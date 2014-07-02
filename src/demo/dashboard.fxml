@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1250.0" stylesheets="@css/dashboard.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo.DashboardController">
+   <children>
+      <VBox prefHeight="650.0" prefWidth="1250.0">
+         <children>
+            <Pane prefHeight="76.0" prefWidth="1250.0" style="-fx-background-color: white;">
+               <children>
+                  <Label layoutX="1150.0" layoutY="54.0" prefHeight="17.0" prefWidth="98.0" text="usuario" />
+                  <ImageView fitHeight="63.0" fitWidth="66.0" layoutX="1084.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label layoutY="6.0" />
+               </children>
+            </Pane>
+            <HBox prefHeight="542.0" prefWidth="1250.0" style="-fx-background-color: white;">
+               <children>
+                  <SplitPane dividerPositions="0.16346153846153846" prefHeight="504.0" prefWidth="1250.0" style="-fx-background-color: white; -fx-border-color: silver;">
+                    <items>
+                      <AnchorPane depthTest="DISABLE" minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="201.0" style="-fx-background-color: white;">
+                           <children>
+                              <Accordion id="accordion" blendMode="DARKEN" prefHeight="480.0" prefWidth="201.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <panes>
+                                  <TitledPane blendMode="DARKEN" contentDisplay="TOP" style="-fx-background-color: white;" text="Identificación" textOverrun="CLIP">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bdevice" fx:id="bdevice" layoutY="1.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Dispositivo" />
+                                                <Button id="bprovider" fx:id="bprovider" layoutY="30.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Proveedor" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                    </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                  </TitledPane>
+                                  <TitledPane blendMode="DARKEN" style="-fx-background-color: white;" text="Benchmark">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bapp" fx:id="bapp" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
+                                                <Button id="btest" fx:id="btest" layoutY="29.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Pruebas" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                    </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                  </TitledPane>
+                                  <TitledPane blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bimgdevice" fx:id="bimgdevice" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Dispositivo" />
+                                                <Button id="bimgfailure" fx:id="bimgfailure" layoutY="29.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Fallas" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                    </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                  </TitledPane>
+                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="76.0" style="-fx-background-color: white;" text="Versus">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bcompare" fx:id="bcompare" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Comparar" />
+                                                <Button id="bsearch" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Busqueda" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="109.0" style="-fx-background-color: white;" text="Fallas">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="binfo" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Información" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="142.0" style="-fx-background-color: white;" text="Reporte">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="breportfailure" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Fallas" />
+                                                <Button id="breportgeneral" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="175.0" style="-fx-background-color: white;" text="Mantenimiento">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Usuario" />
+                                                <Button id="bmantapp" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
+                                                <Button id="bmantdevice" layoutY="58.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Dispositivo" />
+                                                <Button id="bmantprovider" layoutY="87.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Proveedor" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="208.0" style="-fx-background-color: white;" text="Ayuda">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                             <children>
+                                                <Button id="bmanual" fx:id="bmanual" mnemonicParsing="false" onAction="#LoadManual" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Manual" />
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Síragon Regular" size="18.0" />
+                                       </font>
+                                    </TitledPane>
+                                </panes>
+                                 <cursor>
+                                    <Cursor fx:constant="NONE" />
+                                 </cursor>
+                              </Accordion>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="1250.0" style="-fx-background-color: white;">
+                           <children>
+                              <TabPane id="tabdash" fx:id="tabdash" prefHeight="540.0" prefWidth="1250.0" style="-fx-background-color: white;">
+                                <tabs>
+                                  <Tab id="tabdevice" fx:id="tabdevice">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label layoutX="14.0" text="Dispositivo">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="activedevice" layoutX="242.0" layoutY="37.0" prefHeight="21.0" prefWidth="551.0" text="aun no se ha conectado dispositivo">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="18.0" />
+                                                   </font></Label>
+                                                <Button id="detectdevice" fx:id="detectdevice" layoutX="915.0" layoutY="26.0" mnemonicParsing="false" onAction="#detectDevice" prefHeight="43.0" prefWidth="110.0" text="detectar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                                <TableView layoutX="15.0" layoutY="126.0" prefHeight="324.0" prefWidth="1012.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="284.0" text="Item" />
+                                                    <TableColumn prefWidth="727.0" text="Descripción" />
+                                                  </columns>
+                                                </TableView>
+                                                <Button disable="true" layoutX="917.0" layoutY="459.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="continuar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                                <Label layoutX="15.0" layoutY="111.0" text="Información recopilada del equipo conectado ">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                    <Tab id="tabapp" fx:id="tabapp">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label layoutX="14.0" text="Aplicaciones">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="418.0" layoutY="39.0" text="No se ha detectado ningun dispositivo">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button layoutX="915.0" layoutY="26.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="detectar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                                <TableView layoutX="15.0" layoutY="207.0" prefHeight="243.0" prefWidth="1012.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="320.0" text="detectadas" />
+                                                      <TableColumn prefWidth="330.0" text="instaladas" />
+                                                      <TableColumn prefWidth="348.0" text="actualizadas al servidor" />
+                                                   </columns>
+                                                </TableView>
+                                                <Button layoutX="917.0" layoutY="459.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="continuar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab id="tabtest" fx:id="tabtest">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label layoutX="14.0" text="Pruebas">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="418.0" layoutY="39.0" text="No se ha detectado ningun dispositivo">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TableView layoutX="14.0" layoutY="211.0" prefHeight="238.0" prefWidth="1013.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="223.0" AnchorPane.topAnchor="211.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="254.0" text="nombre" />
+                                                      <TableColumn prefWidth="213.0" text="estatus" />
+                                                      <TableColumn prefWidth="265.0" text="imagen" />
+                                                      <TableColumn prefWidth="256.0" text="accion" />
+                                                   </columns>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </TableView>
+                                                <Button layoutX="917.0" layoutY="458.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="continuar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                                <AnchorPane prefHeight="43.0" prefWidth="121.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab id="tabimage" fx:id="tabimage">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label layoutX="14.0" text="Imagenes">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Accordion layoutX="14.0" layoutY="100.0" prefHeight="357.0" prefWidth="1013.0">
+                                                  <panes>
+                                                    <TitledPane animated="false" text="fallas">
+                                                      <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <TableView layoutX="377.0" layoutY="15.0" prefHeight="277.0" prefWidth="620.0">
+                                                                     <columns>
+                                                                        <TableColumn prefWidth="182.0" text="nombre" />
+                                                                        <TableColumn prefWidth="437.0" text="ruta" />
+                                                                     </columns>
+                                                                  </TableView>
+                                                                  <ImageView fitHeight="278.0" fitWidth="200.0" layoutX="148.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="seleccionar imagen">
+                                                                     <font>
+                                                                        <Font name="Síragon Regular" size="12.0" />
+                                                                     </font>
+                                                                  </Button>
+                                                               </children>
+                                                            </AnchorPane>
+                                                      </content>
+                                                    </TitledPane>
+                                                    <TitledPane animated="false" text="pruebas">
+                                                      <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Button layoutX="14.0" layoutY="15.0" mnemonicParsing="false" text="seleccionar imagen">
+                                                                     <font>
+                                                                        <Font name="Síragon Regular" size="12.0" />
+                                                                     </font>
+                                                                  </Button>
+                                                                  <ImageView fitHeight="278.0" fitWidth="200.0" layoutX="147.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <TableView layoutX="377.0" layoutY="15.0" prefHeight="277.0" prefWidth="620.0">
+                                                                    <columns>
+                                                                      <TableColumn prefWidth="182.0" text="nombre" />
+                                                                      <TableColumn prefWidth="437.0" text="ruta" />
+                                                                    </columns>
+                                                                  </TableView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                      </content>
+                                                    </TitledPane>
+                                                  </panes>
+                                                </Accordion>
+                                             </children></AnchorPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab id="tabcompare" fx:id="tabcompare">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label text="Comparar Dispositivos">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="8.0" layoutY="85.0" text="dispositivo actual">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="114.0" layoutY="85.0" text="ninguno">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="8.0" layoutY="290.0" text="tipo de comparativa:">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox layoutX="114.0" layoutY="286.0" prefHeight="25.0" prefWidth="130.0" />
+                                                <Label layoutX="8.0" layoutY="324.0" text="disponibles:">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox layoutX="114.0" layoutY="320.0" prefHeight="25.0" prefWidth="130.0" />
+                                                <TableView layoutX="8.0" layoutY="101.0" prefHeight="170.0" prefWidth="235.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="98.0" text="componente" />
+                                                    <TableColumn prefWidth="116.0" text="descripcion" />
+                                                  </columns>
+                                                </TableView>
+                                                <TableView layoutX="8.0" layoutY="358.0" prefHeight="108.0" prefWidth="236.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="75.0" text="modelo" />
+                                                      <TableColumn prefWidth="144.0" text="componente" />
+                                                   </columns>
+                                                </TableView>
+                                                <Button layoutX="161.0" layoutY="472.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="comparar">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                                <ScrollPane layoutX="267.0" layoutY="101.0" prefHeight="399.0" prefWidth="765.0" vbarPolicy="ALWAYS">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="606.0" prefWidth="751.0">
+                                                         <children>
+                                                            <BarChart layoutX="25.0" layoutY="14.0" prefHeight="432.0" prefWidth="702.0">
+                                                              <xAxis>
+                                                                <CategoryAxis side="BOTTOM" />
+                                                              </xAxis>
+                                                              <yAxis>
+                                                                <NumberAxis side="LEFT" />
+                                                              </yAxis>
+                                                            </BarChart>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </ScrollPane>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </HBox>
+            <HBox prefHeight="33.0" prefWidth="1250.0" style="-fx-background-color: white;">
+               <children>
+                  <Label text="Label" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

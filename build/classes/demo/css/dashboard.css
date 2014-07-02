@@ -1,0 +1,96 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 22, 2014, 10:00:54 AM
+    Author     : project
+*/
+
+.background {
+
+    -fx-background-repeat: repeat;
+    -fx-background-color:
+        linear-gradient(#FFFFFF 0%, #FFFFFF 20%, #FFFFFF 100%),
+        linear-gradient(#FFFFFF, #FFFFFF)
+        
+}
+.button {
+    -fx-background-color:
+        //rgba(255, 95, 0, 0.9),
+        //rgba(255, 95, 0, 0.9),
+        #FF9640;
+        //linear-gradient(#FF4C00 0%, #FF4C00 20%, #FF4C00 100%),
+        //linear-gradient(#FF4C00, #FF4C00),
+        //radial-gradient(center 50% 0%, radius 100%, rgba(135,142,148,0.9),
+       // rgba(255,255,255,0));
+    //-fx-background-radius: 7, 6, 5, 4, 3, 5;
+    //-fx-background-insets: -3 -3 -4 -3, -3, 0, 1, 2, 0;
+    -fx-font-family: "Síragon";
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    //-fx-text-fill: linear-gradient(white, #d0d0d0);
+    //-fx-padding: 10 20 10 20;
+}
+.button:focused, .button:hover {
+    -fx-background-color:
+        //rgba(255, 255, 255, 0.08),
+        //rgba(0, 0, 0, 0.8),
+        #FF4C00;
+        //linear-gradient(#4a5661 0%, #1f2429 20%, #1f242a 100%),
+        //linear-gradient(#3f4950, #23282e),
+        //radial-gradient(center 50% 0%, radius 100%, rgba(135,142,148,0.9),
+        //rgba(255,255,255,0));
+}
+/* .titled-pane {
+-fx-text-fill: gray;
+-fx-border-image: none;
+}
+.titled-pane > .title > .arrow-button .arrow {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-shape: "M 0 0 h 0 0 0 0 z";
+} */
+
+.titled-pane {
+-fx-background-color: white;
+-fx-text-fill: gray;
+-fx-border-image: none;
+}
+.titled-pane:focused {
+    -fx-text-fill: gray;
+	-fx-background-color:gray;
+}
+.titled-pane > .title {
+    -fx-background-color:white;
+}
+.titled-pane:focused > .title {
+    -fx-color: silver;
+}
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: null;
+}
+.titled-pane > .title > .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-shape: "M 0 0 h 0 l 0 0 z";
+}
+.titled-pane > *.content {
+    -fx-background-color:white;
+}
+.titled-pane > .title:focused, .titled-pane > .title:hover {
+    -fx-background-color: #FF9640;
+
+}
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: white;
+}
+.tab-header-background {
+-fx-background-color: transparent;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:top {  
+    -fx-border-color: white;  
+    -fx-background-color: white;  
+    -fx-pref-height:0px;    
+    -fx-background-insets: 0;  
+}  

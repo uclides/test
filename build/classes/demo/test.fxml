@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="24.0" layoutY="10.0" text="Aplicacion">
+         <font>
+            <Font name="Síragon Regular" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="97.0" layoutY="148.0" text="espere mientras se realiza el proceso">
+         <font>
+            <Font name="Síragon Regular" size="14.0" />
+         </font>
+      </Label>
+      <ProgressIndicator disable="true" layoutX="167.0" layoutY="72.0" />
+      <Button layoutX="152.0" layoutY="208.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="83.0" text="aceptar">
+         <font>
+            <Font name="Síragon Regular" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

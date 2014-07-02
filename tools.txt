@@ -1,0 +1,9 @@
+important commands
+
+__filter log 
+
+	adb logcat ActivityManager:I MyApp:D *:
+
+__screenshot
+
+	adb shell screencap -p +/pathfile+.png

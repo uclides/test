@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="24.0" layoutY="10.0" text="Proveedor">
+         <font>
+            <Font name="Síragon Regular" size="36.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="16.0" layoutY="83.0" prefHeight="25.0" prefWidth="322.0" />
+      <Label layoutX="16.0" layoutY="148.0" text="Nombre">
+         <font>
+            <Font name="Síragon Regular" size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="16.0" layoutY="164.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField layoutX="17.0" layoutY="216.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="17.0" layoutY="200.0" text="Contactos">
+         <font>
+            <Font name="Síragon Regular" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="313.0" layoutY="216.0" mnemonicParsing="false" text="+" />
+      <Label layoutX="17.0" layoutY="277.0" text="Detalles">
+         <font>
+            <Font name="Síragon Regular" size="14.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="17.0" layoutY="293.0" prefHeight="61.0" prefWidth="322.0" />
+      <Button layoutX="190.0" layoutY="387.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" text="aceptar">
+         <font>
+            <Font name="Síragon Regular" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="269.0" layoutY="387.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" text="cancelar">
+         <font>
+            <Font name="Síragon Regular" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
