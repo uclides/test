@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FXML-LoginDemo.jar" size="62635" download="eager" />
+    <jar href="FXML-LoginDemo.jar" size="905871" download="eager" />
     <jar href="lib/Enzo-0.1.jar" size="1733405" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873842" download="eager" />
   </resources>

@@ -264,3 +264,10 @@ header .userpanel .drop:before {
 .active {
   background:#B31131!important;
 }
+.imagenes {
+width:20%;
+max-width:100px;
+    cursor: url('Desert.jpg') 25 25, auto;
+
+}
+
