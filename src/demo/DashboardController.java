@@ -7,26 +7,21 @@
 package demo;
 
 import demo.connections.adb;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionModel;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.web.WebView;
-import javax.swing.JButton;
-import javax.swing.JTabbedPane;
+import javafx.scene.paint.Color;
+
 
 /**
  *
@@ -61,11 +56,27 @@ public class DashboardController extends AnchorPane implements Initializable{
     Tab tabimage;
     @FXML
     Tab tabcompare;
-    
-     
+    @FXML
+    TitledPane  accorIdentificacion;
+    @FXML
+    TitledPane  accorBenchmark;
+    @FXML
+    TitledPane  accorImagenes;
+    @FXML
+    TitledPane  accorVersus;
+    @FXML
+    TitledPane  accorFallas;   
+    @FXML
+    TitledPane  accorReporte;
+    @FXML
+    TitledPane  accorMantenimiento;
+    @FXML
+    TitledPane  accorAyuda;   
     //instances
     private adb adb = new adb();
 private Main application;
+
+
 
     public void setApp(Main application){
         this.application = application;
@@ -74,7 +85,13 @@ private Main application;
      
     }
    public void detectDevice(ActionEvent actionEvent){
-   adb.execCmd(activedevice,"adb devices");
+
+   if( adb.execCmd(activedevice,"adb devices")==-1){
+       DisabledAll();
+       System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");
+      Focus();
+   }
+   
    }
 
     @Override
@@ -100,17 +117,23 @@ private Main application;
           case "Button[id=bcompare, styleClass=button]'Comparar'":
             tabdash.getSelectionModel().select(tabcompare);
               break; 
-
-         
- 
-        
      }
-
     }
     
     public void LoadManual(ActionEvent actionEvent){       
    adb.execTerminal("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
    + " file:///C:/Users/Uclides%20Gil/Documents/GitHub/test/src/demo/manual/index.html");
     }
+    public void DisabledAll(){
+    accorBenchmark.setDisable(true);
+    accorImagenes.setDisable(true);
+    accorMantenimiento.setDisable(true);
+    accorFallas.setDisable(true);
+    }
+    
+    public void Focus(){
+     accorAyuda.setTextFill(Color.BLACK);
+    }
+            
 }
 

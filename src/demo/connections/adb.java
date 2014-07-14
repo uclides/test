@@ -6,6 +6,7 @@
 
 package demo.connections;
 
+
 import eu.hansolo.enzo.notification.Notification;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
@@ -18,9 +19,9 @@ import javafx.scene.control.Label;
  * @author desarrollo06
  */
 public class adb {
-    
-    public void execCmd(Label label,String command) {
-  
+
+    public int execCmd(Label label,String command) {
+int val = 0;
     try {
                 Runtime rt = Runtime.getRuntime();
                 //Process pr = rt.exec("cmd /c dir");
@@ -38,12 +39,16 @@ public class adb {
 if(temp[1].indexOf("device")!= -1){
   label.setText(temp[1]+" detectado");
   Notifier.INSTANCE.notifySuccess("Síragon", temp[1]+" detectado");
+val=0;
 }
 else{
   if(temp.length > 1){
   label.setText("verifique modo depuración o drivers instalados");
   Notifier.INSTANCE.notifyWarning("Síragon", "dispositivo no conectado");
+
+  
 }
+  val=-1;
     }
 
                 int exitVal = pr.waitFor();
@@ -54,7 +59,10 @@ else{
             } catch (InterruptedException e) {
                 System.out.println(e.toString());
         }
-        }public String returnDevice(String string){
+        return val;
+        }
+    
+    public String returnDevice(String string){
            
             return string;
         }
