@@ -32,7 +32,7 @@
                            <children>
                               <Accordion id="accordion" blendMode="DARKEN" prefHeight="480.0" prefWidth="201.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <panes>
-                                  <TitledPane blendMode="DARKEN" contentDisplay="TOP" style="-fx-background-color: white;" text="Identificación" textOverrun="CLIP">
+                                  <TitledPane fx:id="accorIdentificacion" blendMode="DARKEN" contentDisplay="TOP" style="-fx-background-color: white;" text="Identificación" textOverrun="CLIP">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -48,7 +48,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane blendMode="DARKEN" style="-fx-background-color: white;" text="Benchmark">
+                                  <TitledPane fx:id="accorBenchmark" blendMode="DARKEN" style="-fx-background-color: white;" text="Benchmark">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -64,7 +64,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
+                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -80,7 +80,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="76.0" style="-fx-background-color: white;" text="Versus">
+                                    <TitledPane fx:id="accorVersus" blendMode="DARKEN" layoutX="10.0" layoutY="76.0" style="-fx-background-color: white;" text="Versus">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -96,7 +96,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="109.0" style="-fx-background-color: white;" text="Fallas">
+                                    <TitledPane fx:id="accorFallas" blendMode="DARKEN" layoutX="10.0" layoutY="109.0" style="-fx-background-color: white;" text="Fallas">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -111,7 +111,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="142.0" style="-fx-background-color: white;" text="Reporte">
+                                    <TitledPane fx:id="accorReporte" blendMode="DARKEN" layoutX="10.0" layoutY="142.0" style="-fx-background-color: white;" text="Reporte">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -127,7 +127,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="175.0" style="-fx-background-color: white;" text="Mantenimiento">
+                                    <TitledPane fx:id="accorMantenimiento" blendMode="DARKEN" layoutX="10.0" layoutY="175.0" style="-fx-background-color: white;" text="Mantenimiento">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
@@ -145,7 +145,7 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane blendMode="DARKEN" layoutX="10.0" layoutY="208.0" style="-fx-background-color: white;" text="Ayuda">
+                                    <TitledPane fx:id="accorAyuda" blendMode="DARKEN" layoutX="10.0" layoutY="208.0" style="-fx-background-color: white;" text="Ayuda">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
