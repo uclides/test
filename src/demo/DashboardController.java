@@ -19,7 +19,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
 
@@ -73,7 +72,7 @@ public class DashboardController extends AnchorPane implements Initializable{
     @FXML
     TitledPane  accorAyuda;   
     //instances
-    private adb adb = new adb();
+ adb adb = new adb();
 private Main application;
 int detectvalue = 0;
 
@@ -86,6 +85,7 @@ int detectvalue = 0;
     }
    public void detectDevice(ActionEvent actionEvent){
 
+    
    if( adb.execCmd(activedevice,"adb devices")==-1){
        DisabledAll();
        System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");

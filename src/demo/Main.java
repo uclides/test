@@ -35,6 +35,7 @@ adb adb = new adb();
      */
     public static void main(String[] args) {
         Application.launch(Main.class, (java.lang.String[])null);
+          
     }
 
     @Override
@@ -49,7 +50,7 @@ adb adb = new adb();
             gotoLogin();
             primaryStage.show();
             servidor.conectar();
-            
+            adb.start();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,6 +80,7 @@ adb adb = new adb();
                       
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
+           
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
