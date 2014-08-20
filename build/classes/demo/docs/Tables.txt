@@ -1,0 +1,60 @@
+Tables
+###############################
+
+Dispositivo{
+	-id-dispositivo
+	-modelo
+	-marca
+	-version-android
+	-version-banda-base
+	-version-nucleo
+	-numero-compilacion
+	-version-construida
+}
+image{
+	-id-image
+	-tipo
+	-nombre-image
+	-imagen
+}
+failure{
+	-id-failure
+	-tipo
+	-estatus
+	-descripcion-falla
+	-fecha-falla
+}
+report{
+	-id-report
+	-nombre-report
+	-descripcion-report
+	-tipo
+	-archivo
+	-fecha-reporte
+}
+application{
+	-id-app
+	-nombre-app
+	-descripcion-app	
+	-tipo
+	-apk
+}
+benchmark{
+	-id-bechmark
+	-nombre-bechmark
+	-descripcion-benchmark
+	-resultado
+	-detalle
+	-fecha-benchmark
+}
+cpu{
+	id-cou
+	-nombre-cpu
+	-manufactura-cpu
+	-caracteristica-cpu
+	-revision-cpu
+	-variante-cpu
+	-cores-cpu
+	-frecuencia-cpu
+	
+}

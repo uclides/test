@@ -24,9 +24,9 @@ public class server {
         try {
             conn = DriverManager.getConnection(url+dbName,userName,password);
             Statement st= conn.createStatement();
-            ResultSet resultSet=st.executeQuery("select * from usuarios");
+            ResultSet resultSet=st.executeQuery("select * from user");
             while(resultSet.next()){
-            nombre= resultSet.getString("nombre");
+            nombre= resultSet.getString("name_user");
             }
                     
         } catch (SQLException ex) {

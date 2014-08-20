@@ -75,7 +75,7 @@ public class DashboardController extends AnchorPane implements Initializable{
     //instances
     private adb adb = new adb();
 private Main application;
-
+int detectvalue = 0;
 
 
     public void setApp(Main application){
@@ -90,6 +90,12 @@ private Main application;
        DisabledAll();
        System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");
       Focus();
+      detectvalue=-1;
+   }
+   else{
+       if(detectvalue==-1 && adb.execCmd(activedevice,"adb devices")==0){
+       EnabledAll();
+       }
    }
    
    }
@@ -122,7 +128,7 @@ private Main application;
     
     public void LoadManual(ActionEvent actionEvent){       
    adb.execTerminal("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-   + " file:///C:/Users/Uclides%20Gil/Documents/GitHub/test/src/demo/manual/index.html");
+   + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html");
     }
     public void DisabledAll(){
     accorBenchmark.setDisable(true);
@@ -130,7 +136,12 @@ private Main application;
     accorMantenimiento.setDisable(true);
     accorFallas.setDisable(true);
     }
-    
+     public void EnabledAll(){
+    accorBenchmark.setDisable(false);
+    accorImagenes.setDisable(false);
+    accorMantenimiento.setDisable(false);
+    accorFallas.setDisable(false);
+    }
     public void Focus(){
      accorAyuda.setTextFill(Color.BLACK);
     }

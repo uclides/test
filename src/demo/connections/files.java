@@ -13,4 +13,9 @@ package demo.connections;
 import com.google.gson.Gson;
 public class files {
     
+    
+    public void GetFileDevice(){
+    
+    }
+    
 }
