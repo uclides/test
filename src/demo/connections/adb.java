@@ -14,7 +14,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -22,8 +30,8 @@ import javafx.scene.control.Label;
  */
 public class adb implements Runnable{
 public Thread thread;
-
-public adb(){}
+int temporal=0;int val = 0;
+Stage dialog = new Stage();
     public int execCmd(Label label,String command) {
 int val = 0;
     try {
@@ -44,6 +52,7 @@ if(temp[1].indexOf("device")!= -1){
   label.setText(temp[1]+" detectado");
   Notifier.INSTANCE.notifySuccess("Síragon", temp[1]+" detectado");
 val=0;
+
 }
 else{
   if(temp.length > 1){
@@ -65,15 +74,13 @@ else{
         }
         return val;
         }
-    public int execCmd2(String command) {
-int val = 0;
+    public int execDetectDevice(String command) {
+
     try {
                 Runtime rt = Runtime.getRuntime();
                 //Process pr = rt.exec("cmd /c dir");
                 Process pr = rt.exec(command);
- 
                 BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
- 
                 String line=null;
                 String [] temp = new String [5];
                 int x=0;
@@ -81,14 +88,27 @@ int val = 0;
                     temp[x]=line;
                     x++;//System.out.print(temp);
                 }
-if(temp[1].indexOf("device")!= -1){
-val=0;
+            
+                if(temp[1].indexOf("device")!= -1 && temporal!=0){
+val=1;
+if(temporal==2){
+System.out.println("Conectado");
+
 }
-else{
-  if(temp.length > 1){
+
 }
-  val=-1;
+                else {
+  if(temp.length > 1 && temporal!=0){
+if(temporal==1){
+System.out.println("Desconectado");
+
+}
+
+  }
+  val=2;
+  
     }
+temporal=val;
 
                 int exitVal = pr.waitFor();
                 //System.out.println("Exited with error code "+exitVal);
@@ -118,12 +138,15 @@ else{
     }
 
     @Override
+   
     public void run() {
     try {
         do{
-        System.out.println(execCmd2("adb devices"));
-        Thread.sleep(1000);}
-        while(execCmd2("adb devices")!=-1);{
+        execDetectDevice("adb devices");
+        Thread.sleep(1000);
+        }
+        
+        while(execDetectDevice("adb devices")!=-1);{
         this.start();
     }
     } catch (InterruptedException ex) {

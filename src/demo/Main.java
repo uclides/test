@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -18,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
 
 
 /**
@@ -50,7 +53,7 @@ adb adb = new adb();
             gotoLogin();
             primaryStage.show();
             servidor.conectar();
-            adb.start();
+          
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,6 +83,20 @@ adb adb = new adb();
                       
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                       Action response = Dialogs.create()
+      .owner(null)
+      .title("You do want dialogs right?")
+      .masthead(null)
+      .message( "I was a bit worried that you might not want them, so I wanted to double check.")
+      .showConfirm();
+                }
+            });
+              adb.start();
+              
            
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
