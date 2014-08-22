@@ -31,7 +31,8 @@ import org.controlsfx.dialog.Dialogs;
 public class adb implements Runnable{
 public Thread thread;
 int temporal=0;int val = 0;
-Stage dialog = new Stage();
+int inte=0;
+
     public int execCmd(Label label,String command) {
 int val = 0;
     try {
@@ -101,7 +102,8 @@ System.out.println("Conectado");
   if(temp.length > 1 && temporal!=0){
 if(temporal==1){
 System.out.println("Desconectado");
-
+inte=-1;
+alertMessage();
 }
 
   }
@@ -136,22 +138,55 @@ temporal=val;
 } catch (IOException e) {
 }
     }
-
-    @Override
-   
-    public void run() {
-    try {
+    
+    public void alertMessage(){
+    Action response = Dialogs.create()
+      .owner(null)
+      .title("You do want dialogs right?")
+      .masthead(null)
+      .message( "I was a bit worried that you might not want them, so I wanted to double check.")
+      .showConfirm();
+    }
+    public void checkDevice(){
+          try {
         do{
-        execDetectDevice("adb devices");
+        inte= execDetectDevice("adb devices");
         Thread.sleep(1000);
+        
+        if(temporal ==1){
+            
+        }
         }
         
-        while(execDetectDevice("adb devices")!=-1);{
-        this.start();
+        while(inte!=-1);{
+
+        //this.start();
     }
     } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
+    }
+    @Override
+   
+    public void run() {
+        
+//    try {
+//        do{
+//        inte= execDetectDevice("adb devices");
+//        Thread.sleep(1000);
+//        
+//        if(temporal ==1){
+//            
+//        }
+//        }
+//        
+//        while(inte!=-1);{
+//
+//        //this.start();
+//    }
+//    } catch (InterruptedException ex) {
+//        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+//    }
     }
     public void start(){
         thread= new Thread(this);

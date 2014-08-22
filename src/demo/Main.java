@@ -27,6 +27,8 @@ import org.controlsfx.dialog.Dialogs;
  * Main Application. This class handles navigation and user session.
  */
 public class Main extends Application {
+    int temporal=0;int val = 0;
+int inte=0;
 server servidor = new server();
 adb adb = new adb();
     private Stage stage;
@@ -87,15 +89,28 @@ adb adb = new adb();
 
                 @Override
                 public void run() {
-                       Action response = Dialogs.create()
-      .owner(null)
-      .title("You do want dialogs right?")
-      .masthead(null)
-      .message( "I was a bit worried that you might not want them, so I wanted to double check.")
-      .showConfirm();
+
+                     adb.checkDevice();
+//      try {
+//        do{
+//        inte= adb.execDetectDevice("adb devices");
+//        Thread.sleep(1000);
+//        
+//        if(temporal ==1){
+//            
+//        }
+//        }
+//        
+//        while(inte!=-1);{
+//
+//        //this.start();
+//    }
+//    } catch (InterruptedException ex) {
+//        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+//    }
                 }
             });
-              adb.start();
+             
               
            
         } catch (Exception ex) {
