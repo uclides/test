@@ -7,6 +7,7 @@
 package demo;
 
 import demo.connections.adb;
+import demo.connections.files;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -80,10 +81,13 @@ public class DashboardController extends AnchorPane implements Initializable{
     TitledPane  accorAyuda;   
     //instances
  adb adb = new adb();
+ files files=new files();
 private Main application;
 int detectvalue = 0;
 
+public DashboardController(){
 
+}
     public void setApp(Main application){
         this.application = application;
 
@@ -102,9 +106,10 @@ int detectvalue = 0;
    else{
        if(detectvalue==-1 && adb.execCmd(activedevice,"adb devices")==0){
        EnabledAll();
+       
        }
    }
-
+System.out.println(files.GetNameFile());
    }
 
     @Override

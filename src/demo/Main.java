@@ -90,34 +90,18 @@ adb adb = new adb();
                 @Override
                 public void run() {
 
-                     adb.checkDevice();
-//      try {
-//        do{
-//        inte= adb.execDetectDevice("adb devices");
-//        Thread.sleep(1000);
-//        
-//        if(temporal ==1){
-//            
-//        }
-//        }
-//        
-//        while(inte!=-1);{
-//
-//        //this.start();
-//    }
-//    } catch (InterruptedException ex) {
-//        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
-//    }
+                    try {
+                        adb.checkDevice();
+
+                    } catch (Throwable ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
-             
-              
-           
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     private void gotoLogin() {
         try {
             LoginController login = (LoginController) replaceSceneContent("login.fxml");

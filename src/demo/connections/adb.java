@@ -7,6 +7,7 @@
 package demo.connections;
 
 
+import demo.DashboardController;
 import eu.hansolo.enzo.notification.Notification;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -102,8 +104,7 @@ System.out.println("Conectado");
   if(temp.length > 1 && temporal!=0){
 if(temporal==1){
 System.out.println("Desconectado");
-inte=-1;
-alertMessage();
+
 }
 
   }
@@ -142,25 +143,31 @@ temporal=val;
     public void alertMessage(){
     Action response = Dialogs.create()
       .owner(null)
-      .title("You do want dialogs right?")
+      .style(DialogStyle.NATIVE)
+      .title("aviso")
       .masthead(null)
-      .message( "I was a bit worried that you might not want them, so I wanted to double check.")
-      .showConfirm();
+      .message( "por favor conecte un dispositivo a traves de USB.")
+      .showWarning();
     }
-    public void checkDevice(){
+    public void checkDevice() throws Throwable{
           try {
         do{
         inte= execDetectDevice("adb devices");
         Thread.sleep(1000);
         
         if(temporal ==1){
-            
+           this.finalize(); 
+        }
+        else{
+        if(temporal ==2){
+            this.finalize();
+        alertMessage(); 
+        }
         }
         }
         
-        while(inte!=-1);{
-
-        //this.start();
+        while(inte==2);{
+this.start();
     }
     } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,24 +176,7 @@ temporal=val;
     @Override
    
     public void run() {
-        
-//    try {
-//        do{
-//        inte= execDetectDevice("adb devices");
-//        Thread.sleep(1000);
-//        
-//        if(temporal ==1){
-//            
-//        }
-//        }
-//        
-//        while(inte!=-1);{
-//
-//        //this.start();
-//    }
-//    } catch (InterruptedException ex) {
-//        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
-//    }
+
     }
     public void start(){
         thread= new Thread(this);
