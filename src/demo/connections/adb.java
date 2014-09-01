@@ -7,21 +7,13 @@
 package demo.connections;
 
 
-import demo.DashboardController;
-import eu.hansolo.enzo.notification.Notification;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
@@ -49,7 +41,9 @@ int val = 0;
                 int x=0;
                 while((line=input.readLine()) != null) {
                     temp[x]=line;
-                    x++;//System.out.print(temp);
+                    System.out.print(temp[x]);
+                    x++;
+                   
                 }
 if(temp[1].indexOf("device")!= -1){
   label.setText(temp[1]+" detectado");
@@ -76,6 +70,29 @@ else{
                 System.out.println(e.toString());
         }
         return val;
+        }
+    public void execGeneric(String command) {
+ String [] temp = new String [100];
+    try {
+                Runtime rt = Runtime.getRuntime();
+                Process pr = rt.exec(command);
+ 
+                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+ 
+                String line="null";
+               
+                int x=0;
+                while((line=input.readLine()) != null) {
+                    temp[x]=line;
+                    System.out.println(temp[x]);
+                    x++;
+                }
+                int exitVal = pr.waitFor();
+            } catch(IOException e) {
+                System.out.println(e.toString());
+            } catch (InterruptedException ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    }
         }
     public int execDetectDevice(String command) {
 
@@ -127,7 +144,6 @@ temporal=val;
            
             return string;
         }
-    
     public void execTerminal(String commands){
            try {
     // Execute command

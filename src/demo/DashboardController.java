@@ -95,21 +95,23 @@ public DashboardController(){
      
     }
    public void detectDevice(ActionEvent actionEvent){
-
-    
-   if( adb.execCmd(activedevice,"adb devices")==-1){
-       DisabledAll();
-       System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");
-      Focus();
-      detectvalue=-1;
-   }
-   else{
-       if(detectvalue==-1 && adb.execCmd(activedevice,"adb devices")==0){
-       EnabledAll();
+ 
        
-       }
-   }
-System.out.println(files.GetNameFile());
+adb.execGeneric("adb pull default.prop");
+    
+//   if( adb.execCmd(activedevice,"adb devices")==-1){
+//       DisabledAll();
+//       System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");
+//      Focus();
+//      detectvalue=-1;
+//   }
+//   else{
+//       if(detectvalue==-1 && adb.execCmd(activedevice,"adb devices")==0){
+//       EnabledAll();
+//       
+//       }
+//   }
+//System.out.println(files.GetNameFile());
    }
 
     @Override

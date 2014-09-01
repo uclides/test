@@ -184,7 +184,7 @@
                                                    <font>
                                                       <Font name="Síragon Regular" size="18.0" />
                                                    </font></Label>
-                                                <Button id="detectdevice" fx:id="detectdevice" layoutX="915.0" layoutY="26.0" mnemonicParsing="false" onAction="#detectDevice" prefHeight="43.0" prefWidth="110.0" text="obtener datos">
+                                                <Button id="detectdevice" fx:id="detectdevice" layoutX="913.0" layoutY="26.0" mnemonicParsing="false" onAction="#detectDevice" prefHeight="43.0" prefWidth="112.0" text="iniciar inspección">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>

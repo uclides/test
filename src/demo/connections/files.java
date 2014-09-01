@@ -10,19 +10,17 @@ package demo.connections;
  *i
  * @author Uclides Gil
  */
-import com.google.gson.Gson;
-import java.io.EOFException;
 import java.io.File;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.core.ZipFile;
 public class files {
     
-    
+    adb adb =new adb();
     public String GetNameFile(){
         File dir= new File("C:\\registerDevice");
         File[] filelist=dir.listFiles();
         String filename = null;
-        if(!dir.isDirectory()){
+        if(dir.exists()){
             
             for(File file:filelist){
                 filename=file.getName();
