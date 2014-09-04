@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
@@ -71,8 +72,8 @@ else{
         }
         return val;
         }
-    public void execGeneric(String command) {
- String [] temp = new String [100];
+    public void execGeneric(String command,TextArea textArea) {
+ String [] temp = new String [10];
     try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec(command);
@@ -84,7 +85,8 @@ else{
                 int x=0;
                 while((line=input.readLine()) != null) {
                     temp[x]=line;
-                    System.out.println(temp[x]);
+                    System.out.println(line);
+                    textArea.appendText(line+"\n");
                     x++;
                 }
                 int exitVal = pr.waitFor();

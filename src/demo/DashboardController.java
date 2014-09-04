@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -34,7 +35,7 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author project
  */
-public class DashboardController extends AnchorPane implements Initializable{
+public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice;
     @FXML
@@ -78,7 +79,9 @@ public class DashboardController extends AnchorPane implements Initializable{
     @FXML
     TitledPane  accorMantenimiento;
     @FXML
-    TitledPane  accorAyuda;   
+    TitledPane  accorAyuda;  
+    @FXML
+    TextArea outConsole;
     //instances
  adb adb = new adb();
  files files=new files();
@@ -97,7 +100,7 @@ public DashboardController(){
    public void detectDevice(ActionEvent actionEvent){
  
        
-adb.execGeneric("adb pull default.prop");
+adb.execGeneric(installSiragonapp,outConsole);
     
 //   if( adb.execCmd(activedevice,"adb devices")==-1){
 //       DisabledAll();

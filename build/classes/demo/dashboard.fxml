@@ -17,20 +17,20 @@
    <children>
       <VBox prefHeight="650.0" prefWidth="1250.0">
          <children>
-            <Pane prefHeight="76.0" prefWidth="1250.0" style="-fx-background-color: white;">
+            <Pane prefHeight="54.0" prefWidth="1250.0" style="-fx-background-color: white;">
                <children>
-                  <Label layoutX="1150.0" layoutY="54.0" prefHeight="17.0" prefWidth="98.0" text="usuario" />
-                  <ImageView fitHeight="63.0" fitWidth="66.0" layoutX="1084.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label layoutX="1152.0" layoutY="30.0" prefHeight="17.0" prefWidth="98.0" text="usuario" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="1084.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
                   <Label layoutY="6.0" />
                </children>
             </Pane>
-            <HBox prefHeight="542.0" prefWidth="1250.0" style="-fx-background-color: white;">
+            <HBox prefHeight="516.0" prefWidth="1250.0" style="-fx-background-color: white;">
                <children>
-                  <SplitPane dividerPositions="0.16346153846153846" prefHeight="504.0" prefWidth="1250.0" style="-fx-background-color: white; -fx-border-color: silver;">
+                  <SplitPane dividerPositions="0.16346153846153846" prefHeight="510.0" prefWidth="1250.0" style="-fx-background-color: white; -fx-border-color: silver;">
                     <items>
-                      <AnchorPane depthTest="DISABLE" minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="201.0" style="-fx-background-color: white;">
+                      <AnchorPane depthTest="DISABLE" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="201.0" style="-fx-background-color: white;">
                            <children>
-                              <Accordion id="accordion" blendMode="DARKEN" prefHeight="480.0" prefWidth="201.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Accordion id="accordion" blendMode="DARKEN" prefHeight="512.0" prefWidth="201.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <panes>
                                   <TitledPane fx:id="accorIdentificacion" blendMode="DARKEN" contentDisplay="TOP" style="-fx-background-color: white;" text="Identificación" textOverrun="CLIP">
                                     <content>
@@ -147,7 +147,7 @@
                                     </TitledPane>
                                     <TitledPane fx:id="accorAyuda" blendMode="DARKEN" layoutX="10.0" layoutY="208.0" style="-fx-background-color: white;" text="Ayuda">
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="245.0" prefWidth="199.0" style="-fx-background-color: white;">
                                              <children>
                                                 <Button id="bmanual" fx:id="bmanual" mnemonicParsing="false" onAction="#LoadManual" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Manual" />
                                              </children>
@@ -167,13 +167,13 @@
                               </Accordion>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="1250.0" style="-fx-background-color: white;">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="516.0" prefWidth="1039.0" style="-fx-background-color: white;">
                            <children>
-                              <TabPane id="tabdash" fx:id="tabdash" prefHeight="540.0" prefWidth="1250.0" style="-fx-background-color: white;">
+                              <TabPane id="tabdash" fx:id="tabdash" prefHeight="512.0" prefWidth="1039.0" style="-fx-background-color: white;">
                                 <tabs>
                                   <Tab id="tabdevice" fx:id="tabdevice">
                                     <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="501.0" prefWidth="1039.0">
                                              <children>
                                                 <Label layoutX="14.0" text="Dispositivo">
                                                    <font>
@@ -205,6 +205,7 @@
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
+                                                <Accordion layoutX="917.0" layoutY="81.0" />
                                              </children>
                                           </AnchorPane>
                                     </content>
@@ -411,11 +412,11 @@
                   </SplitPane>
                </children>
             </HBox>
-            <HBox prefHeight="33.0" prefWidth="1250.0" style="-fx-background-color: white;">
+            <Pane prefHeight="81.0" prefWidth="1250.0">
                <children>
-                  <Label text="Label" />
+                  <TextArea id="outConsole" fx:id="outConsole" editable="false" prefHeight="81.0" prefWidth="1250.0" promptText="salida de consola" />
                </children>
-            </HBox>
+            </Pane>
          </children>
       </VBox>
    </children>
