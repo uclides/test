@@ -8,8 +8,15 @@ package demo;
 
 import demo.connections.adb;
 import demo.connections.files;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -27,6 +35,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 
@@ -82,13 +91,16 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     TitledPane  accorAyuda;  
     @FXML
     TextArea outConsole;
+    @FXML
+    ProgressBar bardashboard; 
     //instances
  adb adb = new adb();
  files files=new files();
 private Main application;
 int detectvalue = 0;
-
+    private Timeline task;
 public DashboardController(){
+
 
 }
     public void setApp(Main application){
@@ -98,25 +110,36 @@ public DashboardController(){
      
     }
    public void detectDevice(ActionEvent actionEvent){
- 
-       
-adb.execGeneric(installSiragonapp,outConsole);
-    
-//   if( adb.execCmd(activedevice,"adb devices")==-1){
+// int ite=0;
+// 
+//   task = new Timeline(
+//        new KeyFrame(
+//                Duration.ZERO,       
+//                new KeyValue(bardashboard.progressProperty(), 0)
+//        ),
+//        new KeyFrame(
+//                Duration.seconds(3), 
+//                new KeyValue(bardashboard.progressProperty(), 1)
+//        )
+//    );  
+//    task.playFromStart();
+// 
+//      if( adb.execCmd(activedevice,"adb devices")==-1){
 //       DisabledAll();
 //       System.out.println("conéctalo!!!!!!!!!!!!!!!!!!!!!!");
 //      Focus();
 //      detectvalue=-1;
 //   }
 //   else{
-//       if(detectvalue==-1 && adb.execCmd(activedevice,"adb devices")==0){
 //       EnabledAll();
-//       
-//       }
+//adb.execGeneric(installSiragonapp,outConsole);
+//adb.execGeneric(startSiragonapp,outConsole);
 //   }
+//       
 //System.out.println(files.GetNameFile());
+       //adb.execGeneric(pullfile,outConsole);
+       files.unZip("C:\\application\\deviceRegisters\\reporte1410054568104.zip", "C:\\application\\deviceRegisters\\");
    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -144,8 +167,7 @@ adb.execGeneric(installSiragonapp,outConsole);
     }
     
     public void LoadManual(ActionEvent actionEvent){       
-   adb.execTerminal("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-   + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html");
+   adb.execTerminal(web);
     }
     public void DisabledAll(){
     accorBenchmark.setDisable(true);

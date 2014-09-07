@@ -10,14 +10,15 @@ package demo.connections;
  *i
  * @author Uclides Gil
  */
+import demo.GenericInterface;
 import java.io.File;
-import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.core.ZipFile;
-public class files {
+import net.lingala.zip4j.exception.ZipException;
+public class files implements GenericInterface{
     
     adb adb =new adb();
     public String GetNameFile(){
-        File dir= new File("C:\\registerDevice");
+        File dir= new File(folderegister);
         File[] filelist=dir.listFiles();
         String filename = null;
         if(dir.exists()){
@@ -27,7 +28,7 @@ public class files {
             }
         }
         else{
-            System.out.println("empty directory");
+            System.out.println(emptyd);
         }
         return filename;
     }

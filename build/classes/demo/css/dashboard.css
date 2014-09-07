@@ -94,3 +94,6 @@ and open the template in the editor.
     -fx-pref-height:0px;    
     -fx-background-insets: 0;  
 }  
+.progress-bar > .bar {
+    -fx-background-color: #FF9640;
+}

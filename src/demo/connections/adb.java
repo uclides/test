@@ -7,6 +7,7 @@
 package demo.connections;
 
 
+import demo.GenericInterface;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author desarrollo06
  */
-public class adb implements Runnable{
+public class adb implements Runnable,GenericInterface{
 public Thread thread;
 int temporal=0;int val = 0;
 int inte=0;
@@ -72,7 +73,7 @@ else{
         }
         return val;
         }
-    public void execGeneric(String command,TextArea textArea) {
+    public int execGeneric(String command,TextArea textArea) {
  String [] temp = new String [10];
     try {
                 Runtime rt = Runtime.getRuntime();
@@ -87,6 +88,7 @@ else{
                     temp[x]=line;
                     System.out.println(line);
                     textArea.appendText(line+"\n");
+                
                     x++;
                 }
                 int exitVal = pr.waitFor();
@@ -95,6 +97,7 @@ else{
             } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return 0;
         }
     public int execDetectDevice(String command) {
 
@@ -161,7 +164,7 @@ temporal=val;
     public void alertMessage(){
     Action response = Dialogs.create()
       .owner(null)
-      .style(DialogStyle.NATIVE)
+      .style(DialogStyle.UNDECORATED)
       .title("aviso")
       .masthead(null)
       .message( "por favor conecte un dispositivo a traves de USB.")
@@ -170,11 +173,12 @@ temporal=val;
     public void checkDevice() throws Throwable{
           try {
         do{
-        inte= execDetectDevice("adb devices");
+        inte= execDetectDevice(devicedisp);
         Thread.sleep(1000);
         
         if(temporal ==1){
-           this.finalize(); 
+           this.finalize();
+            Notifier.INSTANCE.notifySuccess(company,detect);
         }
         else{
         if(temporal ==2){

@@ -45,7 +45,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Login Controller.
  */
-public class LoginController extends AnchorPane implements Initializable {
+public class LoginController extends AnchorPane implements Initializable,GenericInterface {
 
     @FXML
     TextField userId;
@@ -79,7 +79,7 @@ public class LoginController extends AnchorPane implements Initializable {
             errorMessage.setText("Hello " + userId.getText());
         } else {
             if (!application.userLogging(userId.getText(), password.getText())){
-                errorMessage.setText("Username/Password is incorrect");
+                errorMessage.setText(errorlogin);
             }
         }
     }
