@@ -139,7 +139,8 @@ public DashboardController(){
 //System.out.println(files.GetNameFile());
        //adb.execGeneric(pullfile,outConsole);
       //files.unZip();
-       files.checkDir(folderegister,"zip");
+       //files.checkDir(folderegister,"zip");
+files.FileToArray();
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
