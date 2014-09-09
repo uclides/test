@@ -119,7 +119,7 @@ public DashboardController(){
 //        ),
 //        new KeyFrame(
 //                Duration.seconds(3), 
-//                new KeyValue(bardashboard.progressProperty(), 1)
+//                new KeyValue(bardashboard.progressProperty(), 1)putty
 //        )
 //    );  
 //    task.playFromStart();
@@ -138,7 +138,8 @@ public DashboardController(){
 //       
 //System.out.println(files.GetNameFile());
        //adb.execGeneric(pullfile,outConsole);
-       files.unZip("C:\\application\\deviceRegisters\\reporte1410054568104.zip", "C:\\application\\deviceRegisters\\");
+      //files.unZip();
+       files.checkDir(folderegister,"zip");
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

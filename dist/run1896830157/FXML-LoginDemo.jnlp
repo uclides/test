@@ -14,7 +14,7 @@
     <jar href="FXML-LoginDemo.jar" size="1076835" download="eager" />
     <jar href="lib/Enzo-0.1.jar" size="1733404" download="eager" />
     <jar href="lib/commons-io-2.4.jar" size="198399" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="924947" download="eager" />
+    <jar href="lib/controlsfx-8.0.6_20.jar" size="924946" download="eager" />
     <jar href="lib/gson-2.2.4.jar" size="207149" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873841" download="eager" />
     <jar href="lib/zip4j_1.3.2.jar" size="137571" download="eager" />

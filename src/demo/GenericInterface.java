@@ -20,7 +20,7 @@ public interface GenericInterface {
     String web="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
    + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html";
     //paths
-    String folderegister="C:\\application\\deviceRegisters";
+    String folderegister="C:\\application\\deviceRegisters\\";
     //list message
     String detect="Dispositivo detectado";
     String company="Síragon";
