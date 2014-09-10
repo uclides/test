@@ -66,8 +66,8 @@ public class files implements GenericInterface{
             return false;
         }
     }
-    public void FileToArray(){
-        
+    public List<String> FileToArray(){
+        List<String> items=new ArrayList<>();
 try {
     
 //        FileInputStream inputStream = null;
@@ -96,7 +96,7 @@ try {
 //                Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
-    List<String> items=new ArrayList<>();
+    
     File file=new File(folderegister+GetNameFile());
     LineIterator it = FileUtils.lineIterator(file, "UTF-8");
     try {
@@ -112,8 +112,19 @@ try {
 } catch (IOException ex) {
             Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return items;
+        }     
+
+    public void ParseValues(){
+        List<String> tokens = new ArrayList<String>();
+tokens.add("Dispositivo");
+        List<String> values=FileToArray();
+        for(int x=0;x<values.size();x++){
+        if("".equals(values.get(x))){
+        
         }
-                 
+        }
+    }
 }
 
 
