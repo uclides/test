@@ -10,6 +10,7 @@ package demo.connections;
  *i
  * @author Uclides Gil
  */
+import com.sun.deploy.util.StringUtils;
 import demo.GenericInterface;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -103,7 +106,7 @@ try {
         while (it.hasNext()) {
             String line = it.nextLine();
             items.add(line);
-            System.out.println(line);
+            //System.out.println(line);
             // do something with line
         }
     } finally {
@@ -115,16 +118,17 @@ try {
         return items;
         }     
 
-    public void ParseValues(){
-        List<String> tokens = new ArrayList<String>();
-tokens.add("Dispositivo");
-        List<String> values=FileToArray();
-        for(int x=0;x<values.size();x++){
-        if("".equals(values.get(x))){
-        
-        }
+    public void ParseValues(String search){
+        String line;
+List<String> values= FileToArray();
+for(int x=0;x< values.size();x++){
+line=values.get(x);
+if(line.contains(search)){
+System.out.println("ENCONTRADO: "+line);
+}
+}
         }
     }
-}
+
 
 

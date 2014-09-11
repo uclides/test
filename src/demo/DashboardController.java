@@ -140,7 +140,8 @@ public DashboardController(){
        //adb.execGeneric(pullfile,outConsole);
       //files.unZip();
        //files.checkDir(folderegister,"zip");
-files.FileToArray();
+//files.FileToArray();
+files.ParseValues("Marca:");
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
