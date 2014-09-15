@@ -118,17 +118,36 @@ try {
         return items;
         }     
 
-    public void ParseValues(String search){
-        String line;
+    public String[] ParseValues(String list){
+String[] out = null;        
+String line = null;
+int x,initdetected = 1,endetected = 1,temp=0;
 List<String> values= FileToArray();
-for(int x=0;x< values.size();x++){
+
+
+for(x=0;x< values.size();x++){
 line=values.get(x);
-if(line.contains(search)){
-System.out.println("ENCONTRADO: "+line);
+if(line.contains(list)){
+    initdetected=x;
+    break;
 }
 }
-        }
+for(int y=initdetected;y<=values.size();y++){
+line=values.get(y);
+if(line.contains("####################")){
+    endetected=y;
+    break;
+}
+}
+for(int z=initdetected;z<endetected;z++){
+   out=new String[endetected];
+//System.out.println(line=values.get(z).replaceAll(removefile,""));
+out[z]=line=values.get(z);
+System.out.println(out[z]);
+}
+       return out;
     }
+}
 
 
 

@@ -192,8 +192,8 @@
                                                 </Button>
                                                 <TableView layoutX="15.0" layoutY="126.0" prefHeight="324.0" prefWidth="1012.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="284.0" text="Item" />
-                                                    <TableColumn prefWidth="727.0" text="Descripción" />
+                                                    <TableColumn prefWidth="338.0" text="Item" />
+                                                    <TableColumn maxWidth="1152.0" prefWidth="673.0" sortable="false" text="Descripción" />
                                                   </columns>
                                                 </TableView>
                                                 <Button disable="true" layoutX="917.0" layoutY="459.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="continuar">

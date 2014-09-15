@@ -26,5 +26,14 @@ public interface GenericInterface {
     String company="Síragon";
     String emptyd="empty directory";
     String errorlogin="Username/Password is incorrect";
-    
+    String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
+    "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
+    "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
+    "Memoria:","Procesador:","Red:","Escalado de frecuencia de CPU:","Processor:"};
+    String removefile="[|]|'|:|Dispositivo|Modelo|Producto|Marca|Release|Build|Locale|Total|Disponible|height|width|density|Physical size|refresh rate|"
+            + "soporte: '0 :|soporte: '1 :|soporte: '2 :|soporte: '3 :|soporte: '4 :|soporte: '5 :|soporte: '6 :|soporte: '7 :|soporte: '8 :|"
+            + "soporte: '9 :|soporte: '10 :|soporte: '11 :|soporte: '12 :|soporte: '13 :|soporte: '14 :|soporte: '15 :|soporte|Focus mode|"
+            + "Max Num Focus Areas|Whitebalance Values|Scene mode Values|Stabilization Video|Quality JPEG|Quality Thumbnail|Disponible|"
+            + "numero disponibles|estatus|Idle|[|]";
+  
 }

@@ -10,6 +10,7 @@ import demo.connections.adb;
 import demo.connections.files;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,7 +142,7 @@ public DashboardController(){
       //files.unZip();
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
-files.ParseValues("Marca:");
+files.ParseValues("Dispositivo");
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
