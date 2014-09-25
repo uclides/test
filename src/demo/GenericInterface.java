@@ -18,8 +18,8 @@ public interface GenericInterface {
     String devicedisp="adb devices";
     String down="adb shell input keyevent 20";
     String web="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-   + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html";
-    //paths
+   + " file:///C:/Users/Uclides Gil/Documents/NetBeansProjects/test/src/demo/manual/index.html";
+    //pathsC:\Users\Uclides Gil\Documents\NetBeansProjects
     String folderegister="C:\\application\\deviceRegisters\\";
     //list message
     String detect="Dispositivo detectado";
