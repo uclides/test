@@ -8,37 +8,27 @@ package demo;
 
 import demo.connections.adb;
 import demo.connections.files;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.concurrent.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
 
 
 /**
@@ -94,13 +84,47 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     TextArea outConsole;
     @FXML
     ProgressBar bardashboard; 
+    @FXML
+    TableView<Device> tableinfodevice;
+    @FXML
+    TableColumn<Device,String> columnitem;
+    @FXML
+    TableColumn<Device,String> columndescription;
     //instances
  adb adb = new adb();
  files files=new files();
 private Main application;
 int detectvalue = 0;
     private Timeline task;
+//private final ObservableList<Device> data=FXCollections.observableArrayList(
+//new Device("SP-5050","SP-5050","SP-5050","Siragon","4.4.2","KAAI255_VZA_EN_1.12.912",
+//"es_VE","Linux version 3.4.67","Almacenamiento Externo SD","Almacenamiento A2SD",
+//"854","480","240 dpi","4.08","64.82")
+//);
+    int count;
+private final ObservableList<Device> data=FXCollections.observableArrayList(
+new Device("Dispositivo","SP-5050"),
+new Device("Modelo","SP-5050"),
+new Device("Producto","SP-5050"),
+new Device("Marca","Siragon"),
+new Device("Release","4.4.2"),
+new Device("Build","KAAI255_VZA_EN_1.12.912"),
+new Device("Locale","es_VE"),
+new Device("Kernel","Linux version 3.4.67"),
+new Device("Almacenamiento externo SD total","14,82 GB"),
+new Device("Almacenamiento externo SD Disponible","13,92 GB"),
+new Device("Almacenamiento A2SD","Información no disponible"),
+new Device("Pantalla Height","854"),
+new Device("Pantalla Width","480"),
+new Device("Pantalla density","240 dpi"),
+new Device("Pantalla size","4.08"),
+new Device("Pantalla refresh rate","64.82")
+
+
+
+);
 public DashboardController(){
+        this.tableinfodevice = new TableView<>();
 
 
 }
@@ -142,7 +166,15 @@ public DashboardController(){
       //files.unZip();
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
-files.ParseValues("Dispositivo");
+//files.ParseValues("Dispositivo");
+ pushInfo();
+   }
+    @SuppressWarnings("Convert2Diamond")
+   public void pushInfo(){
+   columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>("item"));
+   columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>("device"));
+   tableinfodevice.setItems(data);
+
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
