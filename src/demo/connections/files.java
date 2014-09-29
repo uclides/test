@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,9 +120,9 @@ try {
         }     
 
     public String[] ParseValues(String list){
-String[] out = null;        
+String[] out = new String[100],finalout=null;        
 String line = null;
-int x,initdetected = 1,endetected = 1,temp=0;
+int x,initdetected = 1,endetected = 1,temp=0,iterator=0;
 List<String> values= FileToArray();
 
 
@@ -134,18 +135,47 @@ if(line.contains(list)){
 }
 for(int y=initdetected;y<=values.size();y++){
 line=values.get(y);
+iterator++;
 if(line.contains("####################")){
     endetected=y;
     break;
 }
 }
 for(int z=initdetected;z<endetected;z++){
-   out=new String[endetected];
+    int val=0;
+ ///  out=new String[endetected];
 //System.out.println(line=values.get(z).replaceAll(removefile,""));
-out[z]=line=values.get(z);
-System.out.println(out[z]);
+out[z]=line=values.get(z).replaceAll(removefile,"");
+//System.out.println(out[z]);
+//System.out.println(out.length);
+
 }
        return out;
+    }
+//    public String[] splitString(String[]inStrings){
+//        String[] array = new String[inStrings.length];
+//        int val=0;
+//     for (String out1 : inStrings) {
+//    if (out1 != null) {
+//        String[] salida = out1.split(", ");
+//        for (String salida1 : salida) {
+//           // System.out.println(salida1);
+//        array[val]=salida1;
+//        val++;
+//        }
+//    }
+//}   
+//    return array;
+//    }
+     public void PushTable(String section){
+    switch(section){
+        case "Dispositivo":
+            for(String salida:ParseValues("Dispositivo")){
+            if(salida!=null){
+            System.out.println(salida);
+            }
+            }
+    }
     }
 }
 

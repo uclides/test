@@ -102,27 +102,7 @@ int detectvalue = 0;
 //"854","480","240 dpi","4.08","64.82")
 //);
     int count;
-private final ObservableList<Device> data=FXCollections.observableArrayList(
-new Device("Dispositivo","SP-5050"),
-new Device("Modelo","SP-5050"),
-new Device("Producto","SP-5050"),
-new Device("Marca","Siragon"),
-new Device("Release","4.4.2"),
-new Device("Build","KAAI255_VZA_EN_1.12.912"),
-new Device("Locale","es_VE"),
-new Device("Kernel","Linux version 3.4.67"),
-new Device("Almacenamiento externo SD total","14,82 GB"),
-new Device("Almacenamiento externo SD Disponible","13,92 GB"),
-new Device("Almacenamiento A2SD","Información no disponible"),
-new Device("Pantalla Height","854"),
-new Device("Pantalla Width","480"),
-new Device("Pantalla density","240 dpi"),
-new Device("Pantalla size","4.08"),
-new Device("Pantalla refresh rate","64.82")
 
-
-
-);
 public DashboardController(){
         this.tableinfodevice = new TableView<>();
 
@@ -166,13 +146,33 @@ public DashboardController(){
       //files.unZip();
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
-//files.ParseValues("Dispositivo");
- pushInfo();
+
+pushInfo();
    }
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
+       String[] info;
+        info = files.ParseValues("Dispositivo");
    columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>("item"));
    columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>("device"));
+   ObservableList<Device> data=FXCollections.observableArrayList(
+new Device("Dispositivo",info[3]),
+new Device("Modelo",info[4]),
+new Device("Producto",info[5]),
+new Device("Marca",info[6]),
+new Device("Release",info[7]),
+new Device("Build",info[8]),
+new Device("Locale",info[9]),
+new Device("Kernel",info[10]),
+new Device("Almacenamiento externo SD total","14,82 GB"),
+new Device("Almacenamiento externo SD Disponible","13,92 GB"),
+new Device("Almacenamiento A2SD","Información no disponible"),
+new Device("Pantalla Height","854"),
+new Device("Pantalla Width","480"),
+new Device("Pantalla density","240 dpi"),
+new Device("Pantalla size","4.08"),
+new Device("Pantalla refresh rate","64.82")
+);
    tableinfodevice.setItems(data);
 
    }
