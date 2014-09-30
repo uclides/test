@@ -10,28 +10,21 @@ package demo.connections;
  *i
  * @author Uclides Gil
  */
-import com.sun.deploy.util.StringUtils;
 import demo.GenericInterface;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.LineIterator;
 public class files implements GenericInterface{
-    
+      int val=0;
     adb adb =new adb();
     public String GetNameFile(){
         File dir= new File(folderegister);
@@ -122,7 +115,7 @@ try {
     public String[] ParseValues(String list){
 String[] out = new String[100],finalout=null;        
 String line = null;
-int x,initdetected = 1,endetected = 1,temp=0,iterator=0;
+int x,initdetected = 1,endetected = 1,temp=0,iterator=0,val=0;
 List<String> values= FileToArray();
 
 
@@ -142,41 +135,59 @@ if(line.contains("####################")){
 }
 }
 for(int z=initdetected;z<endetected;z++){
-    int val=0;
  ///  out=new String[endetected];
 //System.out.println(line=values.get(z).replaceAll(removefile,""));
-out[z]=line=values.get(z).replaceAll(removefile,"");
+out[val]=line=values.get(z).replaceAll(removefile,"");
 //System.out.println(out[z]);
 //System.out.println(out.length);
-
+val++;
 }
        return out;
     }
-//    public String[] splitString(String[]inStrings){
-//        String[] array = new String[inStrings.length];
-//        int val=0;
-//     for (String out1 : inStrings) {
-//    if (out1 != null) {
-//        String[] salida = out1.split(", ");
-//        for (String salida1 : salida) {
-//           // System.out.println(salida1);
-//        array[val]=salida1;
-//        val++;
-//        }
-//    }
-//}   
-//    return array;
-//    }
-     public void PushTable(String section){
-    switch(section){
-        case "Dispositivo":
-            for(String salida:ParseValues("Dispositivo")){
-            if(salida!=null){
-            System.out.println(salida);
-            }
-            }
+
+    public String[] splitString(String[]inStrings){
+        String[] array = new String[inStrings.length];
+        int val=0;
+     for (String out1 : inStrings) {
+    if (out1 != null) {
+        String[] salida = out1.split(", ");
+        for (String salida1 : salida) {
+           // System.out.println(salida1);
+        array[val]=salida1;
+        val++;
+        }
     }
+}   
+    return array;
     }
+    
+    
+     public String[] PushInfoBasic(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          System.arraycopy(exit, 0, sal, 0, exit.length);            
+            
+            return sal;
+}
+      @SuppressWarnings("null")
+          public String[] PushInfoExt(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =0;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains("Almacenamiento Externo SD")){
+              }
+              else{
+                  sal=exit1.split(", ");
+              }
+          }
+            
+            return sal;
+}
+          
+ 
+        
+    
 }
 
 

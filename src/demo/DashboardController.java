@@ -95,6 +95,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
  files files=new files();
 private Main application;
 int detectvalue = 0;
+String[] out = new String[100];
     private Timeline task;
 //private final ObservableList<Device> data=FXCollections.observableArrayList(
 //new Device("SP-5050","SP-5050","SP-5050","Siragon","4.4.2","KAAI255_VZA_EN_1.12.912",
@@ -151,27 +152,32 @@ pushInfo();
    }
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
-       String[] info;
-        info = files.ParseValues("Dispositivo");
+       String[] info,info2,info3,info4;
+       
+        info = files.PushInfoBasic("Dispositivo");
+         info2 = files.PushInfoExt("Almacenamiento Externo SD");
+//       info3 = files.ParseValues("Almacenamiento A2SD");
+//        info4 = files.ParseValues("Informacion de Pantalla");
    columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>("item"));
    columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>("device"));
    ObservableList<Device> data=FXCollections.observableArrayList(
-new Device("Dispositivo",info[3]),
-new Device("Modelo",info[4]),
-new Device("Producto",info[5]),
-new Device("Marca",info[6]),
-new Device("Release",info[7]),
-new Device("Build",info[8]),
-new Device("Locale",info[9]),
-new Device("Kernel",info[10]),
-new Device("Almacenamiento externo SD total","14,82 GB"),
-new Device("Almacenamiento externo SD Disponible","13,92 GB"),
-new Device("Almacenamiento A2SD","Información no disponible"),
-new Device("Pantalla Height","854"),
-new Device("Pantalla Width","480"),
-new Device("Pantalla density","240 dpi"),
-new Device("Pantalla size","4.08"),
-new Device("Pantalla refresh rate","64.82")
+new Device("Dispositivo",info[0]),
+new Device("Modelo",info[1]),
+new Device("Producto",info[2]),
+new Device("Marca",info[3]),
+new Device("Release",info[4]),
+new Device("Build",info[5]),
+new Device("Locale",info[6]),
+new Device("Kernel",info[7]),
+new Device("Almacenamiento externo SD total",info2[0]),
+new Device("Almacenamiento externo SD Disponible",info2[1])
+//new Device("Almacenamiento A2SD total",info3[0]),
+//new Device("Almacenamiento A2SD Disponible",info3[1]),
+//new Device("Pantalla Height",info4[0]),
+//new Device("Pantalla Width",info4[1]),
+//new Device("Pantalla density",info4[2]),
+//new Device("Pantalla size",info4[3]),
+//new Device("Pantalla refresh rate",info4[4])
 );
    tableinfodevice.setItems(data);
 
