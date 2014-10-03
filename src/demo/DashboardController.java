@@ -93,6 +93,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     //instances
  adb adb = new adb();
  files files=new files();
+  String[] info,info2,info3,info4,info5,info6;
+   ObservableList<Device> data=FXCollections.observableArrayList();
 private Main application;
 int detectvalue = 0;
 String[] out = new String[100];
@@ -152,35 +154,46 @@ pushInfo();
    }
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
-       String[] info,info2,info3,info4;
+      
        
-        info = files.PushInfoBasic("Dispositivo");
-         info2 = files.PushInfoExt("Almacenamiento Externo SD");
-//       info3 = files.ParseValues("Almacenamiento A2SD");
-//        info4 = files.ParseValues("Informacion de Pantalla");
-   columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>("item"));
-   columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>("device"));
-   ObservableList<Device> data=FXCollections.observableArrayList(
-new Device("Dispositivo",info[0]),
-new Device("Modelo",info[1]),
-new Device("Producto",info[2]),
-new Device("Marca",info[3]),
-new Device("Release",info[4]),
-new Device("Build",info[5]),
-new Device("Locale",info[6]),
-new Device("Kernel",info[7]),
-new Device("Almacenamiento externo SD total",info2[0]),
-new Device("Almacenamiento externo SD Disponible",info2[1])
-//new Device("Almacenamiento A2SD total",info3[0]),
-//new Device("Almacenamiento A2SD Disponible",info3[1]),
-//new Device("Pantalla Height",info4[0]),
-//new Device("Pantalla Width",info4[1]),
-//new Device("Pantalla density",info4[2]),
-//new Device("Pantalla size",info4[3]),
-//new Device("Pantalla refresh rate",info4[4])
+        info = files.PushInfoBasic(valdev);
+         info2 = files.PushInfoExt(valinf2);
+         info3 = files.PushInfoA2SD(valinf3);
+        info4 = files.PushInfoDisplay(valinf4);
+         info5 = files.PushInfoImgGeneric(valinf5);
+         info6 = files.PushInfoImgGeneric(valinf6);
+        createFileDevice(info5);
+   columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>(valitem));
+   columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>(valdevi));
+    data=FXCollections.observableArrayList(
+new Device(valdev,info[0]),
+new Device(valmod,info[1]),
+new Device(valprod,info[2]),
+new Device(valmarc,info[3]),
+new Device(valrel,info[4]),
+new Device(valbui,info[5]),
+new Device(valoc,info[6]),
+new Device(valker,info[7]),
+new Device(valextt,info2[0]),
+new Device(valextd,info2[1]),
+new Device(vala2sdt,info3[0]),
+new Device(vala2sdt,info3[1]),
+new Device(valph,info4[1]),
+new Device(valpw,info4[2]),
+new Device(valpd,info4[3]),
+new Device(valps,info4[4]),
+new Device(valpfr,info4[5])
 );
    tableinfodevice.setItems(data);
-
+   createFileDevice(info5);
+   createFileDevice(info6);
+   }
+   public void createFileDevice(String[] val){
+       
+   for(int y=0;y<files.RemoveNullValue(val).length;y++){
+       if(val!=null && y!=0){
+  data.add(new Device("soporte "+y,val[y]));}
+   }
    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

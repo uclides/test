@@ -26,6 +26,30 @@ public interface GenericInterface {
     String company="Síragon";
     String emptyd="empty directory";
     String errorlogin="Username/Password is incorrect";
+    String valdev="Dispositivo";
+    String valmod="Modelo";
+    String valprod="Producto";
+    String valmarc="Marca";
+    String valrel="Release";
+    String valbui="Build";
+    String valoc="Locale";
+    String valker="Kernel";
+    String valextt="Almacenamiento externo SD total";
+    String valextd="Almacenamiento externo SD Disponible";
+    String vala2sdt="Almacenamiento A2SD total";
+    String vala2sdd="Almacenamiento A2SD Disponible";
+    String valph="Pantalla Height";
+    String valpw="Pantalla Width";
+    String valpd="Pantalla density";
+    String valps="Pantalla size";
+    String valpfr="Pantalla refresh rate";
+    String valinf2="Almacenamiento Externo SD";
+    String valinf3="Almacenamiento A2SD";
+    String valinf4="Informacion de Pantalla";
+    String valinf5="Soporte imagen camara trasera";
+    String valinf6="Soporte video camara trasera";
+    String valitem="item";
+    String valdevi="device";
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",

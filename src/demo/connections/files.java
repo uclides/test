@@ -160,9 +160,7 @@ val++;
 }   
     return array;
     }
-    
-    
-     public String[] PushInfoBasic(String section){
+    public String[] PushInfoBasic(String section){
          String[] exit=ParseValues(section);
          String[]sal=new String[exit.length];
           System.arraycopy(exit, 0, sal, 0, exit.length);            
@@ -170,23 +168,86 @@ val++;
             return sal;
 }
       @SuppressWarnings("null")
-          public String[] PushInfoExt(String section){
+    public String[] PushInfoExt(String section){
          String[] exit=ParseValues(section);
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];
-              if(exit1==null || exit1.contains("Almacenamiento Externo SD")){
+              if(exit1==null || exit1.contains(section)){
               }
               else{
+                  if(exit1.contains("Información no disponible")){
+                  sal="Información no disponible,Información no disponible".split(",");
+                  }
+                  else{
                   sal=exit1.split(", ");
+                  }
+                  }
+          }
+            
+            return sal;
+}
+    public String[] PushInfoA2SD(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =0;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  if(exit1.contains("Información no disponible")){
+                  sal="Información no disponible,Información no disponible".split(",");
+                  }
+                  else{
+                  sal=exit1.split(", ");
+                  }
+                  }
+          }
+            
+            return sal;
+}
+    public String[] PushInfoDisplay(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =0;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  sal[y]=exit1;
+              }
+          }
+            
+            return sal;
+}   
+    public String[] PushInfoImgGeneric(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =0;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  sal[y]=exit1;
               }
           }
             
             return sal;
 }
-          
- 
-        
+public String[] RemoveNullValue(String[] val) {
+  
+    List<String> list = new ArrayList<String>();
+
+    for(String s : val) {
+       if(s != null && s.length() > 0) {
+          list.add(s);
+       }
+    }
+
+    val = list.toArray(new String[list.size()]);
+          return val;
+  }
+      
     
 }
 
