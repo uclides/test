@@ -220,7 +220,36 @@ val++;
             
             return sal;
 }   
-    public String[] PushInfoImgGeneric(String section){
+        public String[] PushInfoImgGeneric(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =1;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  sal[y]=exit1;
+              }
+          }
+         
+            return sal;
+} 
+
+        public String[] PushInfoOthers(String section){
+         String[] exit=ParseValues(section);
+         String[]sal=new String[exit.length];
+          for (int y =0;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  sal[y]=exit1;
+              }
+          }
+            
+            return sal;
+}
+                public String[] PushInfoCam(String section){
          String[] exit=ParseValues(section);
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
@@ -239,12 +268,13 @@ public String[] RemoveNullValue(String[] val) {
     List<String> list = new ArrayList<String>();
 
     for(String s : val) {
-       if(s != null && s.length() > 0) {
+       if(s != null) {
           list.add(s);
        }
     }
 
-    val = list.toArray(new String[list.size()]);
+    val = list.toArray(new String[list.size()+1]);
+
           return val;
   }
       

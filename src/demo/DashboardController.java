@@ -93,7 +93,9 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     //instances
  adb adb = new adb();
  files files=new files();
-  String[] info,info2,info3,info4,info5,info6;
+  String[] info,info2,info3,info4,info5,info6,info7,info8,info9,
+          info10,info11,info12,info13,info14,info15,info16,
+          info17,info18,info19,info20;
    ObservableList<Device> data=FXCollections.observableArrayList();
 private Main application;
 int detectvalue = 0;
@@ -157,12 +159,25 @@ pushInfo();
       
        
         info = files.PushInfoBasic(valdev);
-         info2 = files.PushInfoExt(valinf2);
-         info3 = files.PushInfoA2SD(valinf3);
+        info2 = files.PushInfoExt(valinf2);
+        info3 = files.PushInfoA2SD(valinf3);
         info4 = files.PushInfoDisplay(valinf4);
-         info5 = files.PushInfoImgGeneric(valinf5);
-         info6 = files.PushInfoImgGeneric(valinf6);
-        createFileDevice(info5);
+        info5 = files.PushInfoImgGeneric(valinf5);
+        info6 = files.PushInfoImgGeneric(valinf6);
+        info8 = files.PushInfoImgGeneric(valinf8);
+        info9 = files.PushInfoImgGeneric(valinf9);
+        info10 = files.PushInfoImgGeneric(valinf10);
+        info7 = files.PushInfoOthers(valinf7);
+        info11 = files.PushInfoOthers(valinf11);
+        info12 = files.PushInfoOthers(valinf12);
+        info13 = files.PushInfoExt(valinf13);
+        info14 = files.PushInfoExt(valinf14);
+        info15 = files.PushInfoExt(valinf15);
+        info16 = files.PushInfoExt(valinf16);
+        info17 = files.PushInfoExt(valinf17);
+        info18 = files.PushInfoExt(valinf18);
+        info19 = files.PushInfoExt(valinf19);
+        info20 = files.PushInfoOthers(valinf20);
    columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>(valitem));
    columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>(valdevi));
     data=FXCollections.observableArrayList(
@@ -185,16 +200,69 @@ new Device(valps,info4[4]),
 new Device(valpfr,info4[5])
 );
    tableinfodevice.setItems(data);
-   createFileDevice(info5);
-   createFileDevice(info6);
+   createFileDevice(info5,sup);
+   createFileDevice(info6,sup);
+   createFileDevice(info8,sup);
+   createFileDevice(info9,sup);
+   createFileDevice(info10,mod);
+   createFileDevice2(info7,otfeature);
+   createFileDevice(info11,cams);
+   createFileDevice(info12,est);
+   createFileDevice3(info13,disp);
+   createFileDevice3(info14,disp);
+   createFileDevice3(info15,disp);
+   createFileDevice3(info16,dispm);
+   createFileDevice3(info17,proc);
+   createFileDevice3(info18,proc);
+   createFileDevice3(info19,proc);
+    createFileDevice2(info20,profeature);
    }
-   public void createFileDevice(String[] val){
+   public void createFileDevice(String[] val,String[] desc){
+       
+   for(int y=1;y<files.RemoveNullValue(val).length;y++){
+           if(desc.length==1){
+               data.add(new Device(desc[0]+" ",val[y]));
+           }
+           else{
+  data.add(new Device(desc[y],val[y++]));}
+       
+   }
+   }
+    public void createFileDevice2(String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
-       if(val!=null && y!=0){
-  data.add(new Device("soporte "+y,val[y]));}
+           if(desc.length==1){
+               data.add(new Device(desc[0]+" "+y,val[y]));
+           }
+           else{
+               
+                   if(desc[y] != null){
+  data.add(new Device(desc[y],val[y+1]));
+                   }
+                   else{}
+               
+  }
+       
    }
    }
+        public void createFileDevice3(String[] val,String[] desc){
+       
+   for(int y=0;y<files.RemoveNullValue(val).length;y++){
+           if(desc.length==1){
+               data.add(new Device(desc[0]+" "+y,val[y]));
+           }
+           else{
+               
+                   if(desc[y] != null){
+  data.add(new Device(desc[y],val[y]));
+                   }
+                   else{}
+               
+  }
+       
+   }
+   }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -239,6 +307,8 @@ new Device(valpfr,info4[5])
     public void Focus(){
      accorAyuda.setTextFill(Color.BLACK);
     }
-            
+    public void NextStep(ActionEvent actionEvent){
+        tabdash.getSelectionModel().select(tabdevice);
+    }
 }
 
