@@ -38,15 +38,19 @@ public class files implements GenericInterface{
         }
         else{
             System.out.println(emptyd);
+           
         }
         return filename;
     }
     public boolean unZip(){
         try{
         ZipFile zipFile= new ZipFile(folderegister+GetNameFile());
+        File file= new File(folderegister+GetNameFile());
         zipFile.extractAll(folderegister);
+        FileUtils.deleteQuietly(file);
         }
         catch(ZipException e){
+            return true;
         }
         
         return false;

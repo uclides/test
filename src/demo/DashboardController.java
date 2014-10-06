@@ -29,6 +29,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import org.controlsfx.control.action.Action;
 
 
 /**
@@ -154,10 +155,15 @@ public DashboardController(){
 
 pushInfo();
    }
+
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
-      
        
+       if(files.unZip()){
+           System.err.println("ERROR");
+           adb.alertMessage();
+       }
+       else{
         info = files.PushInfoBasic(valdev);
         info2 = files.PushInfoExt(valinf2);
         info3 = files.PushInfoA2SD(valinf3);
@@ -216,6 +222,7 @@ new Device(valpfr,info4[5])
    createFileDevice3(info18,proc);
    createFileDevice3(info19,proc);
     createFileDevice2(info20,profeature);
+   }
    }
    public void createFileDevice(String[] val,String[] desc){
        
