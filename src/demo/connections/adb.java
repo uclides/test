@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
 
@@ -164,11 +165,23 @@ temporal=val;
     public void alertMessage(){
     Action response = Dialogs.create()
       .owner(null)
-      .style(DialogStyle.UNDECORATED)
+      .style(DialogStyle.CROSS_PLATFORM_DARK)
       .title("aviso")
       .masthead(null)
       .message( "por favor conecte un dispositivo a traves de USB.")
       .showWarning();
+    }
+    public Boolean confirmMessage(String string,String string1){
+    Action response = Dialogs.create()
+        .owner(null)
+        .style(DialogStyle.CROSS_PLATFORM_DARK)
+        .title("Confirm Dialog with Custom Actions")
+        .masthead(string)
+        .message(string1)
+        .actions(Dialog.Actions.OK, Dialog.Actions.CANCEL)
+        .showConfirm();
+    return response==Dialog.Actions.OK;
+    
     }
     public void checkDevice() throws Throwable{
           try {

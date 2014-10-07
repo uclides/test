@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
@@ -22,14 +23,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
 
 
 /**
@@ -160,11 +165,23 @@ pushInfo();
    public void pushInfo(){
        
        if(files.unZip()){
-           System.err.println("ERROR");
-           adb.alertMessage();
+  
+         if(adb.confirmMessage("No se ha detectado archivo valido del dispositivo", "¿Desea continuar el proceso de forma manual?")){
+         System.err.println("editable table");
+         fillTableManual();
+         }
+         else{
+         
+         }
+           
+           
        }
        else{
-        info = files.PushInfoBasic(valdev);
+fillTableAuto();
+   }
+   }
+   public void fillTableAuto(){
+           info = files.PushInfoBasic(valdev);
         info2 = files.PushInfoExt(valinf2);
         info3 = files.PushInfoA2SD(valinf3);
         info4 = files.PushInfoDisplay(valinf4);
@@ -223,7 +240,38 @@ new Device(valpfr,info4[5])
    createFileDevice3(info19,proc);
     createFileDevice2(info20,profeature);
    }
+      public void fillTableManual(){
+          tableinfodevice.setEditable(true);
+   columnitem.setCellValueFactory(new PropertyValueFactory<>(valitem));
+   columndescription.setCellFactory(TextFieldTableCell.forTableColumn());
+   columndescription.setEditable(true);
+    data=FXCollections.observableArrayList(
+new Device(valdev,""),
+new Device(valmod,""),
+new Device(valprod,""),
+new Device(valmarc,""),
+new Device(valrel,""),
+new Device(valbui,""),
+new Device(valoc,""),
+new Device(valker,""),
+new Device(valextt,""),
+new Device(valextd,""),
+new Device(vala2sdt,""),
+new Device(vala2sdt,""),
+new Device(valph,""),
+new Device(valpw,""),
+new Device(valpd,""),
+new Device(valps,""),
+new Device(valpfr,"")
+);
+   tableinfodevice.setItems(data);
+  
+
+
    }
+//   public void tableModeManual(){
+//   tableinfodevice.setEditable(true);
+//   }
    public void createFileDevice(String[] val,String[] desc){
        
    for(int y=1;y<files.RemoveNullValue(val).length;y++){

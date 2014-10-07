@@ -190,10 +190,10 @@
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
-                                                <TableView id="tableinfodevice" fx:id="tableinfodevice" layoutX="15.0" layoutY="126.0" prefHeight="324.0" prefWidth="1012.0">
+                                                <TableView id="tableinfodevice" fx:id="tableinfodevice" editable="true" layoutX="15.0" layoutY="126.0" prefHeight="324.0" prefWidth="1012.0">
                                                   <columns>
                                                     <TableColumn id="columnitem" fx:id="columnitem" prefWidth="338.0" text="Item" />
-                                                    <TableColumn id="columndescription" fx:id="columndescription" maxWidth="1152.0" prefWidth="673.0" sortable="false" text="Descripción" />
+                                                    <TableColumn id="columndescription" fx:id="columndescription" editable="false" maxWidth="1152.0" prefWidth="673.0" sortable="false" text="Descripción" />
                                                   </columns>
                                                 </TableView>
                                                 <Button disable="true" layoutX="917.0" layoutY="459.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="continuar">
