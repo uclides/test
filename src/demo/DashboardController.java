@@ -222,6 +222,7 @@ new Device(valpd,info4[3]),
 new Device(valps,info4[4]),
 new Device(valpfr,info4[5])
 );
+    
    tableinfodevice.setItems(data);
    createFileDevice(info5,sup);
    createFileDevice(info6,sup);
@@ -261,10 +262,14 @@ new Device(vala2sdt,""),
 new Device(valph,""),
 new Device(valpw,""),
 new Device(valpd,""),
+
 new Device(valps,""),
 new Device(valpfr,"")
 );
+    data.add(1, new Device("HOLA","HOLA"));
+    data.add(2, new Device("HOLA2","HOLA2"));
    tableinfodevice.setItems(data);
+
   
 
 
