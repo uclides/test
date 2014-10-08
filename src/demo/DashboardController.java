@@ -380,21 +380,13 @@ menuItemTable();
             final TableRow<Device> row=new TableRow<>();
             final ContextMenu contextMenu=new ContextMenu();
             MenuItem addItem=new MenuItem("agregar");
-            addItem.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    data.add(tableinfodevice.getSelectionModel().getSelectedIndex()+1, 
-                            new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));
-                }
+            addItem.setOnAction((ActionEvent event) -> {
+                data.add(tableinfodevice.getSelectionModel().getSelectedIndex()+1,
+                        new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));
             });
             MenuItem deliItem=new MenuItem("eliminar");
-            deliItem.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    tableinfodevice.getItems().remove(row.getItem());
-                }
+            deliItem.setOnAction((ActionEvent event) -> {
+                tableinfodevice.getItems().remove(row.getItem());
             });
             contextMenu.getItems().addAll(addItem,deliItem);
             row.contextMenuProperty().bind(

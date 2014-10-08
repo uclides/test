@@ -12,10 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -35,6 +38,7 @@ adb adb = new adb();
     private User loggedUser;
     private final double MINIMUM_WINDOW_WIDTH = 1250.0;
     private final double MINIMUM_WINDOW_HEIGHT = 650.0;
+    double xOffset,yOffset;
     /**
      * @param args the command line arguments
      */
@@ -46,12 +50,13 @@ adb adb = new adb();
     @Override
     public void start(Stage primaryStage) {
         try {
-            primaryStage.initStyle(StageStyle.UTILITY);
+           
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             stage = primaryStage;
             stage.setTitle("Síragon");
             stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
             stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
-
+            
             gotoLogin();
             primaryStage.show();
             servidor.conectar();
@@ -120,10 +125,25 @@ adb adb = new adb();
         AnchorPane page;
         try {
             page = (AnchorPane) loader.load(in);
+              page.setOnMousePressed(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+            xOffset=event.getSceneX();
+            yOffset=event.getSceneY();
+            }
+        });
+        page.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+               if (event.getButton() != MouseButton.MIDDLE) {
+                page.getScene().getWindow().setX(event.getScreenX() - xOffset);
+                page.getScene().getWindow().setY(event.getScreenY() - yOffset);
+            }
+            }
+        });
         } finally {
             in.close();
         } 
         Scene scene = new Scene(page, 1250, 650);
+        
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

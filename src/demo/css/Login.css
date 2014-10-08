@@ -3,7 +3,7 @@
 
     -fx-background-repeat: repeat;
     -fx-background-color:
-        linear-gradient(#FFFFFF 0%, #FFFFFF 20%, #FFFFFF 100%),
+        linear-gradient(#FFFFFF 0%, #FFFFFF 100%, #FFFFFF 100%),
         linear-gradient(#FFFFFF, #FFFFFF)
         
 }
@@ -116,4 +116,14 @@
         rgba(235, 235, 235, 0.5),
         rgba(0, 0, 0, 0.4),
         rgb(255, 255, 255);
+}
+.exit-button{
+  -fx-background-color:null;
+  -fx-text-fill:#FF8B39;
+  -fx-font-weight:bold;
+}
+.exit-button:hover{
+  -fx-background-color:#FF8B39;
+  -fx-text-fill:white;
+  -fx-font-weight:bold;
 }
