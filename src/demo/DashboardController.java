@@ -11,6 +11,7 @@ import demo.connections.files;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,12 +20,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
@@ -262,12 +266,9 @@ new Device(vala2sdt,""),
 new Device(valph,""),
 new Device(valpw,""),
 new Device(valpd,""),
-
 new Device(valps,""),
 new Device(valpfr,"")
 );
-    data.add(1, new Device("HOLA","HOLA"));
-    data.add(2, new Device("HOLA2","HOLA2"));
    tableinfodevice.setItems(data);
 
   
@@ -325,7 +326,7 @@ new Device(valpfr,"")
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+menuItemTable();
     }
 
 
@@ -369,6 +370,42 @@ new Device(valpfr,"")
     }
     public void NextStep(ActionEvent actionEvent){
         tabdash.getSelectionModel().select(tabdevice);
+    }
+    public void menuItemTable(){
+    tableinfodevice.setRowFactory(
+    new Callback<TableView<Device>, TableRow<Device>>(){
+
+        @Override
+        public TableRow<Device> call(TableView<Device> param) {
+            final TableRow<Device> row=new TableRow<>();
+            final ContextMenu contextMenu=new ContextMenu();
+            MenuItem addItem=new MenuItem("agregar");
+            addItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    data.add(tableinfodevice.getSelectionModel().getSelectedIndex()+1, 
+                            new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));
+                }
+            });
+            MenuItem deliItem=new MenuItem("eliminar");
+            deliItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    tableinfodevice.getItems().remove(row.getItem());
+                }
+            });
+            contextMenu.getItems().addAll(addItem,deliItem);
+            row.contextMenuProperty().bind(
+      Bindings.when(Bindings.isNotNull(row.itemProperty()))
+      .then(contextMenu)
+      .otherwise((ContextMenu)null));
+            return row;
+        }
+    
+    }
+    );
     }
 }
 

@@ -97,3 +97,13 @@ and open the template in the editor.
 .progress-bar > .bar {
     -fx-background-color: #FF9640;
 }
+.table-view .column-header .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Síragon";
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #FF9640;
+}
