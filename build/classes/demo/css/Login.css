@@ -117,3 +117,13 @@
         rgba(0, 0, 0, 0.4),
         rgb(255, 255, 255);
 }
+.exit-button{
+  -fx-background-color:null;
+  -fx-text-fill:#FF8B39;
+  -fx-font-weight:bold;
+}
+.exit-button:hover{
+  -fx-background-color:#FF8B39;
+  -fx-text-fill:white;
+  -fx-font-weight:bold;
+}

@@ -75,7 +75,7 @@ else{
         return val;
         }
     public int execGeneric(String command,TextArea textArea) {
- String [] temp = new String [10];
+ //String [] temp = new String [10];
     try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec(command);
@@ -86,9 +86,9 @@ else{
                
                 int x=0;
                 while((line=input.readLine()) != null) {
-                    temp[x]=line;
+                    //temp[x]=line;
                     System.out.println(line);
-                    textArea.appendText(line+"\n");
+                    //textArea.appendText(line+"\n");
                 
                     x++;
                 }
@@ -144,6 +144,7 @@ temporal=val;
             } catch (InterruptedException e) {
                 System.out.println(e.toString());
         }
+    System.out.println(val);
         return val;
         }
     public String returnDevice(String string){

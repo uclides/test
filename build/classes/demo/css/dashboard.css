@@ -107,3 +107,13 @@ and open the template in the editor.
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: #FF9640;
 }
+.exit-button{
+  -fx-background-color:null;
+  -fx-text-fill:#FF8B39;
+  -fx-font-weight:bold;
+}
+.exit-button:hover{
+  -fx-background-color:#FF8B39;
+  -fx-text-fill:white;
+  -fx-font-weight:bold;
+}

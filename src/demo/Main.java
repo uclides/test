@@ -97,6 +97,19 @@ adb adb = new adb();
 
                     try {
                         adb.checkDevice();
+                      Runnable r= new Runnable() {
+
+                            @Override
+                            public void run() {
+                                  if(adb.execDetectDevice("adb devices")==1){
+                            adb.execGeneric("adb logcat",null);
+                        
+                        }
+                        else{
+                        }
+                            }
+                        };
+                      new Thread(r).start();
 
                     } catch (Throwable ex) {
                         Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
