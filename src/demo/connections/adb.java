@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.controlsfx.control.action.Action;
@@ -29,6 +30,16 @@ public class adb implements Runnable,GenericInterface{
 public Thread thread;
 int temporal=0;int val = 0;
 int inte=0;
+public String input;
+
+adb(String sinput){
+
+this.input= sinput;
+}
+
+    public adb() {
+super();
+    }
 
     public int execCmd(Label label,String command) {
 int val = 0;
@@ -44,7 +55,8 @@ int val = 0;
                 int x=0;
                 while((line=input.readLine()) != null) {
                     temp[x]=line;
-                    System.out.print(temp[x]);
+                    //System.out.print(temp[x]);
+                    
                     x++;
                    
                 }
@@ -87,9 +99,10 @@ else{
                 int x=0;
                 while((line=input.readLine()) != null) {
                     //temp[x]=line;
+                        setOutAdb(line);
                     System.out.println(line);
                     //textArea.appendText(line+"\n");
-                
+           
                     x++;
                 }
                 int exitVal = pr.waitFor();
@@ -100,6 +113,12 @@ else{
     }
     return 0;
         }
+    public String getOutAdb(){
+    return this.input;
+    }
+    public void setOutAdb(String in){
+    input=in;
+    }
     public int execDetectDevice(String command) {
 
     try {

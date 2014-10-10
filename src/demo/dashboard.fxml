@@ -27,7 +27,7 @@
             </Pane>
             <HBox prefHeight="516.0" prefWidth="1250.0" style="-fx-background-color: white;">
                <children>
-                  <SplitPane dividerPositions="0.16346153846153846" prefHeight="510.0" prefWidth="1250.0" style="-fx-background-color: white; -fx-border-color: silver;">
+                  <SplitPane fx:id="splitPane" dividerPositions="0.16346153846153846" maxHeight="510.0" maxWidth="1250.0" minHeight="510.0" minWidth="1250.0" prefHeight="510.0" prefWidth="1250.0" style="-fx-background-color: white; -fx-border-color: silver;">
                     <items>
                       <AnchorPane depthTest="DISABLE" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="201.0" style="-fx-background-color: white;">
                            <children>

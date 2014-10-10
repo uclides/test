@@ -24,6 +24,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
@@ -100,6 +101,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     TableColumn<Device,String> columnitem;
     @FXML
     TableColumn<Device,String> columndescription;
+    @FXML
+    SplitPane splitPane; 
     //instances
  adb adb = new adb();
  files files=new files();
@@ -129,7 +132,7 @@ public DashboardController(){
      
      
     }
-   public void detectDevice(ActionEvent actionEvent){
+   public void detectDevice(ActionEvent actionEvent) throws Exception{
 // int ite=0;
 // 
 //   task = new Timeline(
@@ -162,7 +165,8 @@ public DashboardController(){
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
 
-pushInfo();
+//pushInfo();
+application.openMonitor();
    }
 
     @SuppressWarnings("Convert2Diamond")
@@ -327,6 +331,8 @@ new Device(valpfr,"")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
+splitPane.setOnSwipeRight(null);
+
     }
 
 

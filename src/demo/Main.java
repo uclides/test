@@ -7,6 +7,7 @@ import demo.connections.adb;
 import demo.connections.server;
 import demo.model.User;
 import demo.security.Authenticator;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,12 +34,15 @@ public class Main extends Application {
     int temporal=0;int val = 0;
 int inte=0;
 server servidor = new server();
-adb adb = new adb();
+adb adb=new adb();
     private Stage stage;
     private User loggedUser;
     private final double MINIMUM_WINDOW_WIDTH = 1250.0;
     private final double MINIMUM_WINDOW_HEIGHT = 650.0;
-    double xOffset,yOffset;
+    double  xOffset,yOffset;
+     double xOffset2,yOffset2;
+      final double fxOffset2 = 0,fyOffset2 = 0;
+       AnchorPane root = null;
     /**
      * @param args the command line arguments
      */
@@ -102,6 +106,7 @@ adb adb = new adb();
                             @Override
                             public void run() {
                                   if(adb.execDetectDevice("adb devices")==1){
+                                    
                             adb.execGeneric("adb logcat",null);
                         
                         }
@@ -125,6 +130,46 @@ adb adb = new adb();
             LoginController login = (LoginController) replaceSceneContent("login.fxml");
             login.setApp(this);
             
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void openMonitor()throws Exception{
+   
+        try {
+            
+//            MonitorController monitor = (MonitorController) replaceSceneContent("monitor.fxml");
+//            Scene monitorscene=new Scene(monitor);
+//            Stage monitorStage = new Stage();
+//            monitorStage.setScene(monitorscene);
+//            monitorStage.show();
+//            
+           
+          
+                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
+             
+            Scene monitorscene = new Scene(root);
+            Stage stage2=new Stage();
+            stage2.initStyle(StageStyle.UNDECORATED);
+            stage2.setScene(monitorscene);
+            stage2.show();
+              
+            root.setOnMousePressed(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+            xOffset2=event.getSceneX();
+            yOffset2=event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+               if (event.getButton() != MouseButton.MIDDLE) {
+                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
+                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
+            }
+            }
+        });
+        
+    
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
