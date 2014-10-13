@@ -11,13 +11,13 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FXML-LoginDemo.jar" size="1093712" download="eager" />
-    <jar href="lib/Enzo-0.1.jar" size="1733403" download="eager" />
-    <jar href="lib/commons-io-2.4.jar" size="198398" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="924946" download="eager" />
-    <jar href="lib/gson-2.2.4.jar" size="207150" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873842" download="eager" />
-    <jar href="lib/zip4j_1.3.2.jar" size="137570" download="eager" />
+    <jar href="FXML-LoginDemo.jar" size="1094650" download="eager" />
+    <jar href="lib/Enzo-0.1.jar" size="1733408" download="eager" />
+    <jar href="lib/commons-io-2.4.jar" size="198402" download="eager" />
+    <jar href="lib/controlsfx-8.0.6_20.jar" size="924949" download="eager" />
+    <jar href="lib/gson-2.2.4.jar" size="207152" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873844" download="eager" />
+    <jar href="lib/zip4j_1.3.2.jar" size="137574" download="eager" />
   </resources>
 <security>
   <all-permissions/>

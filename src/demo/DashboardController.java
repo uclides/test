@@ -165,8 +165,8 @@ public DashboardController(){
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
 
-//pushInfo();
-application.openMonitor();
+pushInfo();
+//application.openMonitor();
    }
 
     @SuppressWarnings("Convert2Diamond")

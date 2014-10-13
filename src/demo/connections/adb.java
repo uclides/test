@@ -8,6 +8,8 @@ package demo.connections;
 
 
 import demo.GenericInterface;
+import demo.Main;
+import demo.MonitorController;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +17,16 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
@@ -27,10 +37,15 @@ import org.controlsfx.dialog.Dialogs;
  * @author desarrollo06
  */
 public class adb implements Runnable,GenericInterface{
+
 public Thread thread;
 int temporal=0;int val = 0;
 int inte=0;
 public String input;
+AnchorPane root = null;
+double  xOffset,yOffset;
+     double xOffset2,yOffset2;
+      final double fxOffset2 = 0,fyOffset2 = 0;
 
 adb(String sinput){
 
@@ -39,6 +54,7 @@ this.input= sinput;
 
     public adb() {
 super();
+
     }
 
     public int execCmd(Label label,String command) {
@@ -88,6 +104,7 @@ else{
         }
     public int execGeneric(String command,TextArea textArea) {
  //String [] temp = new String [10];
+
     try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec(command);
@@ -101,7 +118,7 @@ else{
                     //temp[x]=line;
                         setOutAdb(line);
                     System.out.println(line);
-                    //textArea.appendText(line+"\n");
+              textArea.appendText(line);
            
                     x++;
                 }
@@ -237,4 +254,44 @@ this.start();
         thread= new Thread(this);
         thread.start();
 }
+        public void openMonitor()throws Exception{
+   
+        try {
+            
+//            MonitorController monitor = (MonitorController) replaceSceneContent("monitor.fxml");
+//            Scene monitorscene=new Scene(monitor);
+//            Stage monitorStage = new Stage();
+//            monitorStage.setScene(monitorscene);
+//            monitorStage.show();
+//            
+           
+          
+                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
+             
+            Scene monitorscene = new Scene(root);
+            Stage stage2=new Stage();
+            stage2.initStyle(StageStyle.UNDECORATED);
+            stage2.setScene(monitorscene);
+            stage2.show();
+              
+            root.setOnMousePressed(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+            xOffset2=event.getSceneX();
+            yOffset2=event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+               if (event.getButton() != MouseButton.MIDDLE) {
+                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
+                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
+            }
+            }
+        });
+        
+    
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

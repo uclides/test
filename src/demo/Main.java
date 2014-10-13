@@ -13,10 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +48,7 @@ adb adb=new adb();
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
        AnchorPane root = null;
+Stage stage2=new Stage();
     /**
      * @param args the command line arguments
      */
@@ -91,36 +97,37 @@ adb adb=new adb();
     
     private void gotoProfile() {
         try {
-                      
+          
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    try {
-                        adb.checkDevice();
-                      Runnable r= new Runnable() {
-
-                            @Override
-                            public void run() {
-                                  if(adb.execDetectDevice("adb devices")==1){
-                                    
-                            adb.execGeneric("adb logcat",null);
-                        
-                        }
-                        else{
-                        }
-                            }
-                        };
-                      new Thread(r).start();
-
-                    } catch (Throwable ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
+            openMonitor();
+//            Platform.runLater(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//
+//                    try {
+//                        adb.checkDevice();
+//                      Runnable r= new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//                                  if(adb.execDetectDevice("adb devices")==1){
+//                                    
+//                            adb.execGeneric("adb logcat",null);
+//                        
+//                        }
+//                        else{
+//                        }
+//                            }
+//                        };
+//                      new Thread(r).start();
+//
+//                    } catch (Throwable ex) {
+//                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            });
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -135,25 +142,17 @@ adb adb=new adb();
         }
     }
     public void openMonitor()throws Exception{
-   
         try {
-            
-//            MonitorController monitor = (MonitorController) replaceSceneContent("monitor.fxml");
-//            Scene monitorscene=new Scene(monitor);
-//            Stage monitorStage = new Stage();
-//            monitorStage.setScene(monitorscene);
-//            monitorStage.show();
-//            
-           
-          
+ 
+
                 root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
-             
+                
             Scene monitorscene = new Scene(root);
             Stage stage2=new Stage();
             stage2.initStyle(StageStyle.UNDECORATED);
             stage2.setScene(monitorscene);
             stage2.show();
-              
+             
             root.setOnMousePressed(new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
             xOffset2=event.getSceneX();
@@ -169,10 +168,15 @@ adb adb=new adb();
             }
         });
         
+        
     
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static EventType<Event> llenar() {
+        return EventType.ROOT;
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {

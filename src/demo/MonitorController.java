@@ -9,8 +9,8 @@ import demo.connections.adb;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -19,13 +19,17 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MonitorController extends AnchorPane implements Initializable, GenericInterface{
     @FXML
-    TextArea textarea;
-   
+    public TextArea textarea;
+   private Main application;
     adb adb = new adb();
+    @FXML
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        textarea.appendText(adb.getOutAdb());
+ System.out.println("hoaaaaaaaaaaaaa");
     }
-    
+ public void setMonitor(Main application) {
+        this.application = application;
+    }
+
 }
