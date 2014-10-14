@@ -17,12 +17,14 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -49,6 +51,7 @@ adb adb=new adb();
       final double fxOffset2 = 0,fyOffset2 = 0;
        AnchorPane root = null;
 Stage stage2=new Stage();
+
     /**
      * @param args the command line arguments
      */

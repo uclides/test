@@ -37,12 +37,12 @@ import org.controlsfx.dialog.Dialogs;
  * @author desarrollo06
  */
 public class adb implements Runnable,GenericInterface{
-
 public Thread thread;
 int temporal=0;int val = 0;
 int inte=0;
 public String input;
 AnchorPane root = null;
+public String lineadb="hoaaaaaaaaaaaaaaaa111111111111";
 double  xOffset,yOffset;
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
@@ -53,7 +53,7 @@ this.input= sinput;
 }
 
     public adb() {
-super();
+
 
     }
 
@@ -103,9 +103,9 @@ else{
         return val;
         }
     public int execGeneric(String command,TextArea textArea) {
- //String [] temp = new String [10];
-
+ //String [] temp = new String [10];   
     try {
+        
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec(command);
  
@@ -116,16 +116,18 @@ else{
                 int x=0;
                 while((line=input.readLine()) != null) {
                     //temp[x]=line;
-                        setOutAdb(line);
+ //mc.addText(line+"\n");
+
                     System.out.println(line);
-              textArea.appendText(line);
-           
                     x++;
                 }
                 int exitVal = pr.waitFor();
+                
             } catch(IOException e) {
                 System.out.println(e.toString());
             } catch (InterruptedException ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
     return 0;
