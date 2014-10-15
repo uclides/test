@@ -14,8 +14,10 @@ import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +48,7 @@ public String lineadb="hoaaaaaaaaaaaaaaaa111111111111";
 double  xOffset,yOffset;
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
-
+private Main application;
 adb(String sinput){
 
 this.input= sinput;
@@ -115,14 +117,19 @@ else{
                
                 int x=0;
                 while((line=input.readLine()) != null) {
-                    //temp[x]=line;
- //mc.addText(line+"\n");
+                    lineadb=line;
+
+//textArea.appendText(line);
 
                     System.out.println(line);
                     x++;
                 }
+
                 int exitVal = pr.waitFor();
-                
+                if(exitVal==0){
+                System.out.println("SALIÓ");
+          
+                }
             } catch(IOException e) {
                 System.out.println(e.toString());
             } catch (InterruptedException ex) {

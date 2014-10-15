@@ -103,34 +103,36 @@ Stage stage2=new Stage();
           
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
-            openMonitor();
-//            Platform.runLater(new Runnable() {
-//
-//                @Override
-//                public void run() {
-//
-//                    try {
-//                        adb.checkDevice();
-//                      Runnable r= new Runnable() {
-//
-//                            @Override
-//                            public void run() {
-//                                  if(adb.execDetectDevice("adb devices")==1){
-//                                    
-//                            adb.execGeneric("adb logcat",null);
-//                        
-//                        }
-//                        else{
-//                        }
-//                            }
-//                        };
-//                      new Thread(r).start();
-//
-//                    } catch (Throwable ex) {
-//                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//            });
+            //openMonitor();
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    try {
+                        adb.checkDevice();
+                      Runnable r= new Runnable() {
+
+                            @Override
+                            public void run() {
+                                  if(adb.execDetectDevice("adb devices")==1){
+                                    
+                            adb.execGeneric("adb logcat *:W > /storage/sdcard0/hola.txt",null);
+                        
+                        }
+                        else{
+                       
+                        }
+                            }
+                            
+                        };
+                      new Thread(r).start();
+
+                    } catch (Throwable ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
