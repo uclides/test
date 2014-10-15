@@ -127,7 +127,44 @@ else{
 
                 int exitVal = pr.waitFor();
                 if(exitVal==0){
-                System.out.println("SALIÓ");
+                Platform.runLater(new Runnable(){
+
+                    @Override
+                    public void run() {
+                                               try {
+ 
+
+                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
+                
+            Scene monitorscene = new Scene(root);
+            Stage stage2=new Stage();
+            stage2.initStyle(StageStyle.UNDECORATED);
+            stage2.setScene(monitorscene);
+            stage2.show();
+             
+            root.setOnMousePressed(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+            xOffset2=event.getSceneX();
+            yOffset2=event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+               if (event.getButton() != MouseButton.MIDDLE) {
+                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
+                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
+            }
+            }
+        });
+        
+        
+    
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                    }
+                
+                });
           
                 }
             } catch(IOException e) {
