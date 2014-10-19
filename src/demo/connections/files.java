@@ -26,8 +26,8 @@ import org.apache.commons.io.LineIterator;
 public class files implements GenericInterface{
       int val=0;
     adb adb =new adb();
-    public String GetNameFile(){
-        File dir= new File(folderegister);
+    public String GetNameFile(String folder){
+        File dir= new File(folder);
         File[] filelist=dir.listFiles();
         String filename = null;
         if(dir.exists()){
@@ -44,8 +44,8 @@ public class files implements GenericInterface{
     }
     public boolean unZip(){
         try{
-        ZipFile zipFile= new ZipFile(folderegister+GetNameFile());
-        File file= new File(folderegister+GetNameFile());
+        ZipFile zipFile= new ZipFile(folderegister+GetNameFile(folderegister));
+        File file= new File(folderegister+GetNameFile(folderegister));
         zipFile.extractAll(folderegister);
         FileUtils.deleteQuietly(file);
         }
@@ -59,7 +59,7 @@ public class files implements GenericInterface{
     public boolean checkDir(String dir,String extension){
         File file=new File(dir);
         String ext;
-        if(file.isDirectory()&& file.list().length>0 &&((extension).equals(FilenameUtils.getExtension(folderegister+GetNameFile())))){
+        if(file.isDirectory()&& file.list().length>0 &&((extension).equals(FilenameUtils.getExtension(folderegister+GetNameFile(folderegister))))){
              System.out.println("HAY UN TXT DISPONIBLE");
             return true;         
         }
@@ -67,7 +67,7 @@ public class files implements GenericInterface{
             return false;
         }
     }
-    public List<String> FileToArray(){
+    public List<String> FileToArray(String path,String name){
         List<String> items=new ArrayList<>();
 try {
     
@@ -98,7 +98,7 @@ try {
 //            }
 //        }
     
-    File file=new File(folderegister+GetNameFile());
+    File file=new File(path+name);
     LineIterator it = FileUtils.lineIterator(file, "UTF-8");
     try {
         while (it.hasNext()) {
@@ -116,12 +116,12 @@ try {
         return items;
         }     
 
-    public String[] ParseValues(String list){
+    public String[] ParseValues(String list,String folder,String name){
 String[] out = new String[100],finalout=null;        
 String line = null;
 int x,initdetected = 1,endetected = 1,temp=0,iterator=0,val=0;
-List<String> values= FileToArray();
-
+List<String> values= FileToArray(folder,name);
+//List<String> values= FileToArray(folderegister,GetNameFile(folderegister));
 
 for(x=0;x< values.size();x++){
 line=values.get(x);
@@ -165,7 +165,7 @@ val++;
     return array;
     }
     public String[] PushInfoBasic(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           System.arraycopy(exit, 0, sal, 0, exit.length);            
             
@@ -173,7 +173,7 @@ val++;
 }
       @SuppressWarnings("null")
     public String[] PushInfoExt(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];
@@ -192,7 +192,7 @@ val++;
             return sal;
 }
     public String[] PushInfoA2SD(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];
@@ -211,7 +211,7 @@ val++;
             return sal;
 }
     public String[] PushInfoDisplay(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];
@@ -225,7 +225,7 @@ val++;
             return sal;
 }   
         public String[] PushInfoImgGeneric(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =1;y<exit.length;y++) {
               String exit1=exit[y];
@@ -240,7 +240,7 @@ val++;
 } 
 
         public String[] PushInfoOthers(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];
@@ -254,7 +254,7 @@ val++;
             return sal;
 }
                 public String[] PushInfoCam(String section){
-         String[] exit=ParseValues(section);
+         String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
               String exit1=exit[y];

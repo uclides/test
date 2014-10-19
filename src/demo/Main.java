@@ -37,7 +37,7 @@ import org.controlsfx.dialog.Dialogs;
 /**
  * Main Application. This class handles navigation and user session.
  */
-public class Main extends Application {
+public class Main extends Application implements GenericInterface {
     int temporal=0;int val = 0;
 int inte=0;
 server servidor = new server();
@@ -50,6 +50,7 @@ adb adb=new adb();
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
        AnchorPane root = null;
+       int estatusdevice;
 Stage stage2=new Stage();
 
     /**
@@ -103,21 +104,29 @@ Stage stage2=new Stage();
           
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
-            //openMonitor();
+           
             Platform.runLater(new Runnable() {
 
                 @Override
                 public void run() {
 
                     try {
-                        adb.checkDevice();
-                      Runnable r= new Runnable() {
+                        
+                        estatusdevice= adb.checkDevice();
+                       if(estatusdevice==1){
+                           if(servidor.Consultation("select * from device where id_device='0123456789ABCDEF'")==1){ /////////////////////VERIFICAR LOS DISPOSITIVOS
+                           
+                             adb.alertMessage(mesagges[1]); 
+                           }
+                       }
+                          String ID=adb.returnID(devicedisp)+".txt";
+                        Runnable r= new Runnable() {
 
                             @Override
                             public void run() {
                                   if(adb.execDetectDevice("adb devices")==1){
                                     
-                            adb.execGeneric("adb logcat *:W > /storage/sdcard0/hola.txt",null);
+                            adb.execLogCat(runlogcat+ID,null);
                         
                         }
                         else{
@@ -146,39 +155,7 @@ Stage stage2=new Stage();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void openMonitor()throws Exception{
-        try {
- 
-
-                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
-                
-            Scene monitorscene = new Scene(root);
-            Stage stage2=new Stage();
-            stage2.initStyle(StageStyle.UNDECORATED);
-            stage2.setScene(monitorscene);
-            stage2.show();
-             
-            root.setOnMousePressed(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-            xOffset2=event.getSceneX();
-            yOffset2=event.getSceneY();
-            }
-        });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-               if (event.getButton() != MouseButton.MIDDLE) {
-                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
-                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
-            }
-            }
-        });
-        
-        
-    
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
 
     public static EventType<Event> llenar() {
         return EventType.ROOT;

@@ -5,8 +5,12 @@
  */
 package demo;
 
+import static demo.GenericInterface.folderLogs;
 import demo.connections.adb;
+import demo.connections.files;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,9 +33,20 @@ import javafx.stage.StageStyle;
 public class MonitorController extends AnchorPane implements Initializable, GenericInterface{
     @FXML
     public TextArea textarea;
-
+    files files=new files();
+   public String values="NENE";
+   public List<String>valuess;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
- 
+valuess= files.FileToArray(folderLogs,files.GetNameFile(folderLogs));
+valuess.stream().forEach((s) -> {
+    textarea.appendText(s+"\n");
+});
+System.out.println(values);
+//                             //   items= file.FileToArray(folderLogs,file.GetNameFile(folderLogs));
+
 }
+    
+        
+    
 }

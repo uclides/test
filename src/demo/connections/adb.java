@@ -14,6 +14,7 @@ import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,11 +45,12 @@ int temporal=0;int val = 0;
 int inte=0;
 public String input;
 AnchorPane root = null;
-public String lineadb="hoaaaaaaaaaaaaaaaa111111111111";
+public String lineadb="hoaaaaaaaaaaaaaaaa111111111111",ID;
 double  xOffset,yOffset;
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
 private Main application;
+private files file;
 adb(String sinput){
 
 this.input= sinput;
@@ -104,6 +106,43 @@ else{
         }
         return val;
         }
+        public String returnID(String command) {
+int val = 0;
+    try {
+                Runtime rt = Runtime.getRuntime();
+                //Process pr = rt.exec("cmd /c dir");
+                Process pr = rt.exec(command);
+ 
+                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+ 
+                String line=null;
+                String [] temp = new String [5];
+                int x=0;
+                while((line=input.readLine()) != null) {
+                    temp[x]=line;
+                    //System.out.print(temp[x]);
+                    
+                    x++;
+                   
+                }
+if(temp[1].indexOf("device")!= -1){
+  ID=temp[1];
+
+}
+else{
+
+    }
+
+                int exitVal = pr.waitFor();
+                //System.out.println("Exited with error code "+exitVal);
+ 
+            } catch(IOException e) {
+                System.out.println(e.toString());
+            } catch (InterruptedException e) {
+                System.out.println(e.toString());
+        }
+        return ID;
+        }
     public int execGeneric(String command,TextArea textArea) {
  //String [] temp = new String [10];   
     try {
@@ -127,51 +166,82 @@ else{
 
                 int exitVal = pr.waitFor();
                 if(exitVal==0){
-                Platform.runLater(new Runnable(){
-
-                    @Override
-                    public void run() {
-                                               try {
- 
-
-                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
-                
-            Scene monitorscene = new Scene(root);
-            Stage stage2=new Stage();
-            stage2.initStyle(StageStyle.UNDECORATED);
-            stage2.setScene(monitorscene);
-            stage2.show();
-             
-            root.setOnMousePressed(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-            xOffset2=event.getSceneX();
-            yOffset2=event.getSceneY();
-            }
-        });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-               if (event.getButton() != MouseButton.MIDDLE) {
-                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
-                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
-            }
-            }
-        });
-        
-        
-    
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                    }
-                
-                });
-          
                 }
             } catch(IOException e) {
                 System.out.println(e.toString());
             } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     } catch (Exception ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return 0;
+        }
+    public int execLogCat(String command,TextArea textArea) {
+         String Id=returnID(devicedisp).replaceAll("	device","");
+       System.out.println(Id);
+ //String [] temp = new String [10];   
+    try {
+                Runtime rt = Runtime.getRuntime();
+                Process pr = rt.exec(command);
+ 
+                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+ 
+                String line="null";
+               
+                int x=0;
+                while((line=input.readLine()) != null) {
+                    lineadb=line;
+
+//textArea.appendText(line);
+
+                    System.out.println(line);
+                    x++;
+                }
+
+                int exitVal = pr.waitFor();
+                if(exitVal==0){
+           
+                        Platform.runLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            try {
+                                         if(confirmMessage(disconnect,question)){
+                   
+                                             if(execDetectDevice(devicedisp)==1){
+                 
+                      if(execTerminal("adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){
+                                
+                    showMonitor();
+                                         }
+                                         }
+                                             else{
+                                           checkDevice();
+                                                  if(execDetectDevice("adb devices")==1){
+                                    
+                            if(execTerminal("adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){
+                                
+                    showMonitor();
+                    
+                                         }
+                        }
+                        else{
+                       checkDevice();
+                        }
+                                             }
+                                         }
+                                
+                            } catch (Exception ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Throwable ex) {
+                                Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+                            }   }
+                    });
+               
+                }
+            } catch(IOException e) {
+                System.out.println(e.toString());
+            } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
     return 0;
@@ -233,25 +303,26 @@ temporal=val;
            
             return string;
         }
-    public void execTerminal(String commands){
+    public Boolean execTerminal(String commands){
            try {
     // Execute command
     String command = "cmd /c start cmd.exe";
     Process child = Runtime.getRuntime().exec(commands);
 
     // Get output stream to write from it
-
+return true;
 } catch (IOException e) {
 }
+    return null;
     }
     
-    public void alertMessage(){
+    public void alertMessage(String message){
     Action response = Dialogs.create()
       .owner(null)
       .style(DialogStyle.CROSS_PLATFORM_DARK)
       .title("aviso")
       .masthead(null)
-      .message( "por favor conecte un dispositivo a traves de USB.")
+      .message(message)
       .showWarning();
     }
     public Boolean confirmMessage(String string,String string1){
@@ -266,7 +337,7 @@ temporal=val;
     return response==Dialog.Actions.OK;
     
     }
-    public void checkDevice() throws Throwable{
+    public int checkDevice() throws Throwable{
           try {
         do{
         inte= execDetectDevice(devicedisp);
@@ -279,7 +350,7 @@ temporal=val;
         else{
         if(temporal ==2){
             this.finalize();
-        alertMessage(); 
+        alertMessage(mesagges[0]); 
         }
         }
         }
@@ -290,6 +361,7 @@ this.start();
     } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
+          return temporal;
     }
     @Override
    
@@ -340,4 +412,32 @@ this.start();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+        
+        public void showMonitor() throws IOException{
+                    // List<String> valueslog=file.FileToArray(folderLogs,file.GetNameFile(folderLogs));  /// SE DESCONECTA EL TELEFONO!!!!!!!!!!!!!!!!!!!!!!!!
+                          root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
+                                
+                                Scene monitorscene = new Scene(root);
+                                Stage stage2=new Stage();
+                                stage2.initStyle(StageStyle.UNDECORATED);
+                                stage2.setScene(monitorscene);
+                                stage2.show();
+                                
+                                root.setOnMousePressed(new EventHandler<MouseEvent>(){
+                                    @Override
+                                    public void handle(MouseEvent event){
+                                        xOffset2=event.getSceneX();
+                                        yOffset2=event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>(){
+                                    @Override
+                                    public void handle(MouseEvent event){
+                                        if (event.getButton() != MouseButton.MIDDLE) {
+                                            root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
+                                            root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
+                                        }
+                                    }
+                                });
+        }
 }

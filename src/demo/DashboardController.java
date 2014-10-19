@@ -165,7 +165,7 @@ public DashboardController(){
        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
 
-pushInfo();
+//pushInfo();
 //application.openMonitor();
    }
 

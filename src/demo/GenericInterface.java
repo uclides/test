@@ -21,6 +21,8 @@ public interface GenericInterface {
    + " file:///C:/Users/Uclides Gil/Documents/NetBeansProjects/test/src/demo/manual/index.html";
     //pathsC:\Users\Uclides Gil\Documents\NetBeansProjects
     String folderegister="C:\\application\\deviceRegisters\\";
+    String folderLogs="C:\\application\\logs\\";
+    String runlogcat="adb logcat *:W > /storage/sdcard0/";
     //list message
     String detect="Dispositivo detectado";
     String company="Síragon";
@@ -64,6 +66,8 @@ public interface GenericInterface {
     String valinf20="Descripcion  Procesador";
     String valitem="item";
     String valdevi="device";
+    String disconnect="por algun motivo se ha desconectado el dispositivo";
+    String question="¿Desea ver los registros?";
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
@@ -85,5 +89,6 @@ public interface GenericInterface {
     String[] dispm={"Total","Disponible","Idle",null,null};
     String[] proc={"Tipo",null,null};
     String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Resivison","Serial",null};
-  
+  String stest="select * from user";
+  String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado"};
 }
