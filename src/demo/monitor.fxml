@@ -5,13 +5,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo.MonitorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" stylesheets="@css/monitor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo.MonitorController">
    <children>
-      <TextArea id="textarea" fx:id="textarea" layoutY="54.0" prefHeight="346.0" prefWidth="700.0" />
+      <TextArea id="textarea" fx:id="textarea" layoutY="67.0" prefHeight="333.0" prefWidth="700.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Monitor de Eventos ">
          <font>
             <Font name="Síragon Regular" size="24.0" />
          </font>
       </Label>
+      <Button fx:id="exit" layoutX="680.0" layoutY="-1.0" mnemonicParsing="false" onAction="#exit" styleClass="exit-button" text="x" />
+      <Button layoutX="631.0" layoutY="43.0" mnemonicParsing="false" onAction="#get" prefHeight="17.0" prefWidth="70.0" styleClass="standar-button" text="obtener" />
+      <Label fx:id="loading" layoutX="303.0" layoutY="234.0" prefHeight="7.0" prefWidth="94.0" text="Cargando archivo" visible="false" />
+      <ProgressIndicator fx:id="indicator" layoutX="336.0" layoutY="199.0" prefHeight="35.0" prefWidth="28.0" visible="false" />
    </children>
 </AnchorPane>

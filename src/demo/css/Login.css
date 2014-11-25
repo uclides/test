@@ -59,11 +59,11 @@
         white;
 }
 
-.button .text {
+.standar-button .text {
     //-fx-effect: dropshadow( one-pass-box , rgba(0, 0, 0, 0.8), 0, 0.0 , 0 , -1 );
 }
 
-.button {
+.standar-button {
     -fx-background-color:
         //rgba(255, 95, 0, 0.9),
         //rgba(255, 95, 0, 0.9),
@@ -81,7 +81,7 @@
     //-fx-padding: 10 20 10 20;
 }
 
-.button:focused, .button:hover {
+.standar-button:focused, .standar-button:hover {
     -fx-background-color:
         //rgba(255, 255, 255, 0.08),
         //rgba(0, 0, 0, 0.8),
@@ -119,11 +119,11 @@
 }
 .exit-button{
   -fx-background-color:null;
-  -fx-text-fill:#FF8B39;
+  -fx-text-fill:#FF9640;
   -fx-font-weight:bold;
 }
 .exit-button:hover{
-  -fx-background-color:#FF8B39;
+  -fx-background-color:#B20F0F;
   -fx-text-fill:white;
   -fx-font-weight:bold;
 }

@@ -16,7 +16,17 @@ and open the template in the editor.
         linear-gradient(#FFFFFF, #FFFFFF)
         
 }
-.button {
+.exit-button{
+  -fx-background-color:null;
+  -fx-text-fill:silver;
+  -fx-font-weight:bold;
+}
+.exit-button:hover{
+  -fx-background-color:#B20F0F;
+  -fx-text-fill:white;
+  -fx-font-weight:bold;
+}
+.standar-button {
     -fx-background-color:
         //rgba(255, 95, 0, 0.9),
         //rgba(255, 95, 0, 0.9),
@@ -33,7 +43,7 @@ and open the template in the editor.
     //-fx-text-fill: linear-gradient(white, #d0d0d0);
     //-fx-padding: 10 20 10 20;
 }
-.button:focused, .button:hover {
+.standar-button:focused, .standar-button:hover {
     -fx-background-color:
         //rgba(255, 255, 255, 0.08),
         //rgba(0, 0, 0, 0.8),
@@ -107,13 +117,16 @@ and open the template in the editor.
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: #FF9640;
 }
-.exit-button{
-  -fx-background-color:null;
-  -fx-text-fill:#FF8B39;
-  -fx-font-weight:bold;
+.planModuled {
+    -fx-background-color: #FF9640;
+    -fx-text-alignment:center;
 }
-.exit-button:hover{
-  -fx-background-color:#FF8B39;
-  -fx-text-fill:white;
-  -fx-font-weight:bold;
+ .table-view:focused {
+    -fx-background-color: silver;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0, 0, 0;
+}
+ .progress-bar {
+    -fx-background-color: null;
+    -fx-control-inner-background:null;
 }

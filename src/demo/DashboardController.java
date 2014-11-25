@@ -6,10 +6,17 @@
 
 package demo;
 
+import static demo.GenericInterface.devicedisp;
 import demo.connections.adb;
 import demo.connections.files;
+import demo.connections.server;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -18,28 +25,37 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
+import javafx.util.Duration;
+import org.controlsfx.control.CheckComboBox;
 
 
 /**
@@ -48,49 +64,21 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
-    Button detectdevice;
+    Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
+            exit,bmanual,baddcomporprov,bmore;
     @FXML
-    Button bdevice;
+    Label activedevice,user,permission,dateuser,lblcompinfo;
     @FXML
-    Button bprovider;
-    @FXML
-    Button bapp;
-    @FXML
-    Button bcompare;
-    @FXML
-    Button bmanual;
-    @FXML
-    Label activedevice;
+    ImageView avatar;
     @FXML
     Accordion accordion;
     @FXML
     TabPane tabdash;
     @FXML
-    Tab tabdevice;
+    Tab tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare;
     @FXML
-    Tab tabapp;
-    @FXML
-    Tab tabtest;
-    @FXML
-    Tab tabimage;
-    @FXML
-    Tab tabcompare;
-    @FXML
-    TitledPane  accorIdentificacion;
-    @FXML
-    TitledPane  accorBenchmark;
-    @FXML
-    TitledPane  accorImagenes;
-    @FXML
-    TitledPane  accorVersus;
-    @FXML
-    TitledPane  accorFallas;   
-    @FXML
-    TitledPane  accorReporte;
-    @FXML
-    TitledPane  accorMantenimiento;
-    @FXML
-    TitledPane  accorAyuda;  
+    TitledPane  accorIdentificacion,accorBenchmark,accorImagenes,accorVersus,
+            accorFallas,accorReporte,accorMantenimiento,accorAyuda;
     @FXML
     TextArea outConsole;
     @FXML
@@ -98,11 +86,20 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableView<Device> tableinfodevice;
     @FXML
-    TableColumn<Device,String> columnitem;
-    @FXML
-    TableColumn<Device,String> columndescription;
+    TableColumn<Device,String> columnitem,columndescription;
     @FXML
     SplitPane splitPane; 
+    @FXML
+    ComboBox tecnologiadisplay,cbmaterialdev,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov;
+    @FXML
+    ColorPicker cpdev;
+    @FXML
+    MenuButton choicewifi,choiceband,choicesensor;
+    
+    @FXML 
+    TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,txtelemadd2,txtelemadd3;
+    List<CheckMenuItem> itemsband,itemswifi;
+    
     //instances
  adb adb = new adb();
  files files=new files();
@@ -110,18 +107,16 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
           info10,info11,info12,info13,info14,info15,info16,
           info17,info18,info19,info20;
    ObservableList<Device> data=FXCollections.observableArrayList();
+   public ObservableList<String> attrLogin;
 private Main application;
-int detectvalue = 0;
+LoginController login=new LoginController();
 String[] out = new String[100];
     private Timeline task;
-//private final ObservableList<Device> data=FXCollections.observableArrayList(
-//new Device("SP-5050","SP-5050","SP-5050","Siragon","4.4.2","KAAI255_VZA_EN_1.12.912",
-//"es_VE","Linux version 3.4.67","Almacenamiento Externo SD","Almacenamiento A2SD",
-//"854","480","240 dpi","4.08","64.82")
-//);
+server servidor=new server();
     int count;
-
+public int VAL;
 public DashboardController(){
+       
         this.tableinfodevice = new TableView<>();
 
 
@@ -132,20 +127,48 @@ public DashboardController(){
      
      
     }
-   public void detectDevice(ActionEvent actionEvent) throws Exception{
-// int ite=0;
-// 
-//   task = new Timeline(
-//        new KeyFrame(
-//                Duration.ZERO,       
-//                new KeyValue(bardashboard.progressProperty(), 0)
-//        ),
-//        new KeyFrame(
-//                Duration.seconds(3), 
-//                new KeyValue(bardashboard.progressProperty(), 1)putty
-//        )
-//    );  
-//    task.playFromStart();
+   public void LoadInfoInitialPhone(ActionEvent actionEvent){
+//  System.out.println("ESGRACIAOOOOOOOOOOOOO: "+adb.b);
+       if(tableinfodevice.getItems().isEmpty())
+       {
+  if(adb.b==1) {
+      String device=adb.returnID(devicedisp);
+      System.out.println(device);
+         if(servidor.Consultation("select * from device where id_device='"+device+"'")!=0){ 
+                            
+                            if(adb.confirmMessage(exrecord,question1)){
+                                System.out.println("LOAD INFORMATION DEVICE");
+                                
+                            }
+                        }
+                        else{
+                            ProgressBar(2);
+adb.execGeneric(installSiragonapp,outConsole,adb.b);
+ProgressBar(1);
+adb.execGeneric(startSiragonapp,outConsole,adb.b);
+ProgressBar(1);
+adb.execGeneric(pullfile,outConsole,adb.b);
+pushInfo();
+                           // activedevice.setText("verifica estatus del servidor");                       
+//                          profile.detectdevice.setOnAction((event) -> {
+//                              adb.execTerminal(server);
+//                           });
+                            
+                            
+                        }
+bcontinue.setDisable(false);
+   }
+   else{
+    adb.alertMessage(mesagges[0]);
+    }
+   }
+    else{
+    activedevice.setText(mesagges[3]);
+    }
+        //ProgressBar(1);
+//adb.execGeneric(pullfile,outConsole);
+//pushInfo();
+////////////////////////////////////////////////////7
 // 
 //      if( adb.execCmd(activedevice,"adb devices")==-1){
 //       DisabledAll();
@@ -160,14 +183,16 @@ public DashboardController(){
 //   }
 //       
 //System.out.println(files.GetNameFile());
-       //adb.execGeneric(pullfile,outConsole);
-      //files.unZip();
-       //files.checkDir(folderegister,"zip");
+        
+        //files.unZip();
+        //files.checkDir(folderegister,"zip");
 //files.FileToArray();
-
-//pushInfo();
+        
+        
 //application.openMonitor();
-   }
+        
+
+    } 
 
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
@@ -209,7 +234,7 @@ fillTableAuto();
         info18 = files.PushInfoExt(valinf18);
         info19 = files.PushInfoExt(valinf19);
         info20 = files.PushInfoOthers(valinf20);
-   columnitem.setCellValueFactory(new PropertyValueFactory<Device,String>(valitem));
+   columnitem.setCellValueFactory(new PropertyValueFactory<>(valitem));
    columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>(valdevi));
     data=FXCollections.observableArrayList(
 new Device(valdev,info[0]),
@@ -223,7 +248,7 @@ new Device(valker,info[7]),
 new Device(valextt,info2[0]),
 new Device(valextd,info2[1]),
 new Device(vala2sdt,info3[0]),
-new Device(vala2sdt,info3[1]),
+new Device(vala2sdd,info3[1]),
 new Device(valph,info4[1]),
 new Device(valpw,info4[2]),
 new Device(valpd,info4[3]),
@@ -233,20 +258,20 @@ new Device(valpfr,info4[5])
     
    tableinfodevice.setItems(data);
    createFileDevice(info5,sup);
-   createFileDevice(info6,sup);
-   createFileDevice(info8,sup);
-   createFileDevice(info9,sup);
+   createFileDevice(info6,vidsup);
+   createFileDevice(info8,sup2);
+   createFileDevice(info9,vidsup2);
    createFileDevice(info10,mod);
    createFileDevice2(info7,otfeature);
    createFileDevice(info11,cams);
    createFileDevice(info12,est);
-   createFileDevice3(info13,disp);
-   createFileDevice3(info14,disp);
-   createFileDevice3(info15,disp);
+   createFileDevice3(info13,alminter);
+   createFileDevice3(info14,almsis);
+   createFileDevice3(info15,dispcache);
    createFileDevice3(info16,dispm);
    createFileDevice3(info17,proc);
-   createFileDevice3(info18,proc);
-   createFileDevice3(info19,proc);
+   createFileDevice3(info18,frec);
+   createFileDevice3(info19,red);
     createFileDevice2(info20,profeature);
    }
       public void fillTableManual(){
@@ -266,7 +291,7 @@ new Device(valker,""),
 new Device(valextt,""),
 new Device(valextd,""),
 new Device(vala2sdt,""),
-new Device(vala2sdt,""),
+new Device(vala2sdd,""),
 new Device(valph,""),
 new Device(valpw,""),
 new Device(valpd,""),
@@ -293,7 +318,7 @@ new Device(valpfr,"")
        
    }
    }
-    public void createFileDevice2(String[] val,String[] desc){
+   public void createFileDevice2(String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
@@ -331,16 +356,41 @@ new Device(valpfr,"")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
-splitPane.setOnSwipeRight(null);
+splitPane.setOnSwipeRight(null);    
+  adb.LoopAdb(activedevice);
+ ObservableList<String> olistmaterial = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[0],columnsdb[0]));
 
+  cbmaterialdev.setItems(olistmaterial);
+  choiceband.getItems().addAll(servidor.ConsultforUICMItem(consults[1],columnsdb[1]));
+  choicewifi.getItems().addAll(servidor.ConsultforUICMItem(consults[2],columnsdb[1]));
+  choicesensor.getItems().addAll(servidor.ConsultforUICMItem(consults[7],columnsdb[6]));
+  ObservableList<String> olistblu = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[3],columnsdb[2]));
+  cbbluetooth.setItems(olistblu);
+    ObservableList<String> olistdis = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[4],columnsdb[3]));
+  cbtypedis.setItems(olistdis);
+      ObservableList<String> olisttactil = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[5],columnsdb[4]));
+  cbtactildis.setItems(olisttactil);
+        ObservableList<String> olistbat = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[6],columnsdb[5]));
+  cbtypebat.setItems(olistbat);
+          ObservableList<String> olistprov = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[8],columnsdb[7]));
+  cbprov.setItems(olistprov);
+
+validateTextFile(txthdev);
+validateTextFile(txtwdev);
+validateTextFile(txtbulkdev);
+validateTextFile(txtcolordis);
+validateTextFile(txtcapbat);
+  
     }
-
 
     public void buttonLoadTab(ActionEvent actionEvent){
       switch(actionEvent.getSource().toString()){
           case "Button[id=bdevice, styleClass=button]'Dispositivo'":
             tabdash.getSelectionModel().select(tabdevice);
               break;
+          case "Button[id=bcomponente, styleClass=button]'Componentes / Proveedor'":
+            tabdash.getSelectionModel().select(tabcomp);
+             break;
           case "Button[id=bapp, styleClass=button]'Aplicaciones'":
             tabdash.getSelectionModel().select(tabapp);
               break;
@@ -364,8 +414,8 @@ splitPane.setOnSwipeRight(null);
     accorImagenes.setDisable(true);
     accorMantenimiento.setDisable(true);
     accorFallas.setDisable(true);
-    }
-     public void EnabledAll(){
+    }   
+    public void EnabledAll(){
     accorBenchmark.setDisable(false);
     accorImagenes.setDisable(false);
     accorMantenimiento.setDisable(false);
@@ -375,7 +425,18 @@ splitPane.setOnSwipeRight(null);
      accorAyuda.setTextFill(Color.BLACK);
     }
     public void NextStep(ActionEvent actionEvent){
-        tabdash.getSelectionModel().select(tabdevice);
+        switch(tabdash.getSelectionModel().getSelectedItem().getId()){
+        case("tabdevice"):
+            servidor.generateInfoIdent(columnitem,columndescription);
+            tabdash.getSelectionModel().select(tabcomp);
+            break;
+        case("tabcomp"):
+            getInfoTabComp();
+            //tabdash.getSelectionModel().select(tabapp);
+            break;    
+            
+        }
+    
     }
     public void menuItemTable(){
     tableinfodevice.setRowFactory(
@@ -385,16 +446,21 @@ splitPane.setOnSwipeRight(null);
         public TableRow<Device> call(TableView<Device> param) {
             final TableRow<Device> row=new TableRow<>();
             final ContextMenu contextMenu=new ContextMenu();
+            MenuItem modItem=new MenuItem("modificar");
+            modItem.setOnAction((ActionEvent event) -> {
+                columndescription.setCellFactory(TextFieldTableCell.<Device>forTableColumn());
+             
+            });
             MenuItem addItem=new MenuItem("agregar");
             addItem.setOnAction((ActionEvent event) -> {
                 data.add(tableinfodevice.getSelectionModel().getSelectedIndex()+1,
-                        new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));
+                        new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));          
             });
             MenuItem deliItem=new MenuItem("eliminar");
             deliItem.setOnAction((ActionEvent event) -> {
                 tableinfodevice.getItems().remove(row.getItem());
             });
-            contextMenu.getItems().addAll(addItem,deliItem);
+            contextMenu.getItems().addAll(modItem,addItem,deliItem);
             row.contextMenuProperty().bind(
       Bindings.when(Bindings.isNotNull(row.itemProperty()))
       .then(contextMenu)
@@ -405,5 +471,92 @@ splitPane.setOnSwipeRight(null);
     }
     );
     }
+
+    public void exit(ActionEvent actionEvent){
+    System.exit(0);
+    }
+    public void minimize(ActionEvent actionEvent){
+    
+    }
+
+    public void ProgressBar(int seconds){
+ task = new Timeline(
+        new KeyFrame(
+                Duration.ZERO,       
+                new KeyValue(bardashboard.progressProperty(), 0)
+        ),
+        new KeyFrame(
+                Duration.seconds(seconds), 
+                new KeyValue(bardashboard.progressProperty(), 1)
+        )
+    );  
+    task.playFromStart();
+  
+
 }
+    public void getParametersUser(ObservableList<String> observableList){
+      user.setText(observableList.get(0));
+      permission.setText(observableList.get(1));
+      avatar.setImage(new Image(observableList.get(2)));
+      dateuser.setText(observableList.get(3));
+    }
+    public void getADB(int i){
+    VAL=i;
+    }
+    public void typeAccess(int i){
+    switch(i){
+        case 0:
+         accorMantenimiento.setDisable(true);
+            break;
+        case 1:
+         accorMantenimiento.setDisable(false);   
+            break;
+        default:
+            
+    }
+    }
+    public void validateTextFile(TextField textField)
+    {
+    
+  textField.setOnKeyTyped(new EventHandler<KeyEvent>(){
+
+    @Override
+    public void handle(KeyEvent event) {
+        String valtxt=((TextInputControl)event.getTarget()).getText();
+        if(valtxt.length()<0||valtxt.isEmpty()){
+            ((Node)event.getTarget()).setStyle("-fx-border-color: red");
+        }
+        else{
+        ((Node)event.getTarget()).setStyle("-fx-border-color: null");
+        lblcompinfo.setText("");
+        }
+    }
+  });
+    }
+    public void returnComboBox(ActionEvent actionEvent){
+    System.out.println(files.getValueCb(cbmaterialdev));
+    }
+    public void returnMenuItem(ActionEvent actionEvent){
+        for(String mi:files.getValueMI(choiceband)){
+        System.out.println(mi);
+        }
+        }
+    public void getColor(ActionEvent actionEvent){
+    System.out.println(cpdev.getValue().toString());
+    }
+    public String[][] getInfoTabComp(){
+       String[][]values=new String[20][20];
+
+       if("".equals(txthdev.getText()) ||"".equals(txtwdev.getText())||"".equals(txtbulkdev.getText())
+          ||"".equals(txtcolordis.getText())||"".equals(txtcapbat.getText()))
+       {lblcompinfo.setText("Existen campos vacios, ingrese información correspondiente");}
+       else{}
+    return values;
+      
+
+           
+    }
+    }
+    
+
 

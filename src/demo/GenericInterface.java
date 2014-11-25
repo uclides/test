@@ -13,21 +13,24 @@ package demo;
 public interface GenericInterface {
     //list command//
     String installSiragonapp="adb install C:\\application\\apps\\siragonapp.apk";
-    String startSiragonapp="adb shell am start -n  org.uguess.android.sysinfo/.QSystemInfo";
+    String startSiragonapp="adb shell am start -n  org.uguess.android.sysinfo/.SiragonInfo";
     String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
     String devicedisp="adb devices";
+    String removeFadb="adb shell rm /storage/sdcard0/ADB/*";
     String down="adb shell input keyevent 20";
     String web="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
    + " file:///C:/Users/Uclides Gil/Documents/NetBeansProjects/test/src/demo/manual/index.html";
     //pathsC:\Users\Uclides Gil\Documents\NetBeansProjects
+    String server="C:\\Users\\project\\Desktop\\a.bat";
     String folderegister="C:\\application\\deviceRegisters\\";
     String folderLogs="C:\\application\\logs\\";
-    String runlogcat="adb logcat *:W > /storage/sdcard0/";
+    String runlogcat="adb logcat *:W > /storage/sdcard0/ADB/";
     //list message
     String detect="Dispositivo detectado";
+    String offline="Dispositivo desconectado";
     String company="Síragon";
     String emptyd="empty directory";
-    String errorlogin="Username/Password is incorrect";
+    String errorlogin="Username/Password es inválido";
     String valdev="Dispositivo";
     String valmod="Modelo";
     String valprod="Producto";
@@ -67,7 +70,11 @@ public interface GenericInterface {
     String valitem="item";
     String valdevi="device";
     String disconnect="por algun motivo se ha desconectado el dispositivo";
+    String noconnect="no se ha detectado dispositivo";
+    String exrecord="dispositivo se encuentra registrado";
     String question="¿Desea ver los registros?";
+    String question2="¿Desea continuar sin un dispositivo conectado?";
+    String question1="¿Desea obtener la informacion para su uso?";
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
@@ -81,14 +88,29 @@ public interface GenericInterface {
             + "Quality JPEG|Quality Thumbnail|Disponible|"
             + "numero disponibles|estatus|Idle|Features	:|CPU implementer	:|CPU architecture:|CPU variant	:|CPU part	:|CPU revision	:|Hardware	:|Revision	:|Serial		:|    |[|]";
     String[] otfeature={"Focus mode","Max Num Focus Areas","Whitebalance Values","Scene mode Values","Stabilization Video","Quality JPEG","Quality Thumbnail",null};
-    String[] sup={"soporte"};
-    String[] mod={"mode"};
-    String[] cams={"numero disponibles"};
-    String[] est={"estatus"};
-    String[] disp={"Total","Disponible",null,};
-    String[] dispm={"Total","Disponible","Idle",null,null};
-    String[] proc={"Tipo",null,null};
-    String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Resivison","Serial",null};
+    String[] sup={"soporte resolución imagenes camara principal"};   
+    String[] vidsup={"soporte resolución video camara principal"}; 
+    String[] sup2={"soporte resolución imagenes camara secundaria"};   
+    String[] vidsup2={"soporte resolución video camara secundaria"}; 
+    String[] mod={"modo de foco cámara"};
+    String[] cams={"numero de cámaras disponibles"};
+    String[] est={"estatus flash"};
+    String[] dispcache={"Caché del Sistema Total","Caché del Sistema Disponible",null,};
+    String[] alminter={"Almacenamiento Interno Total","Almacenamiento Interno Disponible",null,};
+    String[] almsis={"Almacenamiento del Sistema Total","Almacenamiento del Sistema Disponible",null,};
+    String[] dispm={"Memoria RAM Total","Memoria RAM Disponible","Memoria RAM Idle",null,null};
+    String[] proc={"Tipo CPU",null,null};
+    String[] frec={"Frecuencia CPU",null,null};
+    String[] red={"Red",null,null};
+    String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Revision","Serial",null};
   String stest="select * from user";
-  String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado"};
+  String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
+      "select val_net from network where type_net='wifi'","select type_blu from bluetooth",
+      "select * from display_type","select * from display_tactil","select * from battery",
+      "select name_sup from other_support where type='sensor'","select name_provider from provider"};
+  String[] columnsdb={"name_mat","val_net","type_blu","name_dis","name_tactil",
+      "type_bat","name_sup","name_provider"};
+  String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado","error al conectar con servidor de datos","tabla ya posee datos de un equipo"};
+
+
 }

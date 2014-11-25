@@ -11,13 +11,27 @@ package demo.connections;
  * @author Uclides Gil
  */
 import demo.GenericInterface;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
+import javax.swing.text.TableView;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -25,6 +39,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.LineIterator;
 public class files implements GenericInterface{
       int val=0;
+      String string;
     adb adb =new adb();
     public String GetNameFile(String folder){
         File dir= new File(folder);
@@ -35,12 +50,13 @@ public class files implements GenericInterface{
             for(File file:filelist){
                 filename=file.getName();
             }
+            return filename;
         }
         else{
             System.out.println(emptyd);
            
         }
-        return filename;
+        return null;
     }
     public boolean unZip(){
         try{
@@ -48,10 +64,14 @@ public class files implements GenericInterface{
         File file= new File(folderegister+GetNameFile(folderegister));
         zipFile.extractAll(folderegister);
         FileUtils.deleteQuietly(file);
+        File file2= new File(folderegister+GetNameFile(folderegister));
+          removeEmptyLine(folderegister+GetNameFile(folderegister));
         }
         catch(ZipException e){
             return true;
-        }
+        } catch (IOException ex) {
+              Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
+          }
        
         return false;
     
@@ -69,35 +89,9 @@ public class files implements GenericInterface{
     }
     public List<String> FileToArray(String path,String name){
         List<String> items=new ArrayList<>();
+        
 try {
-    
-//        FileInputStream inputStream = null;
-//        try {
-//            DataInputStream dataInputStream; 
-//            BufferedReader bufferedReader;
-//            inputStream = new FileInputStream(folderegister+GetNameFile());
-//            List<String> items=new ArrayList<>();
-//            dataInputStream = new DataInputStream(inputStream);
-//            bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
-//            String str_line;
-//            while(!"null".equals(str_line=bufferedReader.readLine())){
-//                str_line=str_line.trim();
-//                if((str_line.length()!=0)){
-//                    items.add(str_line);
-//                    System.out.println(str_line);
-//                }
-//                
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                inputStream.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-    
+
     File file=new File(path+name);
     LineIterator it = FileUtils.lineIterator(file, "UTF-8");
     try {
@@ -115,7 +109,41 @@ try {
         }
         return items;
         }     
+    public List<String> FileToArray2(String path,String name,TextArea a,Label l,ProgressIndicator p){
+        List<String> items=new ArrayList<>();
+new Thread(new Runnable() {
+    @Override public void run() {
+ 
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+  
+try {
 
+    File file=new File(path+name);
+    LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+    try {
+        while (it.hasNext()) {
+            String line = it.nextLine();
+            items.add(line);
+            a.appendText(line+"\n");
+            //System.out.println(line);
+            // do something with line
+        }
+    } finally {
+        l.setVisible(false);
+        p.setVisible(false);
+        LineIterator.closeQuietly(it);
+    }
+} catch (IOException ex) {
+            Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                }
+            });
+        
+    }
+}).start(); 
+        return items;
+        }     
     public String[] ParseValues(String list,String folder,String name){
 String[] out = new String[100],finalout=null;        
 String line = null;
@@ -281,8 +309,53 @@ public String[] RemoveNullValue(String[] val) {
 
           return val;
   }
-      
+public String[] RemoveNullValue2(String[] val) {
+  
+    List<String> list = new ArrayList<String>();
+
+    for(String s : val) {
+       if(s != null) {
+          list.add(s);
+       }
+    }
+
+    val = list.toArray(new String[list.size()]);
+
+          return val;
+  }
+public void removeEmptyLine(String file) throws IOException{
     
+BufferedReader br= new BufferedReader(new FileReader(file));
+        String line;String input = "";
+        while((line=br.readLine())!=null){
+            if(line.length()>0){
+        input+=line+"\n";
+            }
+        }
+        FileOutputStream fos=new FileOutputStream(file);
+        fos.write(input.getBytes());
+} 
+public void getValueColumn(TableView tv){
+
+}    
+public String getValueCb(ComboBox cb){
+    String selected = cb.getValue().toString();
+          return selected;
+}
+public String[] getValueMI(MenuButton mb){
+String[] menui=new String[20];
+int y = 0;
+            for(MenuItem item : mb.getItems()) {
+                CheckMenuItem checkMenuItem = (CheckMenuItem) item;
+                if(checkMenuItem.isSelected()) {
+                    menui[y]=checkMenuItem.getText();
+                }
+                y++;
+            } 
+    
+    return RemoveNullValue2(menui);
+}
+
 }
 
 

@@ -6,32 +6,23 @@ package demo;
 import demo.connections.adb;
 import demo.connections.server;
 import demo.model.User;
-import demo.security.Authenticator;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
 
 
 /**
@@ -51,6 +42,7 @@ adb adb=new adb();
       final double fxOffset2 = 0,fyOffset2 = 0;
        AnchorPane root = null;
        int estatusdevice;
+       public int detectADB;
 Stage stage2=new Stage();
 
     /**
@@ -71,9 +63,10 @@ Stage stage2=new Stage();
             stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
             stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
             
-            gotoLogin();
+           
             primaryStage.show();
-            servidor.conectar();
+           gotoLogin();
+   
           
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,66 +77,25 @@ Stage stage2=new Stage();
         return loggedUser;
     }
         
-    public boolean userLogging(String userId, String password){
-        if (Authenticator.validate(userId, password)) {
-            loggedUser = User.of(userId);
-            gotoProfile();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
     void userLogout(){
         loggedUser = null;
         gotoLogin();
     }
     
-    private void gotoProfile() {
+    void gotoProfile(ObservableList<String> ol) {
+        
+        
         try {
           
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
-           
-            Platform.runLater(new Runnable() {
+            profile.getParametersUser(ol);
+            profile.typeAccess(Integer.parseInt(ol.get(1)));
 
-                @Override
-                public void run() {
 
-                    try {
-                        
-                        estatusdevice= adb.checkDevice();
-                       if(estatusdevice==1){
-                           if(servidor.Consultation("select * from device where id_device='0123456789ABCDEF'")==1){ /////////////////////VERIFICAR LOS DISPOSITIVOS
-                           
-                             adb.alertMessage(mesagges[1]); 
-                           }
-                       }
-                          String ID=adb.returnID(devicedisp)+".txt";
-                        Runnable r= new Runnable() {
-
-                            @Override
-                            public void run() {
-                                  if(adb.execDetectDevice("adb devices")==1){
-                                    
-                            adb.execLogCat(runlogcat+ID,null);
-                        
-                        }
-                        else{
-                       
-                        }
-                            }
-                            
-                        };
-                      new Thread(r).start();
-
-                    } catch (Throwable ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println("NO SE PUEDE INICIAR SESION PORQUE NO HAY CONEXION AL SERVIDOR");
         }
     }
     private void gotoLogin() {
@@ -162,6 +114,7 @@ Stage stage2=new Stage();
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {
+        Scene scene;
         FXMLLoader loader = new FXMLLoader();
         InputStream in = Main.class.getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -169,27 +122,33 @@ Stage stage2=new Stage();
         AnchorPane page;
         try {
             page = (AnchorPane) loader.load(in);
-              page.setOnMousePressed(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-            xOffset=event.getSceneX();
-            yOffset=event.getSceneY();
-            }
-        });
-        page.setOnMouseDragged(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-               if (event.getButton() != MouseButton.MIDDLE) {
+              page.setOnMousePressed((MouseEvent event) -> {
+                  xOffset=event.getSceneX();
+                  yOffset=event.getSceneY();
+            });
+        page.setOnMouseDragged((MouseEvent event) -> {
+            if (event.getButton() != MouseButton.MIDDLE) {
                 page.getScene().getWindow().setX(event.getScreenX() - xOffset);
                 page.getScene().getWindow().setY(event.getScreenY() - yOffset);
             }
-            }
-        });
+            });
         } finally {
             in.close();
         } 
-        Scene scene = new Scene(page, 1250, 650);
+        if("login.fxml".equals(fxml)){
+        scene = new Scene(page, 500, 500);
+        }
+        else{
+         scene = new Scene(page, 1250, 650);
+        }
+        
         
         stage.setScene(scene);
         stage.sizeToScene();
+        
         return (Initializable) loader.getController();
     }
+    public void Minimized(){
+    }
+
 }
