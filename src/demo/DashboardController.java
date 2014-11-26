@@ -90,11 +90,11 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     SplitPane splitPane; 
     @FXML
-    ComboBox tecnologiadisplay,cbmaterialdev,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov;
+    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle;
     @FXML
     ColorPicker cpdev;
     @FXML
-    MenuButton choicewifi,choiceband,choicesensor;
+    MenuButton choicewifi,choiceband,choicesensor,choicematerialdev;
     
     @FXML 
     TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,txtelemadd2,txtelemadd3;
@@ -358,9 +358,9 @@ new Device(valpfr,"")
 menuItemTable();
 splitPane.setOnSwipeRight(null);    
   adb.LoopAdb(activedevice);
- ObservableList<String> olistmaterial = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[0],columnsdb[0]));
 
-  cbmaterialdev.setItems(olistmaterial);
+  choicematerialdev.getItems().addAll(servidor.ConsultforUICMItem(consults[0],columnsdb[0]));
+  choiceband.getItems().addAll(servidor.ConsultforUICMItem(consults[1],columnsdb[1]));
   choiceband.getItems().addAll(servidor.ConsultforUICMItem(consults[1],columnsdb[1]));
   choicewifi.getItems().addAll(servidor.ConsultforUICMItem(consults[2],columnsdb[1]));
   choicesensor.getItems().addAll(servidor.ConsultforUICMItem(consults[7],columnsdb[6]));
@@ -374,6 +374,7 @@ splitPane.setOnSwipeRight(null);
   cbtypebat.setItems(olistbat);
           ObservableList<String> olistprov = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[8],columnsdb[7]));
   cbprov.setItems(olistprov);
+  cbcertgoogle.getItems().addAll("si","no");
 
 validateTextFile(txthdev);
 validateTextFile(txtwdev);
@@ -533,24 +534,68 @@ validateTextFile(txtcapbat);
     }
   });
     }
-    public void returnComboBox(ActionEvent actionEvent){
-    System.out.println(files.getValueCb(cbmaterialdev));
-    }
-    public void returnMenuItem(ActionEvent actionEvent){
-        for(String mi:files.getValueMI(choiceband)){
-        System.out.println(mi);
+//    public void returnComboBox(ActionEvent actionEvent){
+//    System.out.println(files.getValueCb(cbmaterialdev));
+//    }
+    public String[] returnMenuItem(MenuButton mb){
+        String array[]=new String [20];
+        int y=0;
+        for(String mi:files.getValueMI(mb)){
+        array[y]=mi;
+        y++;
         }
+        return array;
         }
     public void getColor(ActionEvent actionEvent){
     System.out.println(cpdev.getValue().toString());
     }
     public String[][] getInfoTabComp(){
        String[][]values=new String[20][20];
-
+int w = 0,x = 0,y = 0,z=0;
        if("".equals(txthdev.getText()) ||"".equals(txtwdev.getText())||"".equals(txtbulkdev.getText())
           ||"".equals(txtcolordis.getText())||"".equals(txtcapbat.getText()))
        {lblcompinfo.setText("Existen campos vacios, ingrese información correspondiente");}
-       else{}
+       else{
+       values[0][0]=txthdev.getText();
+       values[1][0]=txtwdev.getText();
+       values[2][0]=txtbulkdev.getText();
+       for(String val:returnMenuItem(choicematerialdev)){ 
+       values[3][w]=val;
+       w++;
+       }
+       values[4][0]=cpdev.getValue().toString();
+       for(String val:returnMenuItem(choiceband)){ 
+       values[5][x]=val;
+       x++;
+       }
+       for(String val:returnMenuItem(choicewifi)){ 
+       values[6][y]=val;
+       y++;
+       }
+       values[7][0]=files.getValueCb(cbbluetooth);
+       values[8][0]=files.getValueCb(cbtypedis);
+       values[9][0]=txtcolordis.getText();
+       values[10][0]=files.getValueCb(cbtactildis);
+       values[11][0]=files.getValueCb(cbtypebat);
+       values[12][0]=txtcapbat.getText();
+              for(String val:returnMenuItem(choicesensor)){ 
+       values[13][z]=val;
+       z++;
+       }
+       values[14][0]=files.getValueCb(cbprov);
+       values[15][0]=files.getValueCb(cbcertgoogle);
+       
+//       for(String[] valu:values){
+//       System.out.println(Arrays.toString(valu));
+//       }
+           for (String[] value1 : values) {
+               for (String value : value1) {
+                   if(value!=null){
+                   System.out.println(value);
+                   }
+               }
+           }
+       }
     return values;
       
 

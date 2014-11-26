@@ -37,11 +37,15 @@ public class server implements GenericInterface{
   //////////////////////////////items table device////////////////////////////////////////
   String id_device,name_dev,model_dev,product_dev,trade_dev,provider_dev,ver_so,build_dev,locale_dev,kernel_dev,sto_ext_dev_t,sto_ext_dev_d,sto_s2sd_t,
           sto_s2sd_d,p_height_dev,p_width_dev,p_density_dev,p_size_dev,p_refresh_dev,whitebalance_cam,scene_mode_cam,stabilization_video,quality_img,quality_thumb,sta_flash,sto_inter_t,
-          sto_inter_d,sto_sys_t,sto_sys_d,cache_sys_t,cache_sys_d,ram_t,ram_d,ram_i,h_dev,w_dev,type_cpu,frec_cpu,reds,feature_cpu,imple_cpu,arch_cpu,var_cpu,
-          part_cpu,rev_cpu,hard_cpu,revision,serial_cpu,bulk_dev,weight_dev,focus_mode,max_focus_area;
+          sto_inter_d,sto_sys_t,sto_sys_d,cache_sys_t,cache_sys_d,ram_t,ram_d,ram_i,type_cpu,frec_cpu,reds,feature_cpu,imple_cpu,arch_cpu,var_cpu,
+          part_cpu,rev_cpu,hard_cpu,revision,serial_cpu,weight_dev,focus_mode,max_focus_area;
   String[][] firsttab=new String[5][200];
-  int cpu,color,mat,id_blu,id_dis,cert_google,n_cam_dev;
+  int cp,n_cam_dev;
   //////////////////////////////items table Comp//////////////////////////////////////// 
+  String h_dev,w_dev,bulk_dev,mat_dev,color_dev,blu_dev,type_pant,n_colors,tactil_dev,type_bat,provider,cert_google;
+  String[] type_band=new String[10],type_wifi=new String[10],type_sensors=new String[20];
+  
+  
 public ObservableList<String> user;
     public server() {
 //        try {
