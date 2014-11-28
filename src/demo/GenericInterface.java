@@ -69,6 +69,7 @@ public interface GenericInterface {
     String valinf20="Descripcion  Procesador";
     String valitem="item";
     String valdevi="device";
+    String valappinstall="Aplicaciones";
     String disconnect="por algun motivo se ha desconectado el dispositivo";
     String noconnect="no se ha detectado dispositivo";
     String exrecord="dispositivo se encuentra registrado";

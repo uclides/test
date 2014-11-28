@@ -65,7 +65,7 @@ import org.controlsfx.control.CheckComboBox;
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
-            exit,bmanual,baddcomporprov,bmore;
+            exit,bmanual,baddcomporprov,bmore,bprocapp;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo;
     @FXML
@@ -86,7 +86,11 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableView<Device> tableinfodevice;
     @FXML
+    TableView<App> tableapp;
+    @FXML
     TableColumn<Device,String> columnitem,columndescription;
+    @FXML
+    TableColumn<App,String>columnappdevice,columntoinstall,columntoserver;
     @FXML
     SplitPane splitPane; 
     @FXML
@@ -105,8 +109,9 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
  files files=new files();
   String[] info,info2,info3,info4,info5,info6,info7,info8,info9,
           info10,info11,info12,info13,info14,info15,info16,
-          info17,info18,info19,info20;
+          info17,info18,info19,info20,info21;
    ObservableList<Device> data=FXCollections.observableArrayList();
+   ObservableList<Device> dataapp=FXCollections.observableArrayList();
    public ObservableList<String> attrLogin;
 private Main application;
 LoginController login=new LoginController();
@@ -190,10 +195,13 @@ bcontinue.setDisable(false);
         
         
 //application.openMonitor();
-        
+
 
     } 
-
+   public void initProcApp(ActionEvent actionEvent){
+       info21 = files.PushInfoApp(valappinstall);
+       //createFileDevice(dataapp,info20,sup);
+   }
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
        
@@ -234,8 +242,12 @@ fillTableAuto();
         info18 = files.PushInfoExt(valinf18);
         info19 = files.PushInfoExt(valinf19);
         info20 = files.PushInfoOthers(valinf20);
+        
+
+        
+
    columnitem.setCellValueFactory(new PropertyValueFactory<>(valitem));
-   columndescription.setCellValueFactory(new PropertyValueFactory<Device,String>(valdevi));
+   columndescription.setCellValueFactory(new PropertyValueFactory<>(valdevi));
     data=FXCollections.observableArrayList(
 new Device(valdev,info[0]),
 new Device(valmod,info[1]),
@@ -257,22 +269,24 @@ new Device(valpfr,info4[5])
 );
     
    tableinfodevice.setItems(data);
-   createFileDevice(info5,sup);
-   createFileDevice(info6,vidsup);
-   createFileDevice(info8,sup2);
-   createFileDevice(info9,vidsup2);
-   createFileDevice(info10,mod);
-   createFileDevice2(info7,otfeature);
-   createFileDevice(info11,cams);
-   createFileDevice(info12,est);
-   createFileDevice3(info13,alminter);
-   createFileDevice3(info14,almsis);
-   createFileDevice3(info15,dispcache);
-   createFileDevice3(info16,dispm);
-   createFileDevice3(info17,proc);
-   createFileDevice3(info18,frec);
-   createFileDevice3(info19,red);
-    createFileDevice2(info20,profeature);
+   createFileDevice(data,info5,sup);
+   createFileDevice(data,info6,vidsup);
+   createFileDevice(data,info8,sup2);
+   createFileDevice(data,info9,vidsup2);
+   createFileDevice(data,info10,mod);
+   createFileDevice2(data,info7,otfeature);
+   createFileDevice(data,info11,cams);
+   createFileDevice(data,info12,est);
+   createFileDevice3(data,info13,alminter);
+   createFileDevice3(data,info14,almsis);
+   createFileDevice3(data,info15,dispcache);
+   createFileDevice3(data,info16,dispm);
+   createFileDevice3(data,info17,proc);
+   createFileDevice3(data,info18,frec);
+   createFileDevice3(data,info19,red);
+    createFileDevice2(data,info20,profeature);
+    
+
    }
       public void fillTableManual(){
           tableinfodevice.setEditable(true);
@@ -307,7 +321,7 @@ new Device(valpfr,"")
 //   public void tableModeManual(){
 //   tableinfodevice.setEditable(true);
 //   }
-   public void createFileDevice(String[] val,String[] desc){
+   public void createFileDevice(ObservableList<Device> data,String[] val,String[] desc){
        
    for(int y=1;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
@@ -318,7 +332,7 @@ new Device(valpfr,"")
        
    }
    }
-   public void createFileDevice2(String[] val,String[] desc){
+   public void createFileDevice2(ObservableList<Device> data,String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
@@ -335,7 +349,7 @@ new Device(valpfr,"")
        
    }
    }
-        public void createFileDevice3(String[] val,String[] desc){
+        public void createFileDevice3(ObservableList<Device> data,String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){

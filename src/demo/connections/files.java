@@ -145,7 +145,7 @@ try {
         return items;
         }     
     public String[] ParseValues(String list,String folder,String name){
-String[] out = new String[100],finalout=null;        
+String[] out = new String[1000],finalout=null;        
 String line = null;
 int x,initdetected = 1,endetected = 1,temp=0,iterator=0,val=0;
 List<String> values= FileToArray(folder,name);
@@ -170,6 +170,39 @@ for(int z=initdetected;z<endetected;z++){
  ///  out=new String[endetected];
 //System.out.println(line=values.get(z).replaceAll(removefile,""));
 out[val]=line=values.get(z).replaceAll(removefile,"");
+//System.out.println(out[z]);
+//System.out.println(out.length);
+val++;
+}
+       return out;
+    }
+    
+        public String[] ParseValues2(String list,String folder,String name){
+String[] out = new String[1000],finalout=null;        
+String line = null;
+int x,initdetected = 1,endetected = 1,temp=0,iterator=0,val=0;
+List<String> values= FileToArray(folder,name);
+//List<String> values= FileToArray(folderegister,GetNameFile(folderegister));
+
+for(x=0;x< values.size();x++){
+line=values.get(x);
+if(line.contains(list)){
+    initdetected=x;
+    break;
+}
+}
+for(int y=initdetected;y<=values.size();y++){
+line=values.get(y);
+iterator++;
+if(line.contains("####################")){
+    endetected=y;
+    break;
+}
+}
+for(int z=initdetected;z<endetected;z++){
+ ///  out=new String[endetected];
+//System.out.println(line=values.get(z).replaceAll(removefile,""));
+out[val]=line=values.get(z);
 //System.out.println(out[z]);
 //System.out.println(out.length);
 val++;
@@ -219,6 +252,7 @@ val++;
             
             return sal;
 }
+    
     public String[] PushInfoA2SD(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
@@ -252,6 +286,7 @@ val++;
             
             return sal;
 }   
+  
         public String[] PushInfoImgGeneric(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
@@ -266,6 +301,21 @@ val++;
          
             return sal;
 } 
+                public String[] PushInfoApp(String section){
+         String[] exit=ParseValues2(section,folderegister,GetNameFile(folderegister));
+         String[]sal=new String[exit.length];
+          for (int y =1;y<exit.length;y++) {
+              String exit1=exit[y];
+              if(exit1==null || exit1.contains(section)){
+              }
+              else{
+                  sal[y]=exit1.split("<")[0];
+              }
+          }
+         
+            return RemoveNullValue2(sal);
+} 
+        
 
         public String[] PushInfoOthers(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));

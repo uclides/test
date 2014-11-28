@@ -11,14 +11,14 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FXML-LoginDemo.jar" size="1159490" download="eager" />
-    <jar href="lib/Enzo-0.1.jar" size="1733402" download="eager" />
-    <jar href="lib/commons-io-2.4.jar" size="198398" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="924946" download="eager" />
-    <jar href="lib/gson-2.2.4.jar" size="207148" download="eager" />
-    <jar href="lib/jnotify-0.94.jar" size="43088" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873841" download="eager" />
-    <jar href="lib/zip4j_1.3.2.jar" size="137571" download="eager" />
+    <jar href="FXML-LoginDemo.jar" size="1160833" download="eager" />
+    <jar href="lib/Enzo-0.1.jar" size="1733407" download="eager" />
+    <jar href="lib/commons-io-2.4.jar" size="198401" download="eager" />
+    <jar href="lib/controlsfx-8.0.6_20.jar" size="924950" download="eager" />
+    <jar href="lib/gson-2.2.4.jar" size="207152" download="eager" />
+    <jar href="lib/jnotify-0.94.jar" size="43091" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873844" download="eager" />
+    <jar href="lib/zip4j_1.3.2.jar" size="137574" download="eager" />
   </resources>
 <security>
   <all-permissions/>
