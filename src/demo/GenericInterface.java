@@ -12,6 +12,7 @@ package demo;
  */
 public interface GenericInterface {
     //list command//
+    String insgenbench="adb install -r C:\\application\\apps\\apk_benchmark\\";
     String installSiragonapp="adb install C:\\application\\apps\\siragonapp.apk";
     String startSiragonapp="adb shell am start -n  org.uguess.android.sysinfo/.SiragonInfo";
     String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
@@ -70,6 +71,9 @@ public interface GenericInterface {
     String valitem="item";
     String valdevi="device";
     String valappinstall="Aplicaciones";
+    String valapdetect="detect";
+    String apktoinstalled="apk";
+    String valappserver="server";
     String disconnect="por algun motivo se ha desconectado el dispositivo";
     String noconnect="no se ha detectado dispositivo";
     String exrecord="dispositivo se encuentra registrado";
@@ -104,14 +108,17 @@ public interface GenericInterface {
     String[] frec={"Frecuencia CPU",null,null};
     String[] red={"Red",null,null};
     String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Revision","Serial",null};
-  String stest="select * from user";
-  String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
+    String stest="select * from user";
+    String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
       "select val_net from network where type_net='wifi'","select type_blu from bluetooth",
       "select * from display_type","select * from display_tactil","select * from battery",
       "select name_sup from other_support where type='sensor'","select name_provider from provider"};
-  String[] columnsdb={"name_mat","val_net","type_blu","name_dis","name_tactil",
+    String[] columnsdb={"name_mat","val_net","type_blu","name_dis","name_tactil",
       "type_bat","name_sup","name_provider"};
-  String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado","error al conectar con servidor de datos","tabla ya posee datos de un equipo"};
-
-
+    String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado","error al conectar con servidor de datos","tabla ya posee datos de un equipo"};
+    String[] moveresultsappbench={"adb shell su -c'cp /data/data/com.antutu.ABenchMark/files/ranking.xml /storage/sdcard0/app-siragon/result'"};
+    String[] moveappbench={"adb shell su -c 'cp /data/app/com.antutu.ABenchMark-1.apk /storage/sdcard0/app-siragon/apk'"};
+    String[] sendapptoPcbench={"adb pull /storage/sdcard0/app-siragon/apk C:\\application\\apps\\apk_benchmark"};
+    String[] sendfiletoPcbench={"adb pull /storage/sdcard0/app-siragon/result/ranking.xml C:\\application\\apps\\result_benchmark"};
+    String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk"};
 }

@@ -203,7 +203,7 @@
                                                 <TableView id="tableinfodevice" fx:id="tableinfodevice" editable="true" layoutX="15.0" layoutY="126.0" prefHeight="324.0" prefWidth="1012.0">
                                                    <columns>
                                                       <TableColumn id="columnitem" fx:id="columnitem" maxWidth="338.0" minWidth="338.0" prefWidth="338.0" text="Item" />
-                                                      <TableColumn id="columndescription" fx:id="columndescription" maxWidth="673.0" minWidth="673.0" prefWidth="673.0" text="Descripción" />
+                                                      <TableColumn id="columndescription" fx:id="columndescription" maxWidth="673.0" minWidth="597.0" prefWidth="673.0" text="Descripción" />
                                                    </columns>
                                                 </TableView>
                                                 <Button fx:id="bcontinue" disable="true" layoutX="938.0" layoutY="457.0" mnemonicParsing="false" onAction="#NextStep" prefHeight="25.0" prefWidth="87.0" styleClass="standar-button" text="continuar">
@@ -330,23 +330,28 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <Button fx:id="bprocapp" layoutX="888.0" layoutY="48.0" mnemonicParsing="false" onAction="#initProcApp" prefHeight="21.0" prefWidth="137.0" styleClass="standar-button" text="preparar aplicaciones">
+                                                <Button id="bprocapp" fx:id="bprocapp" layoutX="888.0" layoutY="48.0" mnemonicParsing="false" onAction="#initProcApp" prefHeight="21.0" prefWidth="137.0" styleClass="standar-button" text="preparar aplicaciones">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
-                                                <TableView fx:id="tableapp" layoutX="15.0" layoutY="133.0" prefHeight="317.0" prefWidth="1012.0">
+                                                <TableView id="tableapp" fx:id="tableapp" editable="true" layoutX="15.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
                                                    <columns>
-                                                      <TableColumn fx:id="columnappdevice" prefWidth="320.0" text="detectadas" />
-                                                      <TableColumn fx:id="columntoinstall" prefWidth="330.0" text="instaladas" />
-                                                      <TableColumn fx:id="columntoserver" prefWidth="348.0" text="actualizadas al servidor" />
+                                                      <TableColumn id="columnappdevice" fx:id="columnappdevice" prefWidth="300.0" text="detectadas" />
                                                    </columns>
+                                                </TableView>
+                                                <TableView id="tableappinstall" fx:id="tableappinstall" layoutX="315.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
+                                                  <columns>
+                                                    <TableColumn id="columnappinstall" fx:id="columnappinstall" prefWidth="320.0" text="instaladas" />
+                                                  </columns>
                                                 </TableView>
                                                 <Button layoutX="917.0" layoutY="459.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="110.0" styleClass="standar-button" text="continuar">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
+                                                <Label fx:id="estatusapp" alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="82.0" prefHeight="17.0" prefWidth="468.0" text="Label" textAlignment="CENTER" />
+                                                <Button fx:id="binstapp" layoutX="888.0" layoutY="87.0" mnemonicParsing="false" onAction="#InstallApp" text="Button" />
                                              </children>
                                           </AnchorPane>
                                        </content>

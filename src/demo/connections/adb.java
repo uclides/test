@@ -43,6 +43,7 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class adb implements Runnable,GenericInterface{
 public Thread thread;
+
 int temporal=0;int val = 0;
 int inte=0,iterator=0;
 public int b;
@@ -150,9 +151,10 @@ else{
         }
     public int execGeneric(String command,TextArea textArea,int i) {
  //String [] temp = new String [10];   
-        
+
     try {
         if(i==1) {
+            
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec(command);
  
@@ -174,8 +176,11 @@ textArea.appendText(line+"\n");
                 if(exitVal==0){
                     
                 }
+                return 1;
         }else{
-        alertMessage(mesagges[0]);}
+        alertMessage(mesagges[0]);
+        return 0;
+        }
             } catch(IOException e) {
                 System.out.println(e.toString());
             } catch (InterruptedException ex) {
@@ -318,8 +323,9 @@ temporal=val;
     // Get output stream to write from it
 return true;
 } catch (IOException e) {
+    return false;
 }
-    return null;
+
     }
     
     public void alertMessage(String message){

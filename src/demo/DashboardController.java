@@ -6,13 +6,14 @@
 
 package demo;
 
+import demo.tables.Device;
+import demo.tables.App;
 import static demo.GenericInterface.devicedisp;
 import demo.connections.adb;
 import demo.connections.files;
 import demo.connections.server;
+import demo.tables.Apk;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
@@ -21,6 +22,7 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -55,7 +57,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.Duration;
-import org.controlsfx.control.CheckComboBox;
 
 
 /**
@@ -65,9 +66,9 @@ import org.controlsfx.control.CheckComboBox;
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
-            exit,bmanual,baddcomporprov,bmore,bprocapp;
+            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp;
     @FXML
-    Label activedevice,user,permission,dateuser,lblcompinfo;
+    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp;
     @FXML
     ImageView avatar;
     @FXML
@@ -88,9 +89,13 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableView<App> tableapp;
     @FXML
+    TableView<Apk> tableappinstall;
+    @FXML
     TableColumn<Device,String> columnitem,columndescription;
     @FXML
-    TableColumn<App,String>columnappdevice,columntoinstall,columntoserver;
+    TableColumn<App,String>columnappdevice;
+    @FXML
+    TableColumn<Apk,String>columnappinstall;
     @FXML
     SplitPane splitPane; 
     @FXML
@@ -103,7 +108,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML 
     TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,txtelemadd2,txtelemadd3;
     List<CheckMenuItem> itemsband,itemswifi;
-    
+    Task task2;
     //instances
  adb adb = new adb();
  files files=new files();
@@ -111,7 +116,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
           info10,info11,info12,info13,info14,info15,info16,
           info17,info18,info19,info20,info21;
    ObservableList<Device> data=FXCollections.observableArrayList();
-   ObservableList<Device> dataapp=FXCollections.observableArrayList();
+   ObservableList<App> dataapp=FXCollections.observableArrayList();
+   ObservableList<Apk> dataappIns=FXCollections.observableArrayList();
    public ObservableList<String> attrLogin;
 private Main application;
 LoginController login=new LoginController();
@@ -123,6 +129,8 @@ public int VAL;
 public DashboardController(){
        
         this.tableinfodevice = new TableView<>();
+        this.tableapp = new TableView<>();
+        this.tableappinstall = new TableView<>();
 
 
 }
@@ -199,8 +207,34 @@ bcontinue.setDisable(false);
 
     } 
    public void initProcApp(ActionEvent actionEvent){
-       info21 = files.PushInfoApp(valappinstall);
-       //createFileDevice(dataapp,info20,sup);
+                 tableapp.setEditable(true);
+   columnappdevice.setCellValueFactory(new PropertyValueFactory<>(valapdetect));
+
+   tableapp.setItems(dataapp);
+
+   info21 = files.PushInfoApp(valappinstall);
+//   columnappdevice.setCellValueFactory(new PropertyValueFactory<>(valapdetect));
+//   columntoinstall.setCellValueFactory(new PropertyValueFactory<>(valappinst));
+//   columntoserver.setCellValueFactory(new PropertyValueFactory<>(valappserver));
+//   dataapp=FXCollections.observableArrayList(
+//new App(info21[0],"como","estas"),
+//new App(info21[1],"como","estas"),
+//new App(info21[2],"como","estas"),
+//new App(info21[3],"como","estas")
+//
+//);
+//    
+//   tableapp.setItems(dataapp);        
+createRowsApp(dataapp,info21);
+
+   }
+   public void InstallApp(ActionEvent actionEvent){
+                 tableappinstall.setEditable(true);
+   columnappinstall.setCellValueFactory(new PropertyValueFactory<>(apktoinstalled));
+
+   tableappinstall.setItems(dataappIns);
+       createRowsAppInst(dataappIns, apkbenchinstall);
+
    }
     @SuppressWarnings("Convert2Diamond")
    public void pushInfo(){
@@ -222,7 +256,7 @@ fillTableAuto();
    }
    }
    public void fillTableAuto(){
-           info = files.PushInfoBasic(valdev);
+        info = files.PushInfoBasic(valdev);
         info2 = files.PushInfoExt(valinf2);
         info3 = files.PushInfoA2SD(valinf3);
         info4 = files.PushInfoDisplay(valinf4);
@@ -269,26 +303,26 @@ new Device(valpfr,info4[5])
 );
     
    tableinfodevice.setItems(data);
-   createFileDevice(data,info5,sup);
-   createFileDevice(data,info6,vidsup);
-   createFileDevice(data,info8,sup2);
-   createFileDevice(data,info9,vidsup2);
-   createFileDevice(data,info10,mod);
-   createFileDevice2(data,info7,otfeature);
-   createFileDevice(data,info11,cams);
-   createFileDevice(data,info12,est);
-   createFileDevice3(data,info13,alminter);
-   createFileDevice3(data,info14,almsis);
-   createFileDevice3(data,info15,dispcache);
-   createFileDevice3(data,info16,dispm);
-   createFileDevice3(data,info17,proc);
-   createFileDevice3(data,info18,frec);
-   createFileDevice3(data,info19,red);
-    createFileDevice2(data,info20,profeature);
+   createRowsDevice(data,info5,sup);
+   createRowsDevice(data,info6,vidsup);
+   createRowsDevice(data,info8,sup2);
+   createRowsDevice(data,info9,vidsup2);
+   createRowsDevice(data,info10,mod);
+   createRowsDevice2(data,info7,otfeature);
+   createRowsDevice(data,info11,cams);
+   createRowsDevice(data,info12,est);
+   createRowsDevice3(data,info13,alminter);
+   createRowsDevice3(data,info14,almsis);
+   createRowsDevice3(data,info15,dispcache);
+   createRowsDevice3(data,info16,dispm);
+   createRowsDevice3(data,info17,proc);
+   createRowsDevice3(data,info18,frec);
+   createRowsDevice3(data,info19,red);
+    createRowsDevice2(data,info20,profeature);
     
 
    }
-      public void fillTableManual(){
+   public void fillTableManual(){
           tableinfodevice.setEditable(true);
    columnitem.setCellValueFactory(new PropertyValueFactory<>(valitem));
    columndescription.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -318,21 +352,21 @@ new Device(valpfr,"")
 
 
    }
-//   public void tableModeManual(){
-//   tableinfodevice.setEditable(true);
-//   }
-   public void createFileDevice(ObservableList<Device> data,String[] val,String[] desc){
-       
+
+   public void createRowsDevice(ObservableList<Device> data,String[] val,String[] desc){
+    
    for(int y=1;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
                data.add(new Device(desc[0]+" ",val[y]));
            }
            else{
-  data.add(new Device(desc[y],val[y++]));}
+  data.add(new Device(desc[y]+" ",val[y]));
+           }
        
    }
+
    }
-   public void createFileDevice2(ObservableList<Device> data,String[] val,String[] desc){
+   public void createRowsDevice2(ObservableList<Device> data,String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
@@ -349,7 +383,7 @@ new Device(valpfr,"")
        
    }
    }
-        public void createFileDevice3(ObservableList<Device> data,String[] val,String[] desc){
+   public void createRowsDevice3(ObservableList<Device> data,String[] val,String[] desc){
        
    for(int y=0;y<files.RemoveNullValue(val).length;y++){
            if(desc.length==1){
@@ -367,6 +401,26 @@ new Device(valpfr,"")
    }
    }
 
+   public void createRowsApp(ObservableList<App> data,String[] val1){
+   
+    for(int y=1;y<files.RemoveNullValue(val1).length;y++){
+
+    data.add(new App(val1[y++]));
+           
+       
+    }
+
+
+   }
+   public void createRowsAppInst(ObservableList<Apk> data,String[] val1){
+ 
+        for (String val11 : val1) {
+            if (adb.execGeneric(insgenbench+val11, outConsole, adb.b) == 1) {
+                data.add(new Apk(val11));
+            }
+        }
+
+   }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
@@ -453,6 +507,9 @@ validateTextFile(txtcapbat);
         }
     
     }
+    public void AddApp(ActionEvent actionEvent){
+    
+    }
     public void menuItemTable(){
     tableinfodevice.setRowFactory(
     new Callback<TableView<Device>, TableRow<Device>>(){
@@ -530,8 +587,7 @@ validateTextFile(txtcapbat);
             
     }
     }
-    public void validateTextFile(TextField textField)
-    {
+    public void validateTextFile(TextField textField){
     
   textField.setOnKeyTyped(new EventHandler<KeyEvent>(){
 
@@ -548,9 +604,6 @@ validateTextFile(txtcapbat);
     }
   });
     }
-//    public void returnComboBox(ActionEvent actionEvent){
-//    System.out.println(files.getValueCb(cbmaterialdev));
-//    }
     public String[] returnMenuItem(MenuButton mb){
         String array[]=new String [20];
         int y=0;
