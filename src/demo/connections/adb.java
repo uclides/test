@@ -22,6 +22,7 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -48,8 +49,10 @@ int temporal=0;int val = 0;
 int inte=0,iterator=0;
 public int b;
 public String input;
+
 AnchorPane root = null;
 public String lineadb="hoaaaaaaaaaaaaaaaa111111111111",ID;
+
 double  xOffset,yOffset;
      double xOffset2,yOffset2;
       final double fxOffset2 = 0,fyOffset2 = 0;
@@ -149,8 +152,12 @@ else{
             }
         return ID.replaceAll("device", "").trim();
         }
-    public int execGeneric(String command,TextArea textArea,int i) {
+    public Runnable execGeneric(String command,TextArea textArea,int i) {
  //String [] temp = new String [10];   
+Thread t=new Thread(new Task() {
+
+    @Override
+    protected Object call() throws Exception {
 
     try {
         if(i==1) {
@@ -164,9 +171,8 @@ else{
                
                 int x=0;
                 while((line=input.readLine()) != null) {
-                    lineadb=line;
-
-textArea.appendText(line+"\n");
+                    lineadb+=line;
+//textArea.appendText(line+"\n");
 
                     System.out.println(line);
                     x++;
@@ -176,17 +182,28 @@ textArea.appendText(line+"\n");
                 if(exitVal==0){
                     
                 }
-                return 1;
+                
+               // return 1;
         }else{
         alertMessage(mesagges[0]);
-        return 0;
+      //  return 0;
         }
             } catch(IOException e) {
                 System.out.println(e.toString());
             } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
-    return 0;
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+});
+t.setDaemon(true);
+t.start();
+//if(t.isInterrupted()){
+//System.out.println("FINALIZA HILO");
+//}
+
+  // return 0;
+    return null;
         }
     public int execLogCat(String command,TextArea textArea) {
          Id=returnID(devicedisp).replaceAll("	device","");
@@ -327,7 +344,6 @@ return true;
 }
 
     }
-    
     public void alertMessage(String message){
     Action response = Dialogs.create()
       .owner(null)
@@ -390,57 +406,16 @@ this.start();
         
     }
     @Override
-   
     public void run() {
 
     }
     public void start(){
         thread= new Thread(this);
+        thread.setDaemon(true);
         thread.start();
 }
-//        public void openMonitor()throws Exception{
-//   
-//        try {
-//            
-////            MonitorController monitor = (MonitorController) replaceSceneContent("monitor.fxml");
-////            Scene monitorscene=new Scene(monitor);
-////            Stage monitorStage = new Stage();
-////            monitorStage.setScene(monitorscene);
-////            monitorStage.show();
-////            
-//           
-//          
-//                root = FXMLLoader.load(MonitorController.class.getResource("monitor.fxml"));
-//             
-//            Scene monitorscene = new Scene(root);
-//           
-//            stage2.initStyle(StageStyle.DECORATED);
-//            stage2.setScene(monitorscene);
-//            stage2.show();
-//           
-//              
-//            root.setOnMousePressed(new EventHandler<MouseEvent>(){
-//            public void handle(MouseEvent event){
-//            xOffset2=event.getSceneX();
-//            yOffset2=event.getSceneY();
-//            }
-//        });
-//        root.setOnMouseDragged(new EventHandler<MouseEvent>(){
-//            public void handle(MouseEvent event){
-//               if (event.getButton() != MouseButton.MIDDLE) {
-//                root.getScene().getWindow().setX(event.getScreenX() - xOffset2);
-//                root.getScene().getWindow().setY(event.getScreenY() - yOffset2);
-//            }
-//            }
-//        });
-//        
-//    
-//        } catch (Exception ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-        
-        public void showMonitor(){
+     
+    public void showMonitor(){
          if(stage2.getScene()!=null){
          stage2.show();
          }
@@ -478,7 +453,7 @@ this.start();
          }
             
         }
-        public void LoopAdb(Label label){
+    public void LoopAdb(Label label){
        
        timer = new java.util.Timer();
 

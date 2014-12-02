@@ -108,7 +108,7 @@ try {
         }     
     public List<String> FileToArray2(String path,String name,TextArea a,Label l,ProgressIndicator p){
         List<String> items=new ArrayList<>();
-new Thread(new Runnable() {
+Thread hilo=new Thread(new Runnable() {
     @Override public void run() {
  
             Platform.runLater(new Runnable() {
@@ -138,7 +138,9 @@ try {
             });
         
     }
-}).start(); 
+});
+hilo.setDaemon(true);
+hilo.start();
         return items;
         }     
     public String[] ParseValues(String list,String folder,String name){

@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -413,11 +414,12 @@ new Device(valpfr,"")
 
    }
    public void createRowsAppInst(ObservableList<Apk> data,String[] val1){
- 
+
         for (String val11 : val1) {
-            if (adb.execGeneric(insgenbench+val11, outConsole, adb.b) == 1) {
+            Platform.runLater( new Thread(adb.execGeneric(insgenbench+val11, outConsole, adb.b)));
                 data.add(new Apk(val11));
-            }
+       
+            
         }
 
    }
@@ -668,6 +670,7 @@ int w = 0,x = 0,y = 0,z=0;
 
            
     }
+
     }
     
 
