@@ -29,15 +29,26 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javax.swing.text.TableView;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.LineIterator;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 public class files implements GenericInterface{
       int val=0;
       String string;
-    adb adb =new adb();
+          String cadena="",temp="",error=null;
+String[] result;
+    adb adb =new adb();    
+
     public String GetNameFile(String folder){
         File dir= new File(folder);
         File[] filelist=dir.listFiles();
@@ -48,6 +59,24 @@ public class files implements GenericInterface{
                 filename=file.getName();
             }
             return filename;
+        }
+        else{
+            System.out.println(emptyd);
+           
+        }
+        return null;
+    }
+    public String[] GetNameVariousFile(String folder){
+        File dir= new File(folder);
+        File[] filelist=dir.listFiles();
+        String[] number;
+        String filename = null;
+        if(dir.exists()){
+            number=new String[filelist.length];
+            for(int y=0;y<filelist.length;y++){
+                number[y]=filelist[y].getName();
+            }
+            return number;
         }
         else{
             System.out.println(emptyd);
@@ -93,6 +122,7 @@ try {
     LineIterator it = FileUtils.lineIterator(file, "UTF-8");
     try {
         while (it.hasNext()) {
+
             String line = it.nextLine();
             items.add(line);
             //System.out.println(line);
@@ -175,8 +205,7 @@ val++;
 }
        return out;
     }
-    
-        public String[] ParseValues2(String list,String folder,String name){
+    public String[] ParseValues2(String list,String folder,String name){
 String[] out = new String[1000],finalout=null;        
 String line = null;
 int x,initdetected = 1,endetected = 1,temp=0,iterator=0,val=0;
@@ -208,7 +237,6 @@ val++;
 }
        return out;
     }
-
     public String[] splitString(String[]inStrings){
         String[] array = new String[inStrings.length];
         int val=0;
@@ -231,7 +259,7 @@ val++;
             
             return sal;
 }
-      @SuppressWarnings("null")
+    @SuppressWarnings("null")
     public String[] PushInfoExt(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
@@ -251,7 +279,6 @@ val++;
             
             return sal;
 }
-    
     public String[] PushInfoA2SD(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
@@ -285,8 +312,7 @@ val++;
             
             return sal;
 }   
-  
-        public String[] PushInfoImgGeneric(String section){
+    public String[] PushInfoImgGeneric(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =1;y<exit.length;y++) {
@@ -300,7 +326,7 @@ val++;
          
             return sal;
 } 
-                public String[] PushInfoApp(String section){
+    public String[] PushInfoApp(String section){
          String[] exit=ParseValues2(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =1;y<exit.length;y++) {
@@ -314,9 +340,7 @@ val++;
          
             return RemoveNullValue2(sal);
 } 
-        
-
-        public String[] PushInfoOthers(String section){
+    public String[] PushInfoOthers(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
@@ -330,7 +354,7 @@ val++;
             
             return sal;
 }
-                public String[] PushInfoCam(String section){
+    public String[] PushInfoCam(String section){
          String[] exit=ParseValues(section,folderegister,GetNameFile(folderegister));
          String[]sal=new String[exit.length];
           for (int y =0;y<exit.length;y++) {
@@ -344,7 +368,7 @@ val++;
             
             return sal;
 }
-public String[] RemoveNullValue(String[] val) {
+    public String[] RemoveNullValue(String[] val) {
   
     List<String> list = new ArrayList<String>();
 
@@ -358,7 +382,7 @@ public String[] RemoveNullValue(String[] val) {
 
           return val;
   }
-public String[] RemoveNullValue2(String[] val) {
+    public String[] RemoveNullValue2(String[] val) {
   
     List<String> list = new ArrayList<String>();
 
@@ -372,7 +396,7 @@ public String[] RemoveNullValue2(String[] val) {
 
           return val;
   }
-public void removeEmptyLine(String file) throws IOException{
+    public void removeEmptyLine(String file) throws IOException{
     
 BufferedReader br= new BufferedReader(new FileReader(file));
         String line;String input = "";
@@ -384,14 +408,14 @@ BufferedReader br= new BufferedReader(new FileReader(file));
         FileOutputStream fos=new FileOutputStream(file);
         fos.write(input.getBytes());
 } 
-public void getValueColumn(TableView tv){
+    public void getValueColumn(TableView tv){
 
 }    
-public String getValueCb(ComboBox cb){
+    public String getValueCb(ComboBox cb){
     String selected = cb.getValue().toString();
           return selected;
 }
-public String[] getValueMI(MenuButton mb){
+    public String[] getValueMI(MenuButton mb){
 String[] menui=new String[20];
 int y = 0;
             for(MenuItem item : mb.getItems()) {
@@ -404,8 +428,57 @@ int y = 0;
     
     return RemoveNullValue2(menui);
 }
+    public List<String> readXml (String path) throws ParserConfigurationException{
+    List<String> items=new ArrayList<>();
+    File fXmlFile = new File(path);
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+    Document doc = null;
+    try {
+        doc = dBuilder.parse(fXmlFile);
+    } catch (SAXException | IOException e) {
+    }
+
+    doc.getDocumentElement().normalize();
+
+    System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+    NodeList nList = doc.getElementsByTagName("item");
+
+    System.out.println("----------------------------");
+
+    for (int temp = 0; temp < nList.getLength(); temp++) {
+
+        Node nNode = nList.item(temp);
+
+        System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+            Element eElement = (Element) nNode;
+
+            items.add(eElement.getElementsByTagName("score").item(0).getTextContent());
+//            System.out.println("Description : " + eElement.getElementsByTagName("description").item(0).getTextContent());
+//            System.out.println("price : " + eElement.getElementsByTagName("price").item(0).getTextContent());
+//            System.out.println("base qty : " + eElement.getElementsByTagName("base_qty").item(0).getTextContent());
+//            System.out.println("Var qty : " + eElement.getElementsByTagName("var_qty").item(0).getTextContent());
+//            System.out.println("Base price : " + eElement.getElementsByTagName("base_price_").item(0).getTextContent());                
+
+        }
+    }
+          return items;
+}
+    public String oneString(String[] array){
+        String[] value=RemoveNullValue2(array);
+        String s = "";
+        for(String val:value){
+            s+=val+";";
+        }
+          return s;
+    }
 
 }
+
 
 
 

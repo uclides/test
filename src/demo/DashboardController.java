@@ -6,15 +6,20 @@
 
 package demo;
 
+import static demo.GenericInterface.apktochecks;
 import demo.tables.Device;
 import demo.tables.App;
 import static demo.GenericInterface.devicedisp;
+import static demo.GenericInterface.valappinstall;
 import demo.connections.adb;
 import demo.connections.files;
 import demo.connections.server;
 import demo.tables.Apk;
+import demo.tables.Tst;
+import demo.tables.Update;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -39,6 +44,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -54,6 +60,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -67,11 +74,11 @@ import javafx.util.Duration;
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
-            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp;
+            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml;
     @FXML
-    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp;
+    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr1,lblr2,lblimg,lblcapt,lblphoto;
     @FXML
-    ImageView avatar;
+    ImageView avatar,photo;
     @FXML
     Accordion accordion;
     @FXML
@@ -86,11 +93,17 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     ProgressBar bardashboard; 
     @FXML
+    ProgressIndicator probarapp; 
+    @FXML
     TableView<Device> tableinfodevice;
     @FXML
     TableView<App> tableapp;
     @FXML
     TableView<Apk> tableappinstall;
+    @FXML
+    TableView<Update> tableappupdate;
+    @FXML
+    TableView<Tst> tabletest;
     @FXML
     TableColumn<Device,String> columnitem,columndescription;
     @FXML
@@ -98,27 +111,42 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableColumn<Apk,String>columnappinstall;
     @FXML
+    TableColumn<Update,String>columnappupdate;
+    @FXML
+    TableColumn<Tst,String>columnantest;
+    @FXML
+    TableColumn<Tst,String>columnartest;
+    @FXML
+    TableColumn<Tst,String>columnaitest;
+    @FXML
     SplitPane splitPane; 
     @FXML
-    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle;
+    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench;
     @FXML
     ColorPicker cpdev;
     @FXML
     MenuButton choicewifi,choiceband,choicesensor,choicematerialdev;
     
     @FXML 
-    TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,txtelemadd2,txtelemadd3;
+    TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,
+              txtelemadd2,txtelemadd3,result1,result2,result3,result4,result5;
     List<CheckMenuItem> itemsband,itemswifi;
     Task task2;
+     int npng=0;
     //instances
  adb adb = new adb();
  files files=new files();
   String[] info,info2,info3,info4,info5,info6,info7,info8,info9,
           info10,info11,info12,info13,info14,info15,info16,
           info17,info18,info19,info20,info21;
+  String[] items=new String[1];
+  String[] listimg=new String[100];
+  
    ObservableList<Device> data=FXCollections.observableArrayList();
    ObservableList<App> dataapp=FXCollections.observableArrayList();
    ObservableList<Apk> dataappIns=FXCollections.observableArrayList();
+   ObservableList<Update> dataappUp=FXCollections.observableArrayList();
+   ObservableList<Tst> dataBench=FXCollections.observableArrayList();
    public ObservableList<String> attrLogin;
 private Main application;
 LoginController login=new LoginController();
@@ -127,13 +155,12 @@ String[] out = new String[100];
 server servidor=new server();
     int count;
 public int VAL;
-public DashboardController(){
-       
+public DashboardController(){  
         this.tableinfodevice = new TableView<>();
         this.tableapp = new TableView<>();
         this.tableappinstall = new TableView<>();
-
-
+        this.tableappupdate=new TableView<>();
+        this.tabletest=new TableView<>();
 }
     public void setApp(Main application){
         this.application = application;
@@ -159,7 +186,7 @@ public DashboardController(){
                             ProgressBar(2);
 adb.execGeneric(installSiragonapp,outConsole,adb.b);
 ProgressBar(1);
-adb.execGeneric(startSiragonapp,outConsole,adb.b);
+adb.execGeneric(start+startapps[0],outConsole,adb.b);
 ProgressBar(1);
 adb.execGeneric(pullfile,outConsole,adb.b);
 pushInfo();
@@ -214,27 +241,28 @@ bcontinue.setDisable(false);
    tableapp.setItems(dataapp);
 
    info21 = files.PushInfoApp(valappinstall);
-//   columnappdevice.setCellValueFactory(new PropertyValueFactory<>(valapdetect));
-//   columntoinstall.setCellValueFactory(new PropertyValueFactory<>(valappinst));
-//   columntoserver.setCellValueFactory(new PropertyValueFactory<>(valappserver));
-//   dataapp=FXCollections.observableArrayList(
-//new App(info21[0],"como","estas"),
-//new App(info21[1],"como","estas"),
-//new App(info21[2],"como","estas"),
-//new App(info21[3],"como","estas")
-//
-//);
-//    
-//   tableapp.setItems(dataapp);        
+        
 createRowsApp(dataapp,info21);
+if(!tableapp.getItems().isEmpty()){
+   bprocapp.setText(chantxtbt[0]);
+   bprocapp.setOnAction(installApp());
+   
 
-   }
-   public void InstallApp(ActionEvent actionEvent){
-                 tableappinstall.setEditable(true);
-   columnappinstall.setCellValueFactory(new PropertyValueFactory<>(apktoinstalled));
+}
+bprocapp.setOnAction(new EventHandler<ActionEvent>() {
 
-   tableappinstall.setItems(dataappIns);
-       createRowsAppInst(dataappIns, apkbenchinstall);
+                     @Override
+                     public void handle(ActionEvent event) {
+                                     tableappupdate.setEditable(true);
+   columnappupdate.setCellValueFactory(new PropertyValueFactory<>(apktochecks));
+
+   tableappupdate.setItems(dataappUp);
+
+   info21 = files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b));
+        
+createRowsAppUp(dataappUp,info21);
+                     }
+                 });
 
    }
     @SuppressWarnings("Convert2Diamond")
@@ -247,7 +275,7 @@ createRowsApp(dataapp,info21);
          fillTableManual();
          }
          else{
-         
+        // fillTableAuto();
          }
            
            
@@ -407,22 +435,39 @@ new Device(valpfr,"")
     for(int y=1;y<files.RemoveNullValue(val1).length;y++){
 
     data.add(new App(val1[y++]));
-           
-       
+
     }
 
 
    }
-   public void createRowsAppInst(ObservableList<Apk> data,String[] val1){
+   public void createRowsAppUp(ObservableList<Update> data,String[] val1){
+   
+    for(int y=1;y<files.RemoveNullValue(val1).length;y++){
 
-        for (String val11 : val1) {
-            Platform.runLater( new Thread(adb.execGeneric(insgenbench+val11, outConsole, adb.b)));
-                data.add(new Apk(val11));
-       
-            
-        }
+    data.add(new Update(val1[y++]));
+
+    }
+
 
    }
+   public void createRowsBench(ObservableList<Tst> data,String va1,String va2,String va3){
+
+    data.add(new Tst(va1, va2, va3));
+
+   }
+   public void createRowsAppInst(ObservableList<Apk> data,String[] val1){
+       int y=val1.length;
+
+        for (String val11 : val1) {
+            
+          
+           // Platform.runLater( new Thread(adb.execGenericLoop(insgenbench+val11, outConsole, adb.b,data,val11,estatusapp)));
+                //data.add(new Apk(val11));
+                   Platform.runLater( new Thread(adb.execGenericLoop(insgenbench+val11, outConsole, adb.b,data,val11,estatusapp,y,probarapp)));
+
+        }
+   }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
@@ -445,12 +490,34 @@ splitPane.setOnSwipeRight(null);
           ObservableList<String> olistprov = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[8],columnsdb[7]));
   cbprov.setItems(olistprov);
   cbcertgoogle.getItems().addAll("si","no");
+  ObservableList<String> olistbech = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[9],columnsdb[8]));
+  cbbench.setItems(olistbech);
+  
 
 validateTextFile(txthdev);
 validateTextFile(txtwdev);
 validateTextFile(txtbulkdev);
 validateTextFile(txtcolordis);
 validateTextFile(txtcapbat);
+validateTextFile(result1);
+validateTextFile(result2);
+validateTextFile(result3);
+validateTextFile(result4);
+validateTextFile(result5);
+  photo.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
+    @Override
+    public void handle(MouseEvent event) {
+       
+        int ramdom=new Random().nextInt(1000000000);
+        adb.execGeneric(capturedis[0]+String.valueOf(ramdom)+capturedis[1], null, adb.b);
+        adb.execGeneric(pullimg+String.valueOf(ramdom)+capturedis[1]+" "+folderimg, null, adb.b);
+        listimg[npng]=folderimg+"\\"+String.valueOf(ramdom)+capturedis[1];
+        System.out.println(listimg[npng]);
+        npng++;
+        lblimg.setText(String.valueOf(npng));
+        
+    }
+});
   
     }
 
@@ -670,7 +737,152 @@ int w = 0,x = 0,y = 0,z=0;
 
            
     }
+    public EventHandler<ActionEvent> installApp(){
+                       columnappinstall.setCellValueFactory(new PropertyValueFactory<>(apktoinstalled));
 
+   tableappinstall.setItems(dataappIns);
+       createRowsAppInst(dataappIns, files.GetNameVariousFile(folderappbench));
+        return null;
+    }
+    public void bench(String val){
+      if(adb.b==1) {
+        switch(val){
+            case("antutu"):
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[1], outConsole, adb.b);
+                adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[0], estatusbench, probarapp, bsavebech,photo);
+                result1.setDisable(false);
+                lblr1.setDisable(false);
+                lblimg.setDisable(false);
+                lblcapt.setDisable(false);
+                binitbech.setDisable(false);
+                break;
+            case("battery benchmark"):
+                estatusbench.setText("presione start bench para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[6], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("AndEBench"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("3DMark"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("GXBench"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("Geekbench"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("Vellamo"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("Basemark X"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("Basemark OS II"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+            case("Display Tester"):
+                estatusbench.setText("presione start para iniciar la prueba");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);
+                binitbech.setDisable(false);    
+            break;
+        }   
+
+      }
+      else{
+      adb.alertMessage(mesagges[0]);
+      }
+    }
+    public void startBench(ActionEvent actionEvent){
+    bench(files.getValueCb(cbbench));
+    }
+    public void saveRBench(ActionEvent actionEvent){
+if(!result1.getText().equals("")&&!lblimg.getText().equals("")){
+  tabletest.setEditable(true);
+  columnantest.setCellValueFactory(new PropertyValueFactory<>("nt"));
+  columnartest.setCellValueFactory(new PropertyValueFactory<>("rt"));
+  columnaitest.setCellValueFactory(new PropertyValueFactory<>("it"));
+  tabletest.setItems(dataBench);
+  String cb=files.getValueCb(cbbench);
+
+        switch(cb){
+        
+            case("antutu"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("AndEBench"):
+                
+                createRowsBench(dataBench,cb,result1.getText()+";"+result2.getText(),files.oneString(listimg));
+                break;
+        }
+        
+       } 
+else{
+    adb.alertMessage(mesagges[6]);
+}
+    }
     }
     
 

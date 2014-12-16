@@ -10,29 +10,38 @@ package demo.connections;
 import demo.GenericInterface;
 import static demo.GenericInterface.detect;
 import static demo.GenericInterface.devicedisp;
+import static demo.GenericInterface.mesagges;
 import static demo.GenericInterface.runlogcat;
 import demo.Main;
 import demo.MonitorController;
+import demo.tables.Apk;
 import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.xml.parsers.ParserConfigurationException;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
@@ -46,7 +55,7 @@ public class adb implements Runnable,GenericInterface{
 public Thread thread;
 
 int temporal=0;int val = 0;
-int inte=0,iterator=0;
+int inte=0,iterator=0,x;
 public int b;
 public String input;
 
@@ -64,6 +73,7 @@ public int booleandevice,validatedialog=0;
     Boolean monitoruser;
 Action responseconfirm;
     Timer timer;
+public Thread t;
 adb(String sinput){
 
 this.input= sinput;
@@ -152,12 +162,12 @@ else{
             }
         return ID.replaceAll("device", "").trim();
         }
-    public Runnable execGeneric(String command,TextArea textArea,int i) {
- //String [] temp = new String [10];   
-Thread t=new Thread(new Task() {
-
-    @Override
-    protected Object call() throws Exception {
+    public String[] execGeneric(String command,TextArea textArea,int i) {
+ String [] temp = new String [50000];   
+//Thread t=new Thread(new Task() {
+//
+//    @Override
+//    protected Object call() throws Exception {
 
     try {
         if(i==1) {
@@ -172,8 +182,10 @@ Thread t=new Thread(new Task() {
                 int x=0;
                 while((line=input.readLine()) != null) {
                     lineadb+=line;
-//textArea.appendText(line+"\n");
-
+                    if(line!=null && !"".equals(line) && !line.contains("WARNING: linker:")){
+                    temp[x]=line;
+                    }
+                    
                     System.out.println(line);
                     x++;
                 }
@@ -193,7 +205,79 @@ Thread t=new Thread(new Task() {
             } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
     }
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//});
+//t.setDaemon(true);
+//t.start();
+//if(t.isInterrupted()){
+//System.out.println("FINALIZA HILO");
+//}
+
+  // return 0;
+    return temp;
+        }
+
+    public Runnable execGenericLoop(String command,TextArea textArea,int i,ObservableList<Apk> data,String nameapp,Label msj,int finish,ProgressIndicator pi) {
+ //String [] temp = new String [10];
+            
+t=new Thread(new Task() {
+
+    @Override
+    protected Object call() throws Exception {
+
+    try {
+        if(i==1) {
+                Thread runlbl=new Thread(){
+                  @Override
+                  public void run(){
+                  updateLbl(msj,mesagges[4]+nameapp,pi,true);
+                  }  
+                };
+         
+
+              //msj.setText(mesagges[4]+nameapp);      
+                Runtime rt = Runtime.getRuntime();
+                Process pr = rt.exec(command);
+                
+                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+ 
+                String line="null";
+               
+                
+                while((line=input.readLine()) != null) {
+                    lineadb+=line;
+//textArea.appendText(line+"\n");
+
+                    System.out.println(line);
+                    x++;
+                   Platform.runLater(runlbl);
+                }
+             
+data.add(new Apk(nameapp));
+if(finish==data.size()){
+  //  pi.setVisible(false);
+    updateLbl(msj,"Aplicaciones instaladas correctamente",pi,false);
+    
+}
+                int exitVal = pr.waitFor();
+                if(exitVal==0){
+                    
+                }
+                
+               // return 1;
+        }else{
+        alertMessage(mesagges[0]);
+      //  return 0;
+        }
+            } catch(IOException e) {
+                System.out.println(e.toString());
+            } catch (InterruptedException ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    }
+//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+        
     }
 });
 t.setDaemon(true);
@@ -203,7 +287,73 @@ t.start();
 //}
 
   // return 0;
+  //  return 0;
+
     return null;
+        }
+    public Runnable execConsole(String command,TextArea textArea,int i,String equal,Label label,ProgressIndicator pi,Button b,ImageView iv) {
+     //String [] temp = new String [10];
+
+    t=new Thread(new Task() {
+
+        @Override
+        protected Object call() throws Exception {
+        try {
+            if(i==1) {
+                    Thread runlbl=new Thread(){
+                      @Override
+                      public void run(){
+                      prepareDBech(label,mesagges[5],b);
+                     
+                      }  
+                    };
+                    
+                    Runtime rt = Runtime.getRuntime();
+                    Process pr = rt.exec(command);
+
+                    BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+
+                    String line="null";
+
+                    while((line=input.readLine()) != null) {
+                        
+                        if(line.contains(equal)){
+                            Platform.runLater(runlbl);
+                         }
+
+                    }
+
+
+                    int exitVal = pr.waitFor();
+                    if(exitVal==0){
+
+                    }
+
+                   // return 1;
+            }else{
+            alertMessage(mesagges[0]);
+          //  return 0;
+            }
+                } catch(IOException e) {
+                    System.out.println(e.toString());
+                } catch (InterruptedException ex) {
+            Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    //            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return null;
+
+        }
+    });
+    t.setDaemon(true);
+    t.start();
+    //if(t.isInterrupted()){
+    //System.out.println("FINALIZA HILO");
+    //}
+
+      // return 0;
+      //  return 0;
+
+        return null;
         }
     public int execLogCat(String command,TextArea textArea) {
          Id=returnID(devicedisp).replaceAll("	device","");
@@ -534,6 +684,42 @@ timer.schedule(new TimerTask() {
 }, 1000, 1000);
 
         }
-    
-       
+    public void updateLbl(Label lbl,String text,ProgressIndicator pi,Boolean b){
+    Platform.runLater(new Task() {
+
+        @Override
+        protected Object call() throws Exception {
+lbl.setText(text);
+pi.setVisible(b);
+            return null;
+                }
+    });
+    }
+    public void prepareDBech(Label lbl,String text,Button button){
+    Platform.runLater(new Task() {
+
+        @Override
+        protected Object call() throws Exception {
+lbl.setText(text);
+
+button.setDisable(false);
+            execGeneric(start[3]+moveresultsappbench[0], null,b);
+            execGeneric(sendfiletoPcbench[0], null,b);
+            loadxml().stream().forEach((val) -> {
+                System.out.println(val);
+            });
+            return null;
+                }
+    });
+    }
+    public List<String> loadxml(){
+        List<String> items=new ArrayList<>();
+    try {
+        files fil=new files();
+        items=fil.readXml(pathfilebench[0]);
+    } catch (ParserConfigurationException ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return items;
+    }   
 }

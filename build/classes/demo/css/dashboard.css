@@ -130,3 +130,6 @@ and open the template in the editor.
     -fx-background-color: null;
     -fx-control-inner-background:null;
 }
+.toggle-button {
+  -fx-graphic: url('photos.png');
+}

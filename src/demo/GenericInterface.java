@@ -12,19 +12,26 @@ package demo;
  */
 public interface GenericInterface {
     //list command//
+    String start[]={"adb shell am start -n ","adb logcat ActivityManager:V "," *:S","adb shell su -c'cp "};
     String insgenbench="adb install -r C:\\application\\apps\\apk_benchmark\\";
     String installSiragonapp="adb install C:\\application\\apps\\siragonapp.apk";
-    String startSiragonapp="adb shell am start -n  org.uguess.android.sysinfo/.SiragonInfo";
+    String startapps[]={"org.uguess.android.sysinfo/.SiragonInfo",
+    "com.antutu.ABenchMark/com.antutu.ABenchMark.ABenchMarkStart","com.eembc.coremark/.tabs",
+    "com.quicinc.vellamo/.main.MainActivity","com.glbenchmark.glbenchmark27/net.kishonti.gfxbench.GfxMainActivity",
+    "com.futuremark.dmandroid.application/.activity.MainActivity","com.batterybench/.MainActivity"};
     String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
     String devicedisp="adb devices";
     String removeFadb="adb shell rm /storage/sdcard0/ADB/*";
     String down="adb shell input keyevent 20";
     String web="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-   + " file:///C:/Users/Uclides Gil/Documents/NetBeansProjects/test/src/demo/manual/index.html";
-    //pathsC:\Users\Uclides Gil\Documents\NetBeansProjects
+   + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html";
+
     String server="C:\\Users\\project\\Desktop\\a.bat";
     String folderegister="C:\\application\\deviceRegisters\\";
+    String folderappbench="C:\\application\\apps\\apk_benchmark\\";
     String folderLogs="C:\\application\\logs\\";
+    String folderimg="C:\\application\\img";
+    String pullimg="adb pull /sdcard/app-siragon/captures/";
     String runlogcat="adb logcat *:W > /storage/sdcard0/ADB/";
     //list message
     String detect="Dispositivo detectado";
@@ -73,7 +80,11 @@ public interface GenericInterface {
     String valappinstall="Aplicaciones";
     String valapdetect="detect";
     String apktoinstalled="apk";
+    String apktochecks="update";
     String valappserver="server";
+    String nbech="nt";
+    String rbench="rt";
+    String imgb="it";
     String disconnect="por algun motivo se ha desconectado el dispositivo";
     String noconnect="no se ha detectado dispositivo";
     String exrecord="dispositivo se encuentra registrado";
@@ -109,16 +120,25 @@ public interface GenericInterface {
     String[] red={"Red",null,null};
     String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Revision","Serial",null};
     String stest="select * from user";
+    String[] capturedis={"adb shell screencap -p /storage/sdcard0/app-siragon/captures/",".png"};
     String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
       "select val_net from network where type_net='wifi'","select type_blu from bluetooth",
       "select * from display_type","select * from display_tactil","select * from battery",
-      "select name_sup from other_support where type='sensor'","select name_provider from provider"};
+      "select name_sup from other_support where type='sensor'","select name_provider from provider","select name_test from test"};
     String[] columnsdb={"name_mat","val_net","type_blu","name_dis","name_tactil",
-      "type_bat","name_sup","name_provider"};
-    String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado","error al conectar con servidor de datos","tabla ya posee datos de un equipo"};
-    String[] moveresultsappbench={"adb shell su -c'cp /data/data/com.antutu.ABenchMark/files/ranking.xml /storage/sdcard0/app-siragon/result'"};
+      "type_bat","name_sup","name_provider","name_test"};
+    String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado",
+        "error al conectar con servidor de datos","tabla ya posee datos de un equipo",
+        "instalando aplicación ","ha finalizado la prueba correctamente, ingrese el resultado obtenido",
+        "ingrese resultado de la prueba o agrege capturas de pantallas de la prueba"};
+    String[] moveresultsappbench={"/data/data/com.antutu.ABenchMark/files/ranking.xml /storage/sdcard0/app-siragon/result-benchmark'"};
     String[] moveappbench={"adb shell su -c 'cp /data/app/com.antutu.ABenchMark-1.apk /storage/sdcard0/app-siragon/apk'"};
     String[] sendapptoPcbench={"adb pull /storage/sdcard0/app-siragon/apk C:\\application\\apps\\apk_benchmark"};
-    String[] sendfiletoPcbench={"adb pull /storage/sdcard0/app-siragon/result/ranking.xml C:\\application\\apps\\result_benchmark"};
-    String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk"};
+    String[] sendfiletoPcbench={"adb pull /storage/sdcard0/app-siragon/result-benchmark/ranking.xml C:\\application\\apps\\result_benchmark"};
+    String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk","com.quicinc.vellamo-1.apk","com.futuremark.dmandroid.application-2.apk"};
+    String[] chantxtbt={"instalar aplicaciones","obtener aplicaciones","verificar aplicaciones"};
+    String[] finishapp={"com.antutu.benchmark.UPDATE_ON_FINISHED","act=com.quicinc.vellamo.B_RESULTS"};
+    String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
+    String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
+    
 }

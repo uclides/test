@@ -335,12 +335,12 @@
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
-                                                <TableView id="tableapp" fx:id="tableapp" editable="true" layoutX="15.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
+                                                <TableView id="tableapp" fx:id="tableapp" editable="true" layoutX="63.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
                                                    <columns>
                                                       <TableColumn id="columnappdevice" fx:id="columnappdevice" prefWidth="300.0" text="detectadas" />
                                                    </columns>
                                                 </TableView>
-                                                <TableView id="tableappinstall" fx:id="tableappinstall" layoutX="315.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
+                                                <TableView id="tableappinstall" fx:id="tableappinstall" layoutX="362.0" layoutY="133.0" prefHeight="320.0" prefWidth="300.0">
                                                   <columns>
                                                     <TableColumn id="columnappinstall" fx:id="columnappinstall" prefWidth="320.0" text="instaladas" />
                                                   </columns>
@@ -350,8 +350,16 @@
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
-                                                <Label fx:id="estatusapp" alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="82.0" prefHeight="17.0" prefWidth="468.0" text="Label" textAlignment="CENTER" />
-                                                <Button fx:id="binstapp" layoutX="888.0" layoutY="87.0" mnemonicParsing="false" onAction="#InstallApp" text="Button" />
+                                                <Label fx:id="estatusapp" alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" layoutY="89.0" prefHeight="25.0" prefWidth="634.0" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font></Label>
+                                                <ProgressIndicator fx:id="probarapp" layoutX="499.0" layoutY="60.0" prefHeight="25.0" prefWidth="27.0" visible="false" />
+                                                <TableView id="tableappupdate" fx:id="tableappupdate" layoutX="661.0" layoutY="133.0" prefHeight="319.0" prefWidth="289.0">
+                                                  <columns>
+                                                    <TableColumn id="columnappupdate" fx:id="columnappupdate" prefWidth="288.0" text="verificar" />
+                                                  </columns>
+                                                </TableView>
                                              </children>
                                           </AnchorPane>
                                        </content>
@@ -365,23 +373,52 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView layoutX="17.0" layoutY="134.0" prefHeight="275.0" prefWidth="1003.0" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="134.0">
-                                                   <columns>
-                                                      <TableColumn prefWidth="254.0" text="nombre" />
-                                                      <TableColumn prefWidth="213.0" text="estatus" />
-                                                      <TableColumn prefWidth="265.0" text="imagen" />
-                                                      <TableColumn prefWidth="256.0" text="accion" />
-                                                   </columns>
-                                                   <opaqueInsets>
-                                                      <Insets />
-                                                   </opaqueInsets>
-                                                </TableView>
-                                                <Button layoutX="917.0" layoutY="458.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" styleClass="standar-button" text="continuar">
+                                                <Button disable="true" layoutX="917.0" layoutY="458.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="110.0" styleClass="standar-button" text="continuar">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
                                                 <AnchorPane prefHeight="43.0" prefWidth="121.0" />
+                                                <ComboBox fx:id="cbbench" layoutX="599.0" layoutY="134.0" prefHeight="25.0" prefWidth="227.0" />
+                                                <Button fx:id="binitbech" layoutX="917.0" layoutY="134.0" mnemonicParsing="false" onAction="#startBench" prefHeight="25.0" prefWidth="110.0" text="iniciar prueba" />
+                                                <TextField fx:id="result1" disable="true" layoutX="675.0" layoutY="229.0" />
+                                                <TextField fx:id="result2" disable="true" layoutX="675.0" layoutY="259.0" />
+                                                <TextField fx:id="result3" disable="true" layoutX="675.0" layoutY="291.0" />
+                                                <TextField fx:id="result4" disable="true" layoutX="675.0" layoutY="323.0" />
+                                                <TextField fx:id="result5" disable="true" layoutX="675.0" layoutY="354.0" />
+                                                <Button fx:id="bsavebech" disable="true" layoutX="915.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="25.0" prefWidth="110.0" text="guardar" />
+                                                <Label fx:id="lblr1" disable="true" layoutX="601.0" layoutY="233.0" text="Resultado 1:" />
+                                                <Label fx:id="lblr2" disable="true" layoutX="601.0" layoutY="263.0" text="Resultado 2:" />
+                                                <Label disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:" />
+                                                <Label disable="true" layoutX="601.0" layoutY="327.0" text="Resultado 4:" />
+                                                <Label disable="true" layoutX="601.0" layoutY="358.0" text="Resultado 5:" />
+                                                <Label fx:id="estatusbench" alignment="CENTER" contentDisplay="CENTER" layoutX="222.0" layoutY="94.0" prefHeight="17.0" prefWidth="596.0">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblcapt" disable="true" layoutX="601.0" layoutY="392.0" text="Capturas:" />
+                                                <Label fx:id="lblimg" disable="true" layoutX="675.0" layoutY="392.0" />
+                                                <ImageView fx:id="photo" fitHeight="87.0" fitWidth="79.0" layoutX="970.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                                   <image>
+                                                      <Image url="@css/photos.png" />
+                                                   </image>
+                                                   <viewport>
+                                                      <Rectangle2D />
+                                                   </viewport>
+                                                </ImageView>
+                                                <Label fx:id="lblphoto" layoutX="959.0" layoutY="227.0" text="capturar pantalla" visible="false">
+                                                   <font>
+                                                      <Font size="9.0" />
+                                                   </font>
+                                                </Label>
+                                                <TableView id="tabletest" fx:id="tabletest" editable="true" layoutX="15.0" layoutY="133.0" prefHeight="278.0" prefWidth="557.0">
+                                                  <columns>
+                                                    <TableColumn id="columnantest" fx:id="columnantest" prefWidth="150.0" text="C1" />
+                                                    <TableColumn id="columnartest" fx:id="columnartest" prefWidth="87.0" text="C2" />
+                                                      <TableColumn id="columnaitest" fx:id="columnaitest" prefWidth="319.0" text="C3" />
+                                                  </columns>
+                                                </TableView>
                                              </children>
                                           </AnchorPane>
                                        </content>
