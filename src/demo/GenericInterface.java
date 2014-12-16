@@ -137,7 +137,8 @@ public interface GenericInterface {
     String[] sendfiletoPcbench={"adb pull /storage/sdcard0/app-siragon/result-benchmark/ranking.xml C:\\application\\apps\\result_benchmark"};
     String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk","com.quicinc.vellamo-1.apk","com.futuremark.dmandroid.application-2.apk"};
     String[] chantxtbt={"instalar aplicaciones","obtener aplicaciones","verificar aplicaciones"};
-    String[] finishapp={"com.antutu.benchmark.UPDATE_ON_FINISHED","act=com.quicinc.vellamo.B_RESULTS"};
+    String[] finishapp={"com.antutu.benchmark.UPDATE_ON_FINISHED","act=com.quicinc.vellamo.B_RESULTS",
+        "AppLaunch_LaunchTime:com.futuremark.dmandroid.application/.activity.MainActivity"};
     String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
     String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
     
