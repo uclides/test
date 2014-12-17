@@ -389,9 +389,9 @@
                                                 <Button fx:id="bsavebech" disable="true" layoutX="915.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="25.0" prefWidth="110.0" text="guardar" />
                                                 <Label fx:id="lblr1" disable="true" layoutX="601.0" layoutY="233.0" text="Resultado 1:" />
                                                 <Label fx:id="lblr2" disable="true" layoutX="601.0" layoutY="263.0" text="Resultado 2:" />
-                                                <Label disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:" />
-                                                <Label disable="true" layoutX="601.0" layoutY="327.0" text="Resultado 4:" />
-                                                <Label disable="true" layoutX="601.0" layoutY="358.0" text="Resultado 5:" />
+                                                <Label fx:id="lblr3" disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:" />
+                                                <Label fx:id="lblr4" disable="true" layoutX="601.0" layoutY="327.0" text="Resultado 4:" />
+                                                <Label fx:id="lblr5" disable="true" layoutX="601.0" layoutY="358.0" text="Resultado 5:" />
                                                 <Label fx:id="estatusbench" alignment="CENTER" contentDisplay="CENTER" layoutX="222.0" layoutY="94.0" prefHeight="17.0" prefWidth="596.0">
                                                    <font>
                                                       <Font size="16.0" />

@@ -18,7 +18,9 @@ public interface GenericInterface {
     String startapps[]={"org.uguess.android.sysinfo/.SiragonInfo",
     "com.antutu.ABenchMark/com.antutu.ABenchMark.ABenchMarkStart","com.eembc.coremark/.tabs",
     "com.quicinc.vellamo/.main.MainActivity","com.glbenchmark.glbenchmark27/net.kishonti.gfxbench.GfxMainActivity",
-    "com.futuremark.dmandroid.application/.activity.MainActivity","com.batterybench/.MainActivity"};
+    "com.futuremark.dmandroid.application/.activity.MainActivity","com.batterybench/.MainActivity",
+    "com.primatelabs.geekbench/.HomeActivity","com.rightware.BasemarkOSII/.BasemarkOSII",
+    "com.rightware.BasemarkX_Free/com.unity3d.player.UnityPlayerProxyActivity"};
     String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
     String devicedisp="adb devices";
     String removeFadb="adb shell rm /storage/sdcard0/ADB/*";
@@ -138,7 +140,8 @@ public interface GenericInterface {
     String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk","com.quicinc.vellamo-1.apk","com.futuremark.dmandroid.application-2.apk"};
     String[] chantxtbt={"instalar aplicaciones","obtener aplicaciones","verificar aplicaciones"};
     String[] finishapp={"com.antutu.benchmark.UPDATE_ON_FINISHED","act=com.quicinc.vellamo.B_RESULTS",
-        "AppLaunch_LaunchTime:com.futuremark.dmandroid.application/.activity.MainActivity"};
+        "AppLaunch_LaunchTime:com.futuremark.dmandroid.application/.activity.MainActivity",
+        "Displayed Displayed com.primatelabs.geekbench/.BenchmarkDocumentActivity"};
     String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
     String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
     

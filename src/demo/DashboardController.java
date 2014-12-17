@@ -76,7 +76,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
             exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml;
     @FXML
-    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr1,lblr2,lblimg,lblcapt,lblphoto;
+    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr1,
+            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto;
     @FXML
     ImageView avatar,photo;
     @FXML
@@ -748,6 +749,7 @@ int w = 0,x = 0,y = 0,z=0;
       if(adb.b==1) {
         switch(val){
             case("antutu"):
+                estatusbench.setText("presione TEST para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[1], outConsole, adb.b);
@@ -769,7 +771,7 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("AndEBench"):
-                estatusbench.setText("presione start para iniciar la prueba");
+                estatusbench.setText("presione START para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
@@ -779,63 +781,70 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("3DMark"):
-                estatusbench.setText("presione start para iniciar la prueba");
+                estatusbench.setText("presione RUN para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[6], outConsole, adb.b);
-                adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[2], estatusbench, probarapp, bsavebech,photo);                
+                adb.execGeneric(start[0]+startapps[5], outConsole, adb.b);
                 result1.setDisable(false);
                 lblr1.setDisable(false);
                 lblimg.setDisable(false);lblcapt.setDisable(false);
                 binitbech.setDisable(false);    
+                adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[2], estatusbench, probarapp, bsavebech,photo);                
+
             break;
-            case("GXBench"):
-                estatusbench.setText("presione start para iniciar la prueba");
-                photo.setVisible(true);
-                lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
-                result1.setDisable(false);result2.setDisable(false);
-                lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
-                binitbech.setDisable(false);    
-            break;
+//            case("GXBench"):
+//                estatusbench.setText("presione START ALL para iniciar la prueba");
+//                photo.setVisible(true);
+//                lblphoto.setVisible(true);
+//                adb.execGeneric(start[0]+startapps[4], outConsole, adb.b);
+//                result1.setDisable(false);result2.setDisable(false);
+//                lblr1.setDisable(false);lblr2.setDisable(false);
+//                lblimg.setDisable(false);lblcapt.setDisable(false);
+//                binitbech.setDisable(false);    
+//            break;
             case("Geekbench"):
-                estatusbench.setText("presione start para iniciar la prueba");
+                estatusbench.setText("presione RUN BENCHMARKS para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                adb.execGeneric(start[0]+startapps[7], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
                 lblimg.setDisable(false);lblcapt.setDisable(false);
-                binitbech.setDisable(false);    
+                binitbech.setDisable(false);
+                adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[3], estatusbench, probarapp, bsavebech,photo);                
+
             break;
             case("Vellamo"):
                 estatusbench.setText("presione start para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
-                result1.setDisable(false);result2.setDisable(false);
-                lblr1.setDisable(false);lblr2.setDisable(false);
+                adb.execGeneric(start[0]+startapps[3], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);result3.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);lblr3.setDisable(false);
                 lblimg.setDisable(false);lblcapt.setDisable(false);
-                binitbech.setDisable(false);    
+                binitbech.setDisable(false); 
+                adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[1], estatusbench, probarapp, bsavebech,photo);                
+
             break;
             case("Basemark X"):
                 estatusbench.setText("presione start para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
+                adb.execGeneric(start[0]+startapps[9], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
                 lblimg.setDisable(false);lblcapt.setDisable(false);
                 binitbech.setDisable(false);    
             break;
             case("Basemark OS II"):
-                estatusbench.setText("presione start para iniciar la prueba");
+                estatusbench.setText("presione RUN BENCHMARK para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
-                adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
-                result1.setDisable(false);result2.setDisable(false);
-                lblr1.setDisable(false);lblr2.setDisable(false);
+                adb.execGeneric(start[0]+startapps[8], outConsole, adb.b);
+                result1.setDisable(false);result2.setDisable(false);result3.setDisable(false);
+                result4.setDisable(false);result5.setDisable(false);
+                lblr1.setDisable(false);lblr2.setDisable(false);lblr3.setDisable(false);
+                lblr4.setDisable(false);lblr5.setDisable(false);
                 lblimg.setDisable(false);lblcapt.setDisable(false);
                 binitbech.setDisable(false);    
             break;
