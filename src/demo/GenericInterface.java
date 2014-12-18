@@ -20,7 +20,9 @@ public interface GenericInterface {
     "com.quicinc.vellamo/.main.MainActivity","com.glbenchmark.glbenchmark27/net.kishonti.gfxbench.GfxMainActivity",
     "com.futuremark.dmandroid.application/.activity.MainActivity","com.batterybench/.MainActivity",
     "com.primatelabs.geekbench/.HomeActivity","com.rightware.BasemarkOSII/.BasemarkOSII",
-    "com.rightware.BasemarkX_Free/com.unity3d.player.UnityPlayerProxyActivity"};
+    "com.rightware.BasemarkX_Free/com.unity3d.player.UnityPlayerProxyActivity",
+    "com.twitter.android/.StartActivity","com.instagram.android/.activity.MainTabActivity",
+    "com.facebook.katana/.LoginActivity","com.whatsapp/.Main","com.skype.raider/.Main"};
     String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
     String devicedisp="adb devices";
     String removeFadb="adb shell rm /storage/sdcard0/ADB/*";

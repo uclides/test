@@ -76,7 +76,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
             exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml;
     @FXML
-    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr1,
+    Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
             lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto;
     @FXML
     ImageView avatar,photo;
@@ -122,7 +122,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     SplitPane splitPane; 
     @FXML
-    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench;
+    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible;
     @FXML
     ColorPicker cpdev;
     @FXML
@@ -749,6 +749,8 @@ int w = 0,x = 0,y = 0,z=0;
       if(adb.b==1) {
         switch(val){
             case("antutu"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione TEST para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -761,6 +763,8 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);
                 break;
             case("battery benchmark"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start bench para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -771,6 +775,8 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("AndEBench"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione START para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -781,6 +787,8 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("3DMark"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -803,6 +811,8 @@ int w = 0,x = 0,y = 0,z=0;
 //                binitbech.setDisable(false);    
 //            break;
             case("Geekbench"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN BENCHMARKS para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -815,6 +825,8 @@ int w = 0,x = 0,y = 0,z=0;
 
             break;
             case("Vellamo"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -827,6 +839,8 @@ int w = 0,x = 0,y = 0,z=0;
 
             break;
             case("Basemark X"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -837,6 +851,8 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("Basemark OS II"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN BENCHMARK para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -849,6 +865,8 @@ int w = 0,x = 0,y = 0,z=0;
                 binitbech.setDisable(false);    
             break;
             case("Display Tester"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
                 photo.setVisible(true);
                 lblphoto.setVisible(true);
@@ -858,6 +876,51 @@ int w = 0,x = 0,y = 0,z=0;
                 lblimg.setDisable(false);lblcapt.setDisable(false);
                 binitbech.setDisable(false);    
             break;
+            case("twitter"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                estatusbench.setText("inicie sesion y pruebe la aplicación");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[10], outConsole, adb.b);
+                cbcompatible.setDisable(false);lblr0.setDisable(false);
+                break;
+            case("instagram"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                estatusbench.setText("inicie sesion y pruebe la aplicación");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[11], outConsole, adb.b);
+                cbcompatible.setDisable(false);lblr0.setDisable(false);
+                break;
+            case("facebook"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                estatusbench.setText("inicie sesion y pruebe la aplicación");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[12], outConsole, adb.b);
+                cbcompatible.setDisable(false);lblr0.setDisable(false);
+                break;
+            case("whatsapp"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                estatusbench.setText("inicie sesion y pruebe la aplicación");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[13], outConsole, adb.b);
+                cbcompatible.setDisable(false);lblr0.setDisable(false);
+                break;
+            case("skype"):
+                result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                estatusbench.setText("inicie sesion y pruebe la aplicación");
+                photo.setVisible(true);
+                lblphoto.setVisible(true);
+                adb.execGeneric(start[0]+startapps[14], outConsole, adb.b);
+                cbcompatible.setDisable(false);lblr0.setDisable(false);
+                break;
         }   
 
       }
@@ -882,9 +945,44 @@ if(!result1.getText().equals("")&&!lblimg.getText().equals("")){
             case("antutu"):
                 createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
                 break;
+            case("battery benchmark"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
             case("AndEBench"):
-                
                 createRowsBench(dataBench,cb,result1.getText()+";"+result2.getText(),files.oneString(listimg));
+                break;
+            case("3DMark"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("Geekbench"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("Vellamo"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("Basemark X"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("Basemark OS II"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("Display Tester"):
+                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                break;
+            case("twitter"):
+                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                break;
+            case("instagram"):
+                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                break;
+            case("facebook"):
+                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                break;
+            case("whatsapp"):
+                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                break;
+            case("skype"):
+                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
                 break;
         }
         
