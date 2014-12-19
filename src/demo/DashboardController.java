@@ -17,6 +17,9 @@ import demo.connections.server;
 import demo.tables.Apk;
 import demo.tables.Tst;
 import demo.tables.Update;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
@@ -34,6 +37,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
@@ -45,6 +49,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -60,9 +65,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -74,10 +84,10 @@ import javafx.util.Duration;
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
-            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml;
+            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
-            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto;
+            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter;
     @FXML
     ImageView avatar,photo;
     @FXML
@@ -122,7 +132,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     SplitPane splitPane; 
     @FXML
-    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible;
+    ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible,
+             cbfilterimg;
     @FXML
     ColorPicker cpdev;
     @FXML
@@ -132,6 +143,10 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,
               txtelemadd2,txtelemadd3,result1,result2,result3,result4,result5;
     List<CheckMenuItem> itemsband,itemswifi;
+    @FXML
+    ScrollPane scrollPane;
+    @FXML
+    TilePane tilePane;
     Task task2;
      int npng=0;
     //instances
@@ -991,6 +1006,77 @@ else{
     adb.alertMessage(mesagges[6]);
 }
     }
+    public void Img(String path){
+        File folder=new File(path);
+        File[] listFiles=folder.listFiles();
+        for(final File file:listFiles){
+            ImageView imageView;
+            imageView=createImageView(file);
+            tilePane.getChildren().addAll(imageView);
+        }
+    }
+    private ImageView createImageView(final File imageFile) {
+        // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
+        // The last two arguments are: preserveRatio, and use smooth (slower)
+        // resizing
+
+        ImageView imageView = null;
+        try {
+            final Image image;
+            image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                    true);
+            imageView = new ImageView(image);
+            imageView.setFitWidth(150);
+            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+
+                        if(mouseEvent.getClickCount() == 2){
+                            try {
+                                BorderPane borderPane = new BorderPane();
+                                ImageView imageView = new ImageView();
+                                Image image = null;
+                                image = new Image(new FileInputStream(imageFile));
+                                imageView.setImage(image);
+                                imageView.setStyle("-fx-background-color: null");
+                                imageView.setFitHeight(application.stage.getHeight() - 10);
+                                imageView.setPreserveRatio(true);
+                                imageView.setSmooth(true);
+                                imageView.setCache(true);
+                                borderPane.setCenter(imageView);
+                                Button a=new Button("eliminar");
+                                a.setStyle("    -fx-background-color:\n" +
+"        #FF9640;\n" +
+"    -fx-font-family: \"Síragon\";\n" +
+"    -fx-text-fill: white;\n" +
+"    -fx-font-size: 14;");
+                                borderPane.setRight(a);
+                                borderPane.setStyle("-fx-background-color: null");
+                              
+                                Stage newStage = new Stage();
+                                newStage.setWidth(application.stage.getWidth());
+                                newStage.setHeight(application.stage.getHeight());
+                                newStage.setTitle(imageFile.getName());
+                                Scene scene = new Scene(borderPane,Color.WHITE);
+                                newStage.setScene(scene);
+                                newStage.show();
+                            } catch (FileNotFoundException e) {
+                            }
+
+                        }
+                    }
+                }
+            });
+        } catch (FileNotFoundException ex) {
+        }
+        return imageView;
+    }
+    public void Loadimg(ActionEvent actionEvent){
+        Img("C:\\application\\img");
+    } 
     }
     
 

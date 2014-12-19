@@ -32,7 +32,7 @@ public class Main extends Application implements GenericInterface {
 int inte=0;
 server servidor = new server();
 adb adb=new adb();
-    private Stage stage;
+    public Stage stage;
     private User loggedUser;
     private final double MINIMUM_WINDOW_WIDTH = 1250.0;
     private final double MINIMUM_WINDOW_HEIGHT = 650.0;

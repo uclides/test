@@ -28,20 +28,10 @@ and open the template in the editor.
 }
 .standar-button {
     -fx-background-color:
-        //rgba(255, 95, 0, 0.9),
-        //rgba(255, 95, 0, 0.9),
         #FF9640;
-        //linear-gradient(#FF4C00 0%, #FF4C00 20%, #FF4C00 100%),
-        //linear-gradient(#FF4C00, #FF4C00),
-        //radial-gradient(center 50% 0%, radius 100%, rgba(135,142,148,0.9),
-       // rgba(255,255,255,0));
-    //-fx-background-radius: 7, 6, 5, 4, 3, 5;
-    //-fx-background-insets: -3 -3 -4 -3, -3, 0, 1, 2, 0;
     -fx-font-family: "Síragon";
     -fx-text-fill: white;
     -fx-font-size: 14;
-    //-fx-text-fill: linear-gradient(white, #d0d0d0);
-    //-fx-padding: 10 20 10 20;
 }
 .standar-button:focused, .standar-button:hover {
     -fx-background-color:
