@@ -20,10 +20,14 @@ import demo.tables.Update;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -36,6 +40,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
@@ -70,6 +75,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -445,7 +451,6 @@ new Device(valpfr,"")
        
    }
    }
-
    public void createRowsApp(ObservableList<App> data,String[] val1){
    
     for(int y=1;y<files.RemoveNullValue(val1).length;y++){
@@ -506,6 +511,7 @@ splitPane.setOnSwipeRight(null);
           ObservableList<String> olistprov = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[8],columnsdb[7]));
   cbprov.setItems(olistprov);
   cbcertgoogle.getItems().addAll("si","no");
+  cbfilterimg.getItems().addAll("pruebas","fallas","dispositivo","otras");
   ObservableList<String> olistbech = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[9],columnsdb[8]));
   cbbench.setItems(olistbech);
   
@@ -1027,45 +1033,53 @@ else{
                     true);
             imageView = new ImageView(image);
             imageView.setFitWidth(150);
-            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-
-                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-
-                        if(mouseEvent.getClickCount() == 2){
-                            try {
-                                BorderPane borderPane = new BorderPane();
-                                ImageView imageView = new ImageView();
-                                Image image = null;
-                                image = new Image(new FileInputStream(imageFile));
-                                imageView.setImage(image);
-                                imageView.setStyle("-fx-background-color: null");
-                                imageView.setFitHeight(application.stage.getHeight() - 10);
-                                imageView.setPreserveRatio(true);
-                                imageView.setSmooth(true);
-                                imageView.setCache(true);
-                                borderPane.setCenter(imageView);
-                                Button a=new Button("eliminar");
-                                a.setStyle("    -fx-background-color:\n" +
-"        #FF9640;\n" +
-"    -fx-font-family: \"Síragon\";\n" +
-"    -fx-text-fill: white;\n" +
-"    -fx-font-size: 14;");
-                                borderPane.setRight(a);
-                                borderPane.setStyle("-fx-background-color: null");
-                              
-                                Stage newStage = new Stage();
-                                newStage.setWidth(application.stage.getWidth());
-                                newStage.setHeight(application.stage.getHeight());
-                                newStage.setTitle(imageFile.getName());
-                                Scene scene = new Scene(borderPane,Color.WHITE);
-                                newStage.setScene(scene);
-                                newStage.show();
-                            } catch (FileNotFoundException e) {
-                            }
-
+            imageView.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        try {
+                            Button delete=new Button("eliminar");
+                            Button close=new Button("X");
+                            close.setOnAction((ActionEvent event) -> {
+                                ((Node)(event.getSource())).getScene().getWindow().hide();
+                            });
+                            delete.setOnAction((ActionEvent event) -> {
+                                try {
+                                    Files.delete(imageFile.toPath());
+                                    ((Node)(event.getSource())).getScene().getWindow().hide();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });
+                            delete.setStyle("    -fx-background-color:\n" +
+                                    "        #FF9640;\n" +
+                                    "    -fx-font-family: \"Síragon\";\n" +
+                                    "    -fx-text-fill: white;\n" +
+                                    "    -fx-font-size: 14;");
+                            VBox vBox=new VBox();
+                            vBox.setSpacing(10);
+                            vBox.setPadding(Insets.EMPTY);
+                            vBox.getChildren().addAll(delete,close);
+                            BorderPane borderPane = new BorderPane();
+                            ImageView imageView1 = new ImageView();
+                            Image image1 = null;
+                            image1 = new Image(new FileInputStream(imageFile));
+                            imageView1.setImage(image1);
+                            imageView1.setStyle("-fx-background-color: null");
+                            imageView1.setFitHeight(application.stage.getHeight() - 10);
+                            imageView1.setPreserveRatio(true);
+                            imageView1.setSmooth(true);
+                            imageView1.setCache(true);
+                            borderPane.setCenter(imageView1);
+                            borderPane.setRight(vBox);
+                            borderPane.setStyle("-fx-background-color: null");
+                            Stage newStage = new Stage();
+                            newStage.setWidth(application.stage.getWidth());
+                            newStage.setHeight(application.stage.getHeight());
+                            newStage.setTitle(imageFile.getName());
+                            Scene scene1 = new Scene(borderPane,Color.WHITE);
+                            newStage.setScene(scene1);
+                            newStage.show();
+                        }catch (FileNotFoundException e) {
                         }
                     }
                 }
@@ -1075,7 +1089,21 @@ else{
         return imageView;
     }
     public void Loadimg(ActionEvent actionEvent){
-        Img("C:\\application\\img");
+        switch(files.getValueCb(cbcompatible)){
+            case("pruebas"):
+                Img("");
+            break;
+            case("fallas"):
+                Img("");
+            break;
+            case("dispositivo"):
+                Img("");
+            break;
+            case("otras"):
+                Img("");
+            break;    
+
+        }
     } 
     }
     

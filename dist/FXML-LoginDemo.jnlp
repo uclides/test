@@ -7,25 +7,25 @@
     <offline-allowed/>
   </information>
   <resources>
-    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+    <jfx:javafx-runtime version="8.0+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FXML-LoginDemo.jar" size="1220810" download="eager" />
-    <jar href="lib/Enzo-0.1.jar" size="1733406" download="eager" />
-    <jar href="lib/commons-io-2.4.jar" size="198398" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="924945" download="eager" />
-    <jar href="lib/gson-2.2.4.jar" size="207148" download="eager" />
-    <jar href="lib/jnotify-0.94.jar" size="43086" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873839" download="eager" />
-    <jar href="lib/xmlParserAPIs-2.6.2.jar" size="144408" download="eager" />
-    <jar href="lib/zip4j_1.3.2.jar" size="137572" download="eager" />
+    <jar href="FXML-LoginDemo.jar" size="1220808" download="eager" />
+    <jar href="lib/Enzo-0.1.jar" size="1733404" download="eager" />
+    <jar href="lib/commons-io-2.4.jar" size="198401" download="eager" />
+    <jar href="lib/controlsfx-8.0.6_20.jar" size="924949" download="eager" />
+    <jar href="lib/gson-2.2.4.jar" size="207151" download="eager" />
+    <jar href="lib/jnotify-0.94.jar" size="43088" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="873841" download="eager" />
+    <jar href="lib/xmlParserAPIs-2.6.2.jar" size="144412" download="eager" />
+    <jar href="lib/zip4j_1.3.2.jar" size="137571" download="eager" />
   </resources>
 <security>
   <all-permissions/>
 </security>
   <applet-desc  width="700" height="550" main-class="com.javafx.main.NoJavaFXFallback"  name="FXML-LoginDemo" >
-    <param name="requiredFXVersion" value="2.2+"/>
+    <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
   <jfx:javafx-desc  width="700" height="550" main-class="demo.Main"  name="FXML-LoginDemo" />
   <update check="background"/>
