@@ -476,6 +476,14 @@ int y = 0;
         }
           return s;
     }
+    public int booleanToint(String e,String v){
+        if(e.equals(v)){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 
 }
 

@@ -30,4 +30,7 @@ return device.get();
 public void setDevice(String fdevice){
 device.set(fdevice);
 }
+public SimpleStringProperty deviceProperty() {
+    return this.device;
+}
 }

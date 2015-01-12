@@ -23,7 +23,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *

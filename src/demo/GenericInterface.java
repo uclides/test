@@ -34,7 +34,7 @@ public interface GenericInterface {
     String folderegister="C:\\application\\deviceRegisters\\";
     String folderappbench="C:\\application\\apps\\apk_benchmark\\";
     String folderLogs="C:\\application\\logs\\";
-    String folderimg="C:\\application\\img";
+    String[] folderimg={"C:\\application\\img\\test","C:\\application\\img\\fails","C:\\application\\img\\other","C:\\application\\img\\others"};
     String pullimg="adb pull /sdcard/app-siragon/captures/";
     String runlogcat="adb logcat *:W > /storage/sdcard0/ADB/";
     //list message
@@ -94,7 +94,7 @@ public interface GenericInterface {
     String exrecord="dispositivo se encuentra registrado";
     String question="¿Desea ver los registros?";
     String question2="¿Desea continuar sin un dispositivo conectado?";
-    String question1="¿Desea obtener la informacion para su uso?";
+    String[] question1={"¿Desea obtener la información para su uso?","¿Esta seguro de continuar con la informacón actual?"};
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
@@ -113,7 +113,7 @@ public interface GenericInterface {
     String[] sup2={"soporte resolución imagenes camara secundaria"};   
     String[] vidsup2={"soporte resolución video camara secundaria"}; 
     String[] mod={"modo de foco cámara"};
-    String[] cams={"numero de cámaras disponibles"};
+    String[] cameras={"numero camara "};
     String[] est={"estatus flash"};
     String[] dispcache={"Caché del Sistema Total","Caché del Sistema Disponible",null,};
     String[] alminter={"Almacenamiento Interno Total","Almacenamiento Interno Disponible",null,};
@@ -146,5 +146,6 @@ public interface GenericInterface {
         "Displayed Displayed com.primatelabs.geekbench/.BenchmarkDocumentActivity"};
     String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
     String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
+
     
 }

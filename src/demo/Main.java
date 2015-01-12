@@ -51,7 +51,6 @@ Stage stage2=new Stage();
         Application.launch(Main.class, (java.lang.String[])null);
           
     }
-
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -71,16 +70,13 @@ Stage stage2=new Stage();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     public User getLoggedUser() {
         return loggedUser;
-    }
-        
+    }  
     void userLogout(){
         loggedUser = null;
         gotoLogin();
-    }
-    
+    }   
     void gotoProfile(ObservableList<String> ol) {
         
         
@@ -89,7 +85,8 @@ Stage stage2=new Stage();
             DashboardController profile = (DashboardController) replaceSceneContent("dashboard.fxml");
             profile.setApp(this);
             profile.getParametersUser(ol);
-            profile.typeAccess(Integer.parseInt(ol.get(1)));
+            profile.checkInduction(ol.get(0));
+            profile.typeAccess(Integer.parseInt(ol.get(2)));
 
 
         } catch (Exception ex) {
@@ -106,12 +103,9 @@ Stage stage2=new Stage();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
-
     public static EventType<Event> llenar() {
         return EventType.ROOT;
     }
-
     private Initializable replaceSceneContent(String fxml) throws Exception {
         Scene scene;
         FXMLLoader loader = new FXMLLoader();

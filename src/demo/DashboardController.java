@@ -11,10 +11,13 @@ import demo.tables.Device;
 import demo.tables.App;
 import static demo.GenericInterface.devicedisp;
 import static demo.GenericInterface.valappinstall;
+import demo.Controls;
 import demo.connections.adb;
 import demo.connections.files;
 import demo.connections.server;
 import demo.tables.Apk;
+import demo.tables.Chart;
+import demo.tables.Fail;
 import demo.tables.Tst;
 import demo.tables.Update;
 import java.io.File;
@@ -23,6 +26,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -33,6 +40,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -45,10 +54,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -65,22 +76,28 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import org.controlsfx.control.ButtonBar;
+import org.controlsfx.control.ButtonBar.ButtonType;
+import org.controlsfx.control.action.AbstractAction;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 
 
 /**
@@ -90,10 +107,15 @@ import javafx.util.Duration;
 public class DashboardController extends AnchorPane implements Initializable,GenericInterface{
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
-            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg;
+            exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg,borrarimgs,baddfails,
+            bfails,bprev,bnext,bcreatec,binduction,badvantage;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
-            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter;
+            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper;
+    @FXML
+    TextField txtnf;
+    @FXML
+    TextArea txtdf;
     @FXML
     ImageView avatar,photo;
     @FXML
@@ -101,7 +123,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TabPane tabdash;
     @FXML
-    Tab tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare;
+    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails;
     @FXML
     TitledPane  accorIdentificacion,accorBenchmark,accorImagenes,accorVersus,
             accorFallas,accorReporte,accorMantenimiento,accorAyuda;
@@ -122,6 +144,10 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableView<Tst> tabletest;
     @FXML
+    TableView<Fail> tablefails;
+    @FXML
+    TableView<Chart> tablechart;
+    @FXML
     TableColumn<Device,String> columnitem,columndescription;
     @FXML
     TableColumn<App,String>columnappdevice;
@@ -136,25 +162,39 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableColumn<Tst,String>columnaitest;
     @FXML
+    TableColumn<Fail,String> columnafuser;
+    @FXML
+    TableColumn<Fail,String> columnafname;
+    @FXML
+    TableColumn<Fail,String> columnafdesc;
+    @FXML
+    TableColumn<Fail,String> columnafimg;
+    @FXML
+    TableColumn<Chart,Boolean> columnaselect;
+    @FXML
+    TableColumn<Chart,String> columnanchart;
+    @FXML
     SplitPane splitPane; 
     @FXML
     ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible,
-             cbfilterimg;
+             cbfilterimg,cbtypecomp;
     @FXML
     ColorPicker cpdev;
     @FXML
     MenuButton choicewifi,choiceband,choicesensor,choicematerialdev;
     
     @FXML 
-    TextField txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtelemadd1,
+    TextField txthdev,txtwdev,txtbulkdev,txtweight,txtcolordis,txtcapbat,txtelemadd1,
               txtelemadd2,txtelemadd3,result1,result2,result3,result4,result5;
     List<CheckMenuItem> itemsband,itemswifi;
     @FXML
     ScrollPane scrollPane;
     @FXML
     TilePane tilePane;
+    @FXML
+    CheckBox chkpref;
     Task task2;
-     int npng=0;
+     int tpng=0;int z=0;int fpng=0;
     //instances
  adb adb = new adb();
  files files=new files();
@@ -163,26 +203,89 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
           info17,info18,info19,info20,info21;
   String[] items=new String[1];
   String[] listimg=new String[100];
-  
+  String[] listimgfail=new String[100];
+  String[] listdelimg=new String[100];
+  String[] listdelimgfail=new String[100];
+  String[] fail=new String[10];
+  String idu,device;
    ObservableList<Device> data=FXCollections.observableArrayList();
    ObservableList<App> dataapp=FXCollections.observableArrayList();
    ObservableList<Apk> dataappIns=FXCollections.observableArrayList();
    ObservableList<Update> dataappUp=FXCollections.observableArrayList();
    ObservableList<Tst> dataBench=FXCollections.observableArrayList();
+    ObservableList<Fail> datafail=FXCollections.observableArrayList();
+    ObservableList<Chart>datachart=FXCollections.observableArrayList();
    public ObservableList<String> attrLogin;
 private Main application;
 LoginController login=new LoginController();
 String[] out = new String[100];
     private Timeline task;
-server servidor=new server();
+server s=new server();
+Controls c=new Controls();
     int count;
 public int VAL;
+final TextField namefail = new TextField();
+final TextArea descriptionfail = new TextArea();
+final Label lblimgfail =new Label();
+final Action actionFail,actioncapinmg;
+String imgc;
 public DashboardController(){  
+
         this.tableinfodevice = new TableView<>();
         this.tableapp = new TableView<>();
         this.tableappinstall = new TableView<>();
         this.tableappupdate=new TableView<>();
         this.tabletest=new TableView<>();
+        this.tablefails=new TableView<>();
+
+        this.actioncapinmg = new AbstractAction("capturar imagen") {
+            // This method is called when the login button is clicked ...
+            @Override
+            public void handle(ActionEvent ae) {
+                if(adb.b==1){
+                int ramdom2=new Random().nextInt(1000000000);
+        adb.execGeneric(capturedis[0]+String.valueOf(ramdom2)+capturedis[1], null, adb.b);
+        adb.execGeneric(pullimg+String.valueOf(ramdom2)+capturedis[1]+" "+folderimg[1], null, adb.b);
+        imgc=folderimg[1]+"\\"+String.valueOf(ramdom2)+capturedis[1];
+        this.setDisabled(true);
+                }
+                else{
+                adb.alertMessage(mesagges[0]);
+                lblimgfail.setText("");
+                }
+            }
+        };
+        this.actionFail = new AbstractAction("aceptar") {
+            // This method is called when the login button is clicked ...
+            @Override
+            public void handle(ActionEvent ae) {
+                Dialog d = (Dialog) ae.getSource();
+                // Do the login here.
+
+if(!namefail.getText().equals("")&&!descriptionfail.getText().equals("")){
+String[] val={"uf","nf","df","imgf"};
+
+  tablefails.setEditable(true);
+  columnafuser.setCellValueFactory(new PropertyValueFactory<>(val[0]));
+  columnafname.setCellValueFactory(new PropertyValueFactory<>(val[1]));
+  columnafdesc.setCellValueFactory(new PropertyValueFactory<>(val[2]));
+  columnafimg.setCellValueFactory(new PropertyValueFactory<>(val[3]));
+
+  tablefails.setItems(datafail);
+    fail[1]=namefail.getText();
+    fail[2]=descriptionfail.getText();
+    fail[3]=lblimgfail.getText();
+    createRowsFails(datafail,user.getText(),fail[1],fail[2],fail[3]);
+    actioncapinmg.disabledProperty().set(false);
+    lblimgfail.setText("");
+    d.hide();
+       } 
+else{
+    adb.alertMessage(mesagges[6]);
+}
+            }
+        };
+        
 }
     public void setApp(Main application){
         this.application = application;
@@ -195,13 +298,17 @@ public DashboardController(){
        if(tableinfodevice.getItems().isEmpty())
        {
   if(adb.b==1) {
-      String device=adb.returnID(devicedisp);
+      device=adb.returnID(devicedisp);
       System.out.println(device);
-         if(servidor.Consultation("select * from device where id_device='"+device+"'")!=0){ 
+         if(s.Consultation("select * from device where id_device='"+device+"'")!=0){ 
                             
-                            if(adb.confirmMessage(exrecord,question1)){
+                            if(adb.confirmMessage(exrecord,question1[0])){
                                 System.out.println("LOAD INFORMATION DEVICE");
-                                
+                           BDtoTable(0,0,new String[]{valdev,valmod,valprod,valrel,valker,valbui,valoc,valextt,valextd,vala2sdt,vala2sdd,alminter[0],alminter[1],almsis[0],almsis[1],dispcache[0],dispcache[1],dispm[0],dispm[1],dispm[2],"color","alto","ancho","grosor","peso","tipo de bluetooth","certificado google"},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
+                           BDtoTable(1,0,new String[]{"tipo de camara","megapixels",est[0],sup[0],vidsup[0],mod[0],otfeature[0],otfeature[1],otfeature[2],otfeature[3],otfeature[4],otfeature[5],otfeature[6]},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
+                           BDtoTable(2,0,new String[]{"tipo de camara","megapixels",est[0],sup2[0],vidsup2[0],mod[0],otfeature[0],otfeature[1],otfeature[2],otfeature[3],otfeature[4],otfeature[5],otfeature[6]},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
+                           BDtoTable(3,0,new String[]{proc[0],frec[0],"Cores CPU",profeature[0],profeature[7],profeature[6],"GPU"},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
+                           bcontinue.setDisable(true);
                             }
                         }
                         else{
@@ -217,9 +324,9 @@ pushInfo();
 //                              adb.execTerminal(server);
 //                           });
                             
-                            
+     bcontinue.setDisable(false);                       
                         }
-bcontinue.setDisable(false);
+
    }
    else{
     adb.alertMessage(mesagges[0]);
@@ -360,7 +467,7 @@ new Device(valpfr,info4[5])
    createRowsDevice(data,info9,vidsup2);
    createRowsDevice(data,info10,mod);
    createRowsDevice2(data,info7,otfeature);
-   createRowsDevice(data,info11,cams);
+   createRowsDevice(data,info11,cameras);
    createRowsDevice(data,info12,est);
    createRowsDevice3(data,info13,alminter);
    createRowsDevice3(data,info14,almsis);
@@ -370,7 +477,8 @@ new Device(valpfr,info4[5])
    createRowsDevice3(data,info18,frec);
    createRowsDevice3(data,info19,red);
     createRowsDevice2(data,info20,profeature);
-    
+    data.add(new Device("Cores CPU",""));
+    data.add(new Device("GPU",""));
 
    }
    public void fillTableManual(){
@@ -395,7 +503,9 @@ new Device(valph,""),
 new Device(valpw,""),
 new Device(valpd,""),
 new Device(valps,""),
-new Device(valpfr,"")
+new Device(valpfr,""),
+new Device("Cores CPU",""),
+new Device("GPU","")         
 );
    tableinfodevice.setItems(data);
 
@@ -403,7 +513,6 @@ new Device(valpfr,"")
 
 
    }
-
    public void createRowsDevice(ObservableList<Device> data,String[] val,String[] desc){
     
    for(int y=1;y<files.RemoveNullValue(val).length;y++){
@@ -488,61 +597,97 @@ new Device(valpfr,"")
 
         }
    }
+   public void createRowsFails(ObservableList<Fail> data,String va1,String va2,String va3,String va4){
 
+    data.add(new Fail(va1, va2, va3, va4));
+
+   }
+   public void createRowsChart(ObservableList<Chart> data,String va2){
+
+    data.add(new Chart(va2));
+
+   }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
+viewMITable();
 splitPane.setOnSwipeRight(null);    
   adb.LoopAdb(activedevice);
 
-  choicematerialdev.getItems().addAll(servidor.ConsultforUICMItem(consults[0],columnsdb[0]));
-  choiceband.getItems().addAll(servidor.ConsultforUICMItem(consults[1],columnsdb[1]));
-  choiceband.getItems().addAll(servidor.ConsultforUICMItem(consults[1],columnsdb[1]));
-  choicewifi.getItems().addAll(servidor.ConsultforUICMItem(consults[2],columnsdb[1]));
-  choicesensor.getItems().addAll(servidor.ConsultforUICMItem(consults[7],columnsdb[6]));
-  ObservableList<String> olistblu = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[3],columnsdb[2]));
+  choicematerialdev.getItems().addAll(s.ConsultforUICMItem(consults[0],columnsdb[0]));
+  choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
+  choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
+  choicewifi.getItems().addAll(s.ConsultforUICMItem(consults[2],columnsdb[1]));
+  choicesensor.getItems().addAll(s.ConsultforUICMItem(consults[7],columnsdb[6]));
+  ObservableList<String> olistblu = FXCollections.observableArrayList(s.ConsultforUIArray(consults[3],columnsdb[2]));
   cbbluetooth.setItems(olistblu);
-    ObservableList<String> olistdis = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[4],columnsdb[3]));
+    ObservableList<String> olistdis = FXCollections.observableArrayList(s.ConsultforUIArray(consults[4],columnsdb[3]));
   cbtypedis.setItems(olistdis);
-      ObservableList<String> olisttactil = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[5],columnsdb[4]));
+      ObservableList<String> olisttactil = FXCollections.observableArrayList(s.ConsultforUIArray(consults[5],columnsdb[4]));
   cbtactildis.setItems(olisttactil);
-        ObservableList<String> olistbat = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[6],columnsdb[5]));
+        ObservableList<String> olistbat = FXCollections.observableArrayList(s.ConsultforUIArray(consults[6],columnsdb[5]));
   cbtypebat.setItems(olistbat);
-          ObservableList<String> olistprov = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[8],columnsdb[7]));
+          ObservableList<String> olistprov = FXCollections.observableArrayList(s.ConsultforUIArray(consults[8],columnsdb[7]));
   cbprov.setItems(olistprov);
   cbcertgoogle.getItems().addAll("si","no");
   cbfilterimg.getItems().addAll("pruebas","fallas","dispositivo","otras");
-  ObservableList<String> olistbech = FXCollections.observableArrayList(servidor.ConsultforUIArray(consults[9],columnsdb[8]));
+  ObservableList<String> olistbech = FXCollections.observableArrayList(s.ConsultforUIArray(consults[9],columnsdb[8]));
   cbbench.setItems(olistbech);
-  
 
-validateTextFile(txthdev);
-validateTextFile(txtwdev);
-validateTextFile(txtbulkdev);
-validateTextFile(txtcolordis);
-validateTextFile(txtcapbat);
-validateTextFile(result1);
-validateTextFile(result2);
-validateTextFile(result3);
-validateTextFile(result4);
-validateTextFile(result5);
+c.validateTextFile(txthdev,lblcompinfo);txthdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(txtwdev,lblcompinfo);txtwdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(txtbulkdev,lblcompinfo);txtbulkdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(txtcolordis,lblcompinfo);txtcolordis.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(20));
+c.validateTextFile(txtcapbat,lblcompinfo);txtcapbat.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(20));
+c.validateTextFile(txtweight,lblcompinfo);txtweight.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(result1,lblcompinfo);
+c.validateTextFile(result2,lblcompinfo);
+c.validateTextFile(result3,lblcompinfo);
+c.validateTextFile(result4,lblcompinfo);
+c.validateTextFile(result5,lblcompinfo);
   photo.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
     @Override
     public void handle(MouseEvent event) {
        
         int ramdom=new Random().nextInt(1000000000);
         adb.execGeneric(capturedis[0]+String.valueOf(ramdom)+capturedis[1], null, adb.b);
-        adb.execGeneric(pullimg+String.valueOf(ramdom)+capturedis[1]+" "+folderimg, null, adb.b);
-        listimg[npng]=folderimg+"\\"+String.valueOf(ramdom)+capturedis[1];
-        System.out.println(listimg[npng]);
-        npng++;
-        lblimg.setText(String.valueOf(npng));
+        adb.execGeneric(pullimg+String.valueOf(ramdom)+capturedis[1]+" "+folderimg[0], null, adb.b);
+        listimg[tpng]=folderimg[0]+"\\"+String.valueOf(ramdom)+capturedis[1];
+        System.out.println(listimg[tpng]);
+        tpng++;
+        lblimg.setText(String.valueOf(tpng));
         
     }
 });
-  
+  chkpref.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(s.Consultation("select * from user_preferences where u_pref="+idu+" and id_pref=1")!=0){
+                s.UpdatElement("update user_preferences set desc_pref = ? where u_pref="+idu+" and id_pref=1",new int[]{0},new String[]{newValue.toString()}, null);
+                }
+                else{
+                s.Addelement("insert into user_preferences values ("+idu+",1,"+"'"+newValue.toString()+"'"+")");
+                }
+                }
+        });
+       
+  binduction.setOnAction(new EventHandler<ActionEvent>() {
+    @Override
+    public void handle(ActionEvent event) {
+    tabdash.getSelectionModel().select(tabdevice);
     }
+  });
+  
+  helper.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+    @Override
+    public void handle(MouseEvent event) {
+        adb.execTerminal(web);
+    }
+});
+
+
+    }
     public void buttonLoadTab(ActionEvent actionEvent){
       switch(actionEvent.getSource().toString()){
           case "Button[id=bdevice, styleClass=button]'Dispositivo'":
@@ -557,15 +702,17 @@ validateTextFile(result5);
           case "Button[id=btest, styleClass=button]'Pruebas'":
             tabdash.getSelectionModel().select(tabtest);
               break;
-          case "Button[id=bimgdevice, styleClass=button]'Dispositivo'":
+          case "Button[id=bimgdevice, styleClass=button]'General'":
             tabdash.getSelectionModel().select(tabimage);
               break;    
           case "Button[id=bcompare, styleClass=button]'Comparar'":
             tabdash.getSelectionModel().select(tabcompare);
-              break; 
+              break;
+          case "Button[id=bfails, styleClass=button]'Información'":
+            tabdash.getSelectionModel().select(tabfails);
+              break;
      }
     }
-    
     public void LoadManual(ActionEvent actionEvent){       
    adb.execTerminal(web);
     }
@@ -587,13 +734,119 @@ validateTextFile(result5);
     public void NextStep(ActionEvent actionEvent){
         switch(tabdash.getSelectionModel().getSelectedItem().getId()){
         case("tabdevice"):
-            servidor.generateInfoIdent(columnitem,columndescription);
-            tabdash.getSelectionModel().select(tabcomp);
+            Boolean bool=false;
+               for(int x=0;x<columndescription.getTableView().getItems().size();x++){
+                   if(columndescription.getCellData(x).isEmpty()){
+                   bool=true;
+                   }
+               }
+                if(!bool){
+            if(adb.confirmMessage("Aviso",question1[1])){
+                s.generateInfoIdent(tabdash,columnitem,columndescription);
+                tabdash.getSelectionModel().select(tabcomp);
+                bcomponente.setDisable(false);                         
+            }
+                }
+            else{
+                adb.alertMessage("Existen campos vacíos en la tabla");
+            }
+
+               // System.out.println(s.name_cpu);
+
             break;
         case("tabcomp"):
-            getInfoTabComp();
-            //tabdash.getSelectionModel().select(tabapp);
-            break;    
+           String apps=files.oneString(files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b)));
+           c.getInfoTabComp(lblcompinfo,new TextField[]{txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtweight},new MenuButton[]{choicematerialdev,choiceband,choicewifi,choicesensor},new ComboBox[]{cbbluetooth,cbtypedis,cbtactildis,cbtypebat,cbprov,cbcertgoogle},cpdev);
+           String blu=s.ConsultforUIString("select id_blu from bluetooth where type_blu='"+c.values[7][0]+"'", "id_blu");
+           int cert= files.booleanToint("si",c.values[15][0]);
+           int mat=files.RemoveNullValue2(c.values[3]).length;
+           int band=files.RemoveNullValue2(c.values[5]).length;
+           int wifi=files.RemoveNullValue2(c.values[6]).length;
+           int other=files.RemoveNullValue2(c.values[13]).length;
+           String bat=s.ConsultforUIString("select id_bat from battery where type_bat='"+c.values[11][0]+"'", "id_bat");
+           String type_d=s.ConsultforUIString("select id_type_dis from display_type where name_dis='"+c.values[8][0]+"'", "id_type_dis");
+           String type_tac=s.ConsultforUIString("select id_tactil from display_tactil where name_tactil='"+c.values[10][0]+"'", "id_tactil");
+           String[] c1=files.RemoveNullValue2(s.firsttab[0]);
+           String[] c2=files.RemoveNullValue2(s.firsttab[2]);
+            if(s.Consultation("select * from device where id_device='"+device+"'")!=0){
+                s.UpdatElement("update device set name_dev= ?,model_dev= ?,ver_so= ?,kernel= ?,build_dev= ?,locale_dev= ?,sto_ext_sd_t= ?,sto_ext_sd_d= ?,sto_s2sd_t= ?,sto_s2sd_d= ?,sto_inter_t= ?,sto_inter_d= ?,sto_sys_t= ?,sto_sys_d= ?,cache_sys_t= ?,cache_sys_d= ?,ram_t= ?,ram_d= ?,ram_l= ?,color= ?,h_dev= ?,w_dev= ?,bulk_dev= ?,weight_dev= ?,id_blu= ?,cert_google= ?,all_app_dev= ? where id_device='"+device+"'",
+                        new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0},
+                        new String[]{s.name_dev,s.model_dev,s.ver_so,s.kernel_dev,s.build_dev,s.locale_dev,s.sto_ext_sd_t,s.sto_ext_sd_t,s.sto_ext_sd_d,s.sto_s2sd_t,s.sto_s2sd_d,s.sto_inter_t,s.sto_inter_d,s.sto_sys_t,s.sto_sys_d,s.cache_sys_t,s.cache_sys_d,s.ram_t,s.ram_d,s.ram_l,c.values[4][0],c.values[0][0],c.values[1][0],c.values[2][0],c.values[16][0],apps},
+                        new int[]{Integer.valueOf(blu),cert});
+                  if(s.Consultation("select * from cpu where name_cpu='"+s.name_cpu+"'")!=0){
+                                  int cpu=s.ConsultforUIInt("select id_cpu as sel from cpu where name_cpu='"+s.name_cpu+"'", "sel");    
+                                 s.Addelement("insert into device_cpu values ('"+device+"',"+cpu+")");
+                            }
+                  else{
+                                int lastcpu=s.ConsultforUIInt("select count(*) as t from cpu", "t");
+                                lastcpu+=1;
+                                s.Addelement("insert into cpu values ("+lastcpu+",'"+s.name_cpu+"','"+s.frec_cpu+"',"+s.core_cpu+",'"+s.feature_cpu.replaceAll(" ",";")+"','"+s.revision_cpu+"','"+s.revision_cpu+"','"+s.gpu+"')");
+                                
+                      }
+               
+                  
+                  
+                }
+                else{
+                            s.Addelement("insert into device values ('"+device+"','"+s.name_dev+"','"+s.model_dev+"','"+s.ver_so+"','"+s.kernel_dev+"','"+s.build_dev+"','"+s.locale_dev+"','"+s.sto_ext_sd_t+"','"+s.sto_ext_sd_d+"','"+s.sto_s2sd_t+"','"+s.sto_s2sd_d+"','"+s.sto_inter_t+"','"+s.sto_inter_d+"','"+s.sto_sys_t+"','"+s.sto_sys_d+"','"+s.cache_sys_t+"','"+s.cache_sys_d+"','"+s.ram_t+"','"+s.ram_d+"','"+s.ram_l+"','"+c.values[4][0]+"','"+c.values[0][0]+"','"+c.values[1][0]+"','"+c.values[2][0]+"','"+c.values[16][0]+"',"+blu+","+cert+",'"+apps+"')");
+                            s.Addelement("insert into display values('"+device+"',"+type_d+","+s.p_width_dev+","+s.p_height_dev+","+type_tac+",'"+s.p_size_dev+"','"+s.p_refresh_dev+"','"+s.p_density_dev+"','"+c.values[9][0]+"')");                          
+                            if(s.n_cam_dev.contains("2")){
+                                      s.Addelement("insert into device_cam values ('"+device+"','primary','"+c1[c1.length-1]+"',"+files.booleanToint("true",s.sta_flash.trim())+",'"+files.oneString(s.firsttab[0]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[1]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[4]).replaceAll(" ","")+"','"+s.focus_mode+"','"+s.max_focus_area+"','"+s.whitebalance_cam.replaceAll("\\s|null|\\]|\\[|", "")+"','"+s.scene_mode_cam.replaceAll("\\s|null|\\]|\\[|", "")+"',"+files.booleanToint("true",s.stabilization_video.trim())+",'"+s.quality_img+"','"+s.quality_thumb+"')");
+   //                                   s.Addelement("insert into device_cam values ('"+device+"','secundary','"+c2[c2.length-1]+"',0,'"+files.oneString(s.firsttab[2]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[3]).replaceAll(" ","")+"','null','null','null','null','null',0,'null','null')");
+                                      s.Addelement("insert into device_cam values ('"+device+"','secundary','"+c2[c2.length-1]+"',0,'"+files.oneString(s.firsttab[2]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[3]).replaceAll(" ","")+"','N/A','N/A','N/A','N/A','N/A',0,'N/A','N/A')");
+                            }
+                                else{
+                                if(s.n_cam_dev.contains("1")){
+                                          s.Addelement("insert into device_cam values ('"+device+"','primary','"+c1[c1.length-1]+"',"+files.booleanToint("true",s.sta_flash.trim())+",'"+files.oneString(s.firsttab[0]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[1]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[4]).replaceAll(" ","")+"','"+s.focus_mode+"','"+s.max_focus_area+"','"+s.whitebalance_cam.replaceAll("\\s|null|\\]|\\[|", "")+"','"+s.scene_mode_cam.replaceAll("\\s|null|\\]|\\[|", "")+"',"+files.booleanToint("true",s.stabilization_video.trim())+",'"+s.quality_img+"','"+s.quality_thumb+"')");
+                                          }
+                                }
+                            if(s.Consultation("select * from cpu where name_cpu='"+s.name_cpu+"'")!=0){
+      
+                                  int cpu=s.ConsultforUIInt("select id_cpu as sel from cpu where name_cpu='"+s.name_cpu+"'", "sel");    
+
+                                 s.Addelement("insert into device_cpu values ('"+device+"',"+cpu+")");
+                            }
+
+                                else{
+                                    int lastcpu=s.ConsultforUIInt("select count(*) as t from cpu", "t");
+                                    lastcpu+=1;
+                                    s.Addelement("insert into cpu values ("+lastcpu+",'"+s.name_cpu+"','"+s.frec_cpu+"',"+s.core_cpu+",'"+s.feature_cpu.replaceAll(" ",";")+"','"+s.revision_cpu+"','"+s.revision_cpu+"','"+s.gpu+"')");
+                                }
+                            for(int i=0;i<mat;i++){
+                            int ma=s.ConsultforUIInt("select id_mat from material where name_mat='"+c.values[3][i]+"'", "id_mat");
+                            s.Addelement("insert into device_mat values ('"+device+"',"+ma+")");
+                            }
+                            for(int i=0;i<band;i++){
+                            int nt=s.ConsultforUIInt("select id_net from network where val_net='"+c.values[5][i]+"'", "id_net");
+                            s.Addelement("insert into device_network values ('"+device+"',"+nt+")");
+                            }
+                            for(int i=0;i<wifi;i++){
+                            int nt=s.ConsultforUIInt("select id_net from network where val_net='"+c.values[6][i]+"'", "id_net");
+                            s.Addelement("insert into device_network values ('"+device+"',"+nt+")");
+                            }
+                            s.Addelement("insert into device_battery values ('"+device+"',"+bat+",'"+c.values[12][0]+"')");
+                            for(int i=0;i<other;i++){
+                            int ot=s.ConsultforUIInt("select id_sup from other_support where name_sup='"+c.values[13][i]+"'", "id_sup");
+                            s.Addelement("insert into device_support values ('"+device+"',"+ot+")");
+                            }
+                }
+
+//                        int icpu = 0;
+//            if(s.Consultation("select id_cpu from cpu where name_cpu='"+s.name_cpu+"'")==0){
+//                if(s.Addelement("insert into cpu values ('"+s.name_cpu+"','"+s.frec_cpu+"',"+Integer.valueOf(s.core_cpu)+",'"+s.feature_cpu+"','"+s.revision_cpu+"','"+s.hard_cpu+"','"+s.gpu+"')")==true){ 
+//                    icpu=Integer.valueOf(s.ConsultforUIString("select id_cpu from cpu where name_cpu='"+s.name_cpu+"'","id_cpu"));
+//                }
+//            }
+//            else{
+//            icpu=Integer.valueOf(s.ConsultforUIString("select id_cpu from cpu where name_cpu='"+s.name_cpu+"'","id_cpu"));
+//            }
+//            for(String s:c.values[3]){
+//            
+//            }
+            tabdash.getSelectionModel().select(tabapp);         
+            
+
+            break;        
             
         }
     
@@ -628,20 +881,44 @@ validateTextFile(result5);
       Bindings.when(Bindings.isNotNull(row.itemProperty()))
       .then(contextMenu)
       .otherwise((ContextMenu)null));
+            
+            
+            return row;
+            
+        }
+    
+    }
+    );
+    }
+    public void viewMITable(){
+    tablefails.setRowFactory(
+    new Callback<TableView<Fail>, TableRow<Fail>>(){
+
+        @Override
+        public TableRow<Fail> call(TableView<Fail> param) {
+            final TableRow<Fail> row=new TableRow<>();
+            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println(row.getItem().uf.getValue());
+                    System.out.println(row.getItem().imgf.getValue());
+                    txtnf.setText(row.getItem().nf.getValue());
+                    txtdf.setText(row.getItem().df.getValue());
+                }
+            });
             return row;
         }
     
     }
     );
     }
-
     public void exit(ActionEvent actionEvent){
     System.exit(0);
     }
     public void minimize(ActionEvent actionEvent){
     
     }
-
     public void ProgressBar(int seconds){
  task = new Timeline(
         new KeyFrame(
@@ -658,10 +935,11 @@ validateTextFile(result5);
 
 }
     public void getParametersUser(ObservableList<String> observableList){
-      user.setText(observableList.get(0));
-      permission.setText(observableList.get(1));
-      avatar.setImage(new Image(observableList.get(2)));
-      dateuser.setText(observableList.get(3));
+        idu=observableList.get(0);
+      user.setText(observableList.get(1));
+      permission.setText(observableList.get(2));
+      avatar.setImage(new Image(observableList.get(3)));
+      dateuser.setText(observableList.get(4));
     }
     public void getADB(int i){
     VAL=i;
@@ -678,86 +956,8 @@ validateTextFile(result5);
             
     }
     }
-    public void validateTextFile(TextField textField){
-    
-  textField.setOnKeyTyped(new EventHandler<KeyEvent>(){
-
-    @Override
-    public void handle(KeyEvent event) {
-        String valtxt=((TextInputControl)event.getTarget()).getText();
-        if(valtxt.length()<0||valtxt.isEmpty()){
-            ((Node)event.getTarget()).setStyle("-fx-border-color: red");
-        }
-        else{
-        ((Node)event.getTarget()).setStyle("-fx-border-color: null");
-        lblcompinfo.setText("");
-        }
-    }
-  });
-    }
-    public String[] returnMenuItem(MenuButton mb){
-        String array[]=new String [20];
-        int y=0;
-        for(String mi:files.getValueMI(mb)){
-        array[y]=mi;
-        y++;
-        }
-        return array;
-        }
     public void getColor(ActionEvent actionEvent){
     System.out.println(cpdev.getValue().toString());
-    }
-    public String[][] getInfoTabComp(){
-       String[][]values=new String[20][20];
-int w = 0,x = 0,y = 0,z=0;
-       if("".equals(txthdev.getText()) ||"".equals(txtwdev.getText())||"".equals(txtbulkdev.getText())
-          ||"".equals(txtcolordis.getText())||"".equals(txtcapbat.getText()))
-       {lblcompinfo.setText("Existen campos vacios, ingrese información correspondiente");}
-       else{
-       values[0][0]=txthdev.getText();
-       values[1][0]=txtwdev.getText();
-       values[2][0]=txtbulkdev.getText();
-       for(String val:returnMenuItem(choicematerialdev)){ 
-       values[3][w]=val;
-       w++;
-       }
-       values[4][0]=cpdev.getValue().toString();
-       for(String val:returnMenuItem(choiceband)){ 
-       values[5][x]=val;
-       x++;
-       }
-       for(String val:returnMenuItem(choicewifi)){ 
-       values[6][y]=val;
-       y++;
-       }
-       values[7][0]=files.getValueCb(cbbluetooth);
-       values[8][0]=files.getValueCb(cbtypedis);
-       values[9][0]=txtcolordis.getText();
-       values[10][0]=files.getValueCb(cbtactildis);
-       values[11][0]=files.getValueCb(cbtypebat);
-       values[12][0]=txtcapbat.getText();
-              for(String val:returnMenuItem(choicesensor)){ 
-       values[13][z]=val;
-       z++;
-       }
-       values[14][0]=files.getValueCb(cbprov);
-       values[15][0]=files.getValueCb(cbcertgoogle);
-       
-//       for(String[] valu:values){
-//       System.out.println(Arrays.toString(valu));
-//       }
-           for (String[] value1 : values) {
-               for (String value : value1) {
-                   if(value!=null){
-                   System.out.println(value);
-                   }
-               }
-           }
-       }
-    return values;
-      
-
-           
     }
     public EventHandler<ActionEvent> installApp(){
                        columnappinstall.setCellValueFactory(new PropertyValueFactory<>(apktoinstalled));
@@ -1013,56 +1213,52 @@ else{
 }
     }
     public void Img(String path){
+         ImageView imageView = null;
         File folder=new File(path);
         File[] listFiles=folder.listFiles();
+        if(listFiles.length>0){
+            tilePane.getChildren().clear();
+            lblmsjimg.setText("presione 2 click izquierdo para visualizar / derecho para descartar imagen");
         for(final File file:listFiles){
-            ImageView imageView;
-            imageView=createImageView(file);
+                try {
+                    imageView=createImageView(file);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             tilePane.getChildren().addAll(imageView);
+          
+        }
+        imageView.setImage(null);
+        listFiles=null;
+        folder=null;
+        }
+        else{
+            tilePane.getChildren().clear();
+        lblmsjimg.setText("no hay imagenes disponibles");
         }
     }
-    private ImageView createImageView(final File imageFile) {
+    private ImageView createImageView(final File imageFile) throws FileNotFoundException{
         // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
         // The last two arguments are: preserveRatio, and use smooth (slower)
         // resizing
-
-        ImageView imageView = null;
-        try {
-            final Image image;
-            image = new Image(new FileInputStream(imageFile), 150, 0, true,
-                    true);
-            imageView = new ImageView(image);
+        FileInputStream fileInputStream = new FileInputStream(imageFile);
+        
+  Image image = null;
+  ImageView imageView1=new ImageView();
+  BorderPane borderPane = new BorderPane();
+  image = new Image(fileInputStream, 150, 0, true,
+          true);
+             ImageView imageView = new ImageView(image);
+      
             imageView.setFitWidth(150);
             imageView.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
+                        FileInputStream fileInputStream2 = null;
                         try {
-                            Button delete=new Button("eliminar");
-                            Button close=new Button("X");
-                            close.setOnAction((ActionEvent event) -> {
-                                ((Node)(event.getSource())).getScene().getWindow().hide();
-                            });
-                            delete.setOnAction((ActionEvent event) -> {
-                                try {
-                                    Files.delete(imageFile.toPath());
-                                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            });
-                            delete.setStyle("    -fx-background-color:\n" +
-                                    "        #FF9640;\n" +
-                                    "    -fx-font-family: \"Síragon\";\n" +
-                                    "    -fx-text-fill: white;\n" +
-                                    "    -fx-font-size: 14;");
-                            VBox vBox=new VBox();
-                            vBox.setSpacing(10);
-                            vBox.setPadding(Insets.EMPTY);
-                            vBox.getChildren().addAll(delete,close);
-                            BorderPane borderPane = new BorderPane();
-                            ImageView imageView1 = new ImageView();
+                            fileInputStream2 = new FileInputStream(imageFile);
                             Image image1 = null;
-                            image1 = new Image(new FileInputStream(imageFile));
+                            image1 = new Image(fileInputStream2);
                             imageView1.setImage(image1);
                             imageView1.setStyle("-fx-background-color: null");
                             imageView1.setFitHeight(application.stage.getHeight() - 10);
@@ -1070,7 +1266,6 @@ else{
                             imageView1.setSmooth(true);
                             imageView1.setCache(true);
                             borderPane.setCenter(imageView1);
-                            borderPane.setRight(vBox);
                             borderPane.setStyle("-fx-background-color: null");
                             Stage newStage = new Stage();
                             newStage.setWidth(application.stage.getWidth());
@@ -1079,32 +1274,205 @@ else{
                             Scene scene1 = new Scene(borderPane,Color.WHITE);
                             newStage.setScene(scene1);
                             newStage.show();
-                        }catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            try {
+                                fileInputStream2.close();
+                            } catch (IOException ex) {
+                                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        try {
+                            fileInputStream2.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                   
                 }
+           
+                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getClickCount() == 2) {
+                
+                listdelimg[z]=imageFile.getAbsolutePath();
+                imageFile.deleteOnExit();
+                tilePane.getChildren().remove(imageView);
+                
+                
+               z++;
+
+            }
+                    
+                }
+            
             });
-        } catch (FileNotFoundException ex) {
+           image=null;
+        try {
+            fileInputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return imageView;
     }
     public void Loadimg(ActionEvent actionEvent){
-        switch(files.getValueCb(cbcompatible)){
+        switch(files.getValueCb(cbfilterimg)){
             case("pruebas"):
-                Img("");
+                Img("C:\\application\\img\\test");
             break;
             case("fallas"):
-                Img("");
+                Img("C:\\application\\img\\fails");
             break;
             case("dispositivo"):
-                Img("");
+                Img("C:\\application\\img\\device");
             break;
             case("otras"):
-                Img("");
+                Img("C:\\application\\img\\others");
             break;    
 
         }
     } 
+    public void deleteImg(ActionEvent actionEvent){
+     Path path;
+                    tilePane.getChildren().clear();
+                try {
+                    for(String paths:files.RemoveNullValue2(listdelimg)){
+                         path = Paths.get(paths);
+                         Files.deleteIfExists(path);
+                    }
+                   
+                    //Files.delete(path);
+                } catch (IOException ex) {
+                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+    }
+    public void addfails(ActionEvent actionEvent){
+        // Create the custom dialog.
+            fail[1]="";fail[2]="";fail[3]="";
+    Button bcapfails=new Button("capturar imagen");   
+    Dialog dlg = new Dialog(application.stage, "Fallas");
+
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(0, 10, 0, 10));
+
+    namefail.setPromptText("tipo de falla");
+    descriptionfail.setPromptText("descripción de la falla");
+
+    grid.add(new Label("nombre:"), 0, 0);
+    grid.add(namefail, 1, 0);
+    
+    grid.add(new Label("descripción:"), 0, 1);
+    grid.add(descriptionfail, 1, 1);
+    grid.add(lblimgfail, 1, 2);
+
+    ButtonBar.setType(actionFail, ButtonType.OK_DONE);
+    actionFail.disabledProperty().set(true);
+   // bcapfails.setOnAction(actioncapinmg);
+    // Do some validation (using the Java 8 lambda syntax).
+    namefail.textProperty().addListener((observable, oldValue, newValue) -> {
+        actionFail.disabledProperty().set(newValue.trim().isEmpty());
+    });
+    actioncapinmg.disabledProperty().addListener((observable, oldValue, newValue) -> {
+        lblimgfail.setText(imgc);
+    });
+
+    dlg.setMasthead("ingrese información referente a falla");
+    dlg.setContent(grid);
+    dlg.getActions().addAll(actionFail,actioncapinmg, Dialog.Actions.CANCEL);
+
+    // Request focus on the username field by default.
+    
+    namefail.setText("");
+    descriptionfail.setText("");
+    descriptionfail.setWrapText(true);
+    dlg.show();
+    
+    } 
+    public void getChartDevice(ActionEvent actionEvent){
+        String[] val={"bd","nd"};
+
+  tablechart.setEditable(true);
+  columnaselect.setCellValueFactory(new PropertyValueFactory<>(val[0]));
+  columnaselect.setCellFactory(CheckBoxTableCell.forTableColumn(columnaselect));
+  columnaselect.setEditable(true);
+  columnanchart.setCellValueFactory(new PropertyValueFactory<>(val[1]));
+
+ tablechart.setItems(datachart);
+        createRowsChart(datachart,"fedwjfwpf");
+    }
+    public void getCherDeviceTrue(ActionEvent actionEvent){
+        for(Chart c:tablechart.getItems()){
+            if(c.getBd()==true){
+                System.out.println("EXISSTE");
+            }
+        }
+    }
+    public void checkInduction(String val){
+        if(s.Consultation("select * from user_preferences where u_pref="+val+" and id_pref=1 and desc_pref='true'")==0){
+   tabdash.getSelectionModel().select(tabinduction);
+  }
+  else{
+       tabdash.getSelectionModel().select(tabdevice);
+            bcontinue.setVisible(true);
+            baddfails.setVisible(true);
+            badvantage.setVisible(true);
+  }
+    }
+    public void BDtoTable(int i,int y,String[] desc,TableView tv,TableColumn tc,TableColumn tc1,String[] ses){
+        int z=0,x=0;
+    switch(i){
+        case(0):
+            
+   tc.setCellValueFactory(new PropertyValueFactory<>(ses[0]));
+   tc1.setCellValueFactory(new PropertyValueFactory<>(ses[1]));
+   tv.setItems(data);
+          String[][] val= s.getBD(1,"select * from device where id_Device='"+device+"'",new String[]{"id_device","name_dev","model_dev","ver_so","kernel","build_dev","locale_dev","sto_ext_sd_t",
+                "sto_ext_sd_d","sto_s2sd_t","sto_s2sd_d","sto_inter_t","sto_inter_d","sto_sys_t","sto_sys_d","cache_sys_t","cache_sys_d","ram_t","ram_d","ram_l","color","h_dev","w_dev","bulk_dev",
+                "weight_dev","id_blu","cert_google"});
+
+                for(String g: files.RemoveNullValue2(val[0])){
+                System.out.println(g);
+                data.add(new Device(desc[x],g));
+                x++;
+                }       
+        break;
+        case 1:
+          x=0;
+            String[][] va=s.getBD(2,"select * from device_cam where id_dev_cam='"+device+"'",new String[]{"type_cam","mp_cam","flash_cam","supp_img_cam","supp_vid_cam","dis_focus","focus_enabled","focus_area","whitebalance","scene_mode","sta_vid","q_jpeg","q_thum"});
+          
+              for(String c:files.RemoveNullValue2(va[0])){
+             System.out.println(c);
+             data.add(new Device(desc[x],c));
+             x++;
+             }
+        break;
+        case 2:
+          x=0;
+            String[][] va1=s.getBD(2,"select * from device_cam where id_dev_cam='"+device+"'",new String[]{"type_cam","mp_cam","flash_cam","supp_img_cam","supp_vid_cam","dis_focus","focus_enabled","focus_area","whitebalance","scene_mode","sta_vid","q_jpeg","q_thum"});
+          
+             for(String c:files.RemoveNullValue2(va1[1])){
+             System.out.println(c);
+             data.add(new Device(desc[z],c));
+             z++;
+             }
+        break;
+        case 3:
+          x=0;
+          String cpu=s.ConsultforUIString("select * from device_cpu where id_dev_cpu='"+device+"'","id_cpu_c");
+            String[][] va2=s.getBD(1,"select * from cpu where id_cpu="+cpu+"",new String[]{"name_cpu","frec_cpu","core_cpu","feature_cpu","revision_cpu","hard_cpu","gpu"});
+          
+              for(String c:files.RemoveNullValue2(va2[0])){
+             System.out.println(c);
+             data.add(new Device(desc[x],c));
+             x++;
+             }
+
+        break;
+
+    }
+    }
     }
     
 
