@@ -64,13 +64,13 @@ System.out.println(values);
 //        
        
 }
-         public void exit(ActionEvent actionEvent){
+    public void exit(ActionEvent actionEvent){
 
                   
 ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
     } 
-                  public void get(ActionEvent actionEvent){
+    public void get(ActionEvent actionEvent){
                       
      
                       textarea.clear();
@@ -115,6 +115,7 @@ textarea.setText("");
 }
 
     } 
+
     
 }
  

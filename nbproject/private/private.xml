@@ -14,11 +14,9 @@
         <group>
             <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/DashboardController.java</file>
             <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/connections/server.java</file>
-            <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/connections/adb.java</file>
             <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/connections/files.java</file>
             <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/GenericInterface.java</file>
-            <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/Main.java</file>
-            <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/Controls.java</file>
+            <file>file:/C:/Users/project/Documents/GitHub/test/src/demo/tables/Fail.java</file>
         </group>
     </open-files>
 </project-private>

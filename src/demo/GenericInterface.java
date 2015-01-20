@@ -14,7 +14,7 @@ public interface GenericInterface {
     //list command//
     String start[]={"adb shell am start -n ","adb logcat ActivityManager:V "," *:S","adb shell su -c'cp "};
     String insgenbench="adb install -r C:\\application\\apps\\apk_benchmark\\";
-    String installSiragonapp="adb install C:\\application\\apps\\siragonapp.apk";
+    String installSiragonapp="adb install -r C:\\application\\apps\\siragonapp.apk";
     String startapps[]={"org.uguess.android.sysinfo/.SiragonInfo",
     "com.antutu.ABenchMark/com.antutu.ABenchMark.ABenchMarkStart","com.eembc.coremark/.tabs",
     "com.quicinc.vellamo/.main.MainActivity","com.glbenchmark.glbenchmark27/net.kishonti.gfxbench.GfxMainActivity",
@@ -34,9 +34,12 @@ public interface GenericInterface {
     String folderegister="C:\\application\\deviceRegisters\\";
     String folderappbench="C:\\application\\apps\\apk_benchmark\\";
     String folderLogs="C:\\application\\logs\\";
-    String[] folderimg={"C:\\application\\img\\test","C:\\application\\img\\fails","C:\\application\\img\\other","C:\\application\\img\\others"};
-    String pullimg="adb pull /sdcard/app-siragon/captures/";
-    String runlogcat="adb logcat *:W > /storage/sdcard0/ADB/";
+    String[] folderimg={"C:\\\\application\\\\img\\\\fails\\\\","C:\\application\\img\\test\\","C:\\application\\img\\others\\","C:\\application\\img\\device\\"};
+    String[] ftemp={"C:\\application\\img\\fails\\temp","C:\\application\\img\\test\\temp","C:\\application\\img\\others\\temp","C:\\application\\img\\device\\temp"};
+    String[] folderimgA={"C:/application/img/fails/","C:/application/img/test/","C:/application/img/others/","C:/application/img/device/"};
+    String pullimg[]={"adb pull /sdcard/app-siragon/captures/","/"};
+    String runlogcat="adb logcat *:W > /storage/sdcard0/app-siragon/ADB/";
+    String folderfail="C:\\\\\\\\application\\\\\\\\\\img\\\\\\\\test\\\\\\\\";
     //list message
     String detect="Dispositivo detectado";
     String offline="Dispositivo desconectado";
@@ -89,12 +92,15 @@ public interface GenericInterface {
     String nbech="nt";
     String rbench="rt";
     String imgb="it";
+    String rd[]={"'","delete from display where i_dev='","delete from device_mat where id_dev_mat='","delete from device_support where id_dev='",
+    "delete from device_cpu where id_dev_cpu='","delete from device_cam where id_dev_cam='","delete from device_battery where id_dev_b='",
+    "delete from device_support where id_dev='","delete from device_network where id_dev='","delete from image where id_dev='","delete from device_failure where id_dev='","delete from device where id_device='"};
     String disconnect="por algun motivo se ha desconectado el dispositivo";
     String noconnect="no se ha detectado dispositivo";
     String exrecord="dispositivo se encuentra registrado";
     String question="¿Desea ver los registros?";
     String question2="¿Desea continuar sin un dispositivo conectado?";
-    String[] question1={"¿Desea obtener la información para su uso?","¿Esta seguro de continuar con la informacón actual?"};
+    String[] question1={"¿Desea obtener la información para su uso?","¿Esta seguro de continuar con la informacón actual?","¿Desea reiniciar el proceso de evaluación?"};
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
@@ -128,9 +134,9 @@ public interface GenericInterface {
     String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
       "select val_net from network where type_net='wifi'","select type_blu from bluetooth",
       "select * from display_type","select * from display_tactil","select * from battery",
-      "select name_sup from other_support where type='sensor'","select name_provider from provider","select name_test from test"};
+      "select name_sup from other_support where type='sensor'","select name_provider from provider","select name_test from test","select nparams from params"};
     String[] columnsdb={"name_mat","val_net","type_blu","name_dis","name_tactil",
-      "type_bat","name_sup","name_provider","name_test"};
+      "type_bat","name_sup","name_provider","name_test","nparams"};
     String[] mesagges={"por favor conecte un dispositivo a traves de USB.","dispositivo se encuentra registrado",
         "error al conectar con servidor de datos","tabla ya posee datos de un equipo",
         "instalando aplicación ","ha finalizado la prueba correctamente, ingrese el resultado obtenido",

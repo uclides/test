@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -373,7 +374,7 @@ val++;
     List<String> list = new ArrayList<String>();
 
     for(String s : val) {
-       if(s != null) {
+       if(s != null && !s.equals("")) {
           list.add(s);
        }
     }
@@ -395,6 +396,33 @@ val++;
     val = list.toArray(new String[list.size()]);
 
           return val;
+  }
+    public String[] RemoveNullValue3(String[] val) {
+  
+    List<String> list = new ArrayList<String>();
+
+    for(String s : val) {
+       if(s != null && !s.equals("")) {
+          list.add(s);
+       }
+    }
+
+    val = list.toArray(new String[list.size()]);
+
+          return val;
+  }
+    public String[][] RemoveNullArray(String[][] val) {
+for(int i = 0; i < val.length; i++) {
+    Object[] inner = val[i];
+    List<Object> list = new ArrayList<Object>(inner.length);
+    for(int j = 0; j < inner.length; j++){
+        if(inner[j] != null||inner[j] != ""){
+            list.add(inner[j]);
+        }
+    }
+    val[i] = list.toArray(new String[list.size()]);
+}
+return val;
   }
     public void removeEmptyLine(String file) throws IOException{
     
@@ -484,7 +512,27 @@ int y = 0;
             return 0;
         }
     }
+    public void createDirs(String device,String[] fd){
+        if(adb.b==1) {
+        device=adb.returnID(devicedisp);
+        for(String st:new String[]{folderimg[0],folderimg[1],folderimg[2],folderimg[3]}){
+        int x=0;
+               File f=new File(st+device);
+             if(!f.exists()){
+                 f.mkdir();
+                 fd[x]=folderimgA[x]+device+"/";
+                 
+             }
+             else{
+             fd[x]=folderimgA[x]+device;
+                 
+             }
+             x++;
+        }
+        }else{}
 
+}
+    
 }
 
 

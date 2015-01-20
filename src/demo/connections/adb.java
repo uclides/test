@@ -129,7 +129,7 @@ else{
             }
         return val;
         }
-        public String returnID(String command) {
+    public String returnID(String command) {
 int val = 0;
     try {
                 Runtime rt = Runtime.getRuntime();
@@ -203,9 +203,12 @@ else{
       //  return 0;
         }
             } catch(IOException e) {
+                
                 System.out.println(e.toString());
+                return null;
             } catch (InterruptedException ex) {
         Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+        return null;
     }
 //            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
@@ -605,7 +608,7 @@ this.start();
          }
             
         }
-    public void LoopAdb(Label label){
+    public String LoopAdb(Label label){
        
        timer = new java.util.Timer();
 
@@ -619,6 +622,7 @@ timer.schedule(new TimerTask() {
              bool = execDetectDevice(devicedisp);
              if(bool==1)
              {
+                 
                  if(x==1||x==0){
                      label.setText(detect);
                      execTerminal(removeFadb);
@@ -626,10 +630,13 @@ timer.schedule(new TimerTask() {
                       x=2;
                       z=0;
                       String ID=returnID(devicedisp)+y+".txt";
+                      System.out.println(ID);
                  execTerminal(runlogcat+ID);
+                 ID=returnID(devicedisp);
                  System.out.println("EJECUTANDO LOG");
                 
                 }
+                 
              }
              else{
                  label.setText(offline);
@@ -645,7 +652,7 @@ timer.schedule(new TimerTask() {
                 
                                              if(execDetectDevice(devicedisp)==1){
                  
-                      if(execTerminal("adb pull /storage/sdcard0/ADB c:\\application\\logs\\")){      
+                      if(execTerminal("adb pull /storage/sdcard0/app-siragon/ADB c:\\application\\logs\\")){      
                           showMonitor();
                                         }
                                          }
@@ -684,7 +691,7 @@ timer.schedule(new TimerTask() {
     }
 
 }, 1000, 1000);
-
+return ID;
         }
     public void updateLbl(Label lbl,String text,ProgressIndicator pi,Boolean b){
     Platform.runLater(new Task() {

@@ -12,6 +12,7 @@ import demo.tables.App;
 import static demo.GenericInterface.devicedisp;
 import static demo.GenericInterface.valappinstall;
 import demo.Controls;
+import static demo.GenericInterface.rd;
 import demo.connections.adb;
 import demo.connections.files;
 import demo.connections.server;
@@ -23,6 +24,7 @@ import demo.tables.Update;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -30,6 +32,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -46,10 +54,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
@@ -90,9 +100,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import org.apache.commons.io.FileUtils;
 import org.controlsfx.control.ButtonBar;
 import org.controlsfx.control.ButtonBar.ButtonType;
 import org.controlsfx.control.action.AbstractAction;
@@ -108,10 +122,10 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
             exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg,borrarimgs,baddfails,
-            bfails,bprev,bnext,bcreatec,binduction,badvantage;
+            bfails,bprev,bnext,bcreatec,binduction,badvantage,brestore,banyimg;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
-            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper;
+            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper,lblinfod,lblinfofail,lblversus;
     @FXML
     TextField txtnf;
     @FXML
@@ -162,6 +176,14 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableColumn<Tst,String>columnaitest;
     @FXML
+    TableColumn<Tst,String>columnaitest1;
+    @FXML
+    TableColumn<Tst,String>columnaitest2;
+    @FXML
+    TableColumn<Tst,String>columnaitest3;
+    @FXML
+    TableColumn<Tst,String>columnaitest4;
+    @FXML
     TableColumn<Fail,String> columnafuser;
     @FXML
     TableColumn<Fail,String> columnafname;
@@ -170,6 +192,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableColumn<Fail,String> columnafimg;
     @FXML
+    TableColumn<Fail,String> columnafdate;
+    @FXML
     TableColumn<Chart,Boolean> columnaselect;
     @FXML
     TableColumn<Chart,String> columnanchart;
@@ -177,7 +201,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     SplitPane splitPane; 
     @FXML
     ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible,
-             cbfilterimg,cbtypecomp;
+             cbfilterimg,cbtypecomp,cbspecomp;
     @FXML
     ColorPicker cpdev;
     @FXML
@@ -207,7 +231,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
   String[] listdelimg=new String[100];
   String[] listdelimgfail=new String[100];
   String[] fail=new String[10];
-  String idu,device;
+  String idu,device,date,devi;
    ObservableList<Device> data=FXCollections.observableArrayList();
    ObservableList<App> dataapp=FXCollections.observableArrayList();
    ObservableList<Apk> dataappIns=FXCollections.observableArrayList();
@@ -222,13 +246,14 @@ String[] out = new String[100];
     private Timeline task;
 server s=new server();
 Controls c=new Controls();
+String[] foldersdevice=new String[10];
     int count;
 public int VAL;
 final TextField namefail = new TextField();
 final TextArea descriptionfail = new TextArea();
 final Label lblimgfail =new Label();
-final Action actionFail,actioncapinmg;
-String imgc;
+final Action actionFail,actioncapinmg,actionRestore;
+String imgc,imgtest;
 public DashboardController(){  
 
         this.tableinfodevice = new TableView<>();
@@ -245,14 +270,19 @@ public DashboardController(){
                 if(adb.b==1){
                 int ramdom2=new Random().nextInt(1000000000);
         adb.execGeneric(capturedis[0]+String.valueOf(ramdom2)+capturedis[1], null, adb.b);
-        adb.execGeneric(pullimg+String.valueOf(ramdom2)+capturedis[1]+" "+folderimg[1], null, adb.b);
-        imgc=folderimg[1]+"\\"+String.valueOf(ramdom2)+capturedis[1];
+        if(adb.execGeneric(pullimg[0]+String.valueOf(ramdom2)+capturedis[1]+" "+folderimg[0]+device, null, adb.b)==null){
+            imgc="no se pudo enviar la imagen al servidor";
+        }
+        else{
+        imgc=foldersdevice[0]+"/"+String.valueOf(ramdom2)+capturedis[1];
         this.setDisabled(true);
+        } 
                 }
                 else{
                 adb.alertMessage(mesagges[0]);
                 lblimgfail.setText("");
                 }
+                
             }
         };
         this.actionFail = new AbstractAction("aceptar") {
@@ -263,21 +293,32 @@ public DashboardController(){
                 // Do the login here.
 
 if(!namefail.getText().equals("")&&!descriptionfail.getText().equals("")){
-String[] val={"uf","nf","df","imgf"};
+    
+ 
+System.out.println(date);
+String[] val={"uf","nf","df","imgf","datef"};
 
   tablefails.setEditable(true);
   columnafuser.setCellValueFactory(new PropertyValueFactory<>(val[0]));
   columnafname.setCellValueFactory(new PropertyValueFactory<>(val[1]));
   columnafdesc.setCellValueFactory(new PropertyValueFactory<>(val[2]));
   columnafimg.setCellValueFactory(new PropertyValueFactory<>(val[3]));
-
+  columnafdate.setCellValueFactory(new PropertyValueFactory<>(val[4]));
   tablefails.setItems(datafail);
     fail[1]=namefail.getText();
     fail[2]=descriptionfail.getText();
     fail[3]=lblimgfail.getText();
-    createRowsFails(datafail,user.getText(),fail[1],fail[2],fail[3]);
+    fail[4]=date;
+    int i=s.ConsultforUIInt("select count(id_image)as t from image","t");
+    i+=1;
+    s.Addelement("insert into image values("+i+",'"+device+"','falla','"+date+"','"+"file:"+fail[3]+"')");
+    
+    int j=s.ConsultforUIInt("select count(id_fail) as t from device_failure","t");
+    j+=1;
+    s.Addelement("insert into device_failure values("+j+",'"+device+"','"+fail[1]+"','"+fail[2]+"',"+i+",'"+date+"',"+idu+")");
+    createRowsFails(datafail,user.getText(),fail[1],fail[2],fail[3],fail[4]);
     actioncapinmg.disabledProperty().set(false);
-    lblimgfail.setText("");
+    lblimgfail.setText("");  
     d.hide();
        } 
 else{
@@ -285,7 +326,27 @@ else{
 }
             }
         };
-        
+        this.actionRestore = new AbstractAction("") {
+            // This method is called when the login button is clicked ...
+            @Override
+            public void handle(ActionEvent ae) {
+  if(adb.confirmMessage("restablecer proceso",question1[0])){
+      brestore.setVisible(false);
+      detectdevice.setVisible(true);
+      
+      tableinfodevice.getItems().removeAll(data);
+      for(String p:new String[]{rd[1]+device+rd[0],rd[1]+device+rd[0],rd[2]+device+rd[0],rd[2]+device+rd[0],rd[3]+device+rd[0],rd[4]+device+rd[0],
+            rd[5]+device+rd[0],rd[6]+device+rd[0],rd[7]+device+rd[0],rd[8]+device+rd[0],rd[9]+device+rd[0]}){
+        s.Addelement(p);
+      }
+      lblinfod.setText("Operación realizada, puede volver a evaluar el dispositivo");
+      baddfails.setDisable(true);
+                            }
+
+            }
+        };
+
+
 }
     public void setApp(Main application){
         this.application = application;
@@ -299,6 +360,26 @@ else{
        {
   if(adb.b==1) {
       device=adb.returnID(devicedisp);
+        for(String st:new String[]{folderimg[0],folderimg[1],folderimg[2],folderimg[3]}){
+      int x=0;
+               File f=new File(st+device);
+             if(!f.exists()){
+          try {
+              f.mkdir();
+              new File(f.getAbsolutePath(),"temp").createNewFile();
+              foldersdevice[x]=folderimgA[x]+device+"/";
+          } catch (IOException ex) {
+              Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+                 
+             }
+             else{
+             foldersdevice[x]=folderimgA[x]+device;
+                 
+             }
+             x++;
+  }
+      device=adb.returnID(devicedisp);
       System.out.println(device);
          if(s.Consultation("select * from device where id_device='"+device+"'")!=0){ 
                             
@@ -308,10 +389,20 @@ else{
                            BDtoTable(1,0,new String[]{"tipo de camara","megapixels",est[0],sup[0],vidsup[0],mod[0],otfeature[0],otfeature[1],otfeature[2],otfeature[3],otfeature[4],otfeature[5],otfeature[6]},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
                            BDtoTable(2,0,new String[]{"tipo de camara","megapixels",est[0],sup2[0],vidsup2[0],mod[0],otfeature[0],otfeature[1],otfeature[2],otfeature[3],otfeature[4],otfeature[5],otfeature[6]},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
                            BDtoTable(3,0,new String[]{proc[0],frec[0],"Cores CPU",profeature[0],profeature[7],profeature[6],"GPU"},tableinfodevice,columnitem,columndescription,new String[]{valitem,valdevi});
-                           bcontinue.setDisable(true);
+                           detectdevice.setVisible(false);
+                           lblinfod.setText("Se ha cargado la información correctamente, si desea evaluar el dispositivo nuevamente se borraran todos sus registros ");
+                           brestore.setVisible(true);
+                           brestore.setOnAction(actionRestore);
+                           baddfails.setDisable(false);
                             }
                         }
                         else{
+//             File f=new File(folderimg[4]+device);
+//             if(!f.exists()){
+//                 f.mkdir();
+//                 folderimg[1]=folderimg[4]+device;
+//                 ffail=folderimg[4]+device+"\\\\\\\\";
+//             }
                             ProgressBar(2);
 adb.execGeneric(installSiragonapp,outConsole,adb.b);
 ProgressBar(1);
@@ -378,6 +469,7 @@ if(!tableapp.getItems().isEmpty()){
    
 
 }
+bprocapp.setText("verificar aplicaciones");
 bprocapp.setOnAction(new EventHandler<ActionEvent>() {
 
                      @Override
@@ -390,6 +482,7 @@ bprocapp.setOnAction(new EventHandler<ActionEvent>() {
    info21 = files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b));
         
 createRowsAppUp(dataappUp,info21);
+bcontinue.setDisable(false);
                      }
                  });
 
@@ -482,10 +575,11 @@ new Device(valpfr,info4[5])
 
    }
    public void fillTableManual(){
-          tableinfodevice.setEditable(true);
+          
    columnitem.setCellValueFactory(new PropertyValueFactory<>(valitem));
-   columndescription.setCellFactory(TextFieldTableCell.forTableColumn());
-   columndescription.setEditable(true);
+   columndescription.setCellValueFactory(new PropertyValueFactory<>(valdevi));
+   columndescription.setCellFactory(TextFieldTableCell.<Device>forTableColumn());
+
     data=FXCollections.observableArrayList(
 new Device(valdev,""),
 new Device(valmod,""),
@@ -580,9 +674,9 @@ new Device("GPU","")
 
 
    }
-   public void createRowsBench(ObservableList<Tst> data,String va1,String va2,String va3){
+   public void createRowsBench(ObservableList<Tst> data,String va1,String va2,String va3,String va4,String va5,String va6,String va7){
 
-    data.add(new Tst(va1, va2, va3));
+    data.add(new Tst(va1,va2,va3,va4,va5,va6,va7));
 
    }
    public void createRowsAppInst(ObservableList<Apk> data,String[] val1){
@@ -597,9 +691,9 @@ new Device("GPU","")
 
         }
    }
-   public void createRowsFails(ObservableList<Fail> data,String va1,String va2,String va3,String va4){
+   public void createRowsFails(ObservableList<Fail> data,String va1,String va2,String va3,String va4,String va5){
 
-    data.add(new Fail(va1, va2, va3, va4));
+    data.add(new Fail(va1, va2, va3, va4, va5));
 
    }
    public void createRowsChart(ObservableList<Chart> data,String va2){
@@ -612,8 +706,9 @@ new Device("GPU","")
 menuItemTable();
 viewMITable();
 splitPane.setOnSwipeRight(null);    
-  adb.LoopAdb(activedevice);
+  device=adb.LoopAdb(activedevice);
 
+ 
   choicematerialdev.getItems().addAll(s.ConsultforUICMItem(consults[0],columnsdb[0]));
   choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
   choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
@@ -630,33 +725,39 @@ splitPane.setOnSwipeRight(null);
           ObservableList<String> olistprov = FXCollections.observableArrayList(s.ConsultforUIArray(consults[8],columnsdb[7]));
   cbprov.setItems(olistprov);
   cbcertgoogle.getItems().addAll("si","no");
+  cbcompatible.getItems().addAll("si","no");
   cbfilterimg.getItems().addAll("pruebas","fallas","dispositivo","otras");
   ObservableList<String> olistbech = FXCollections.observableArrayList(s.ConsultforUIArray(consults[9],columnsdb[8]));
   cbbench.setItems(olistbech);
-
+  ObservableList<String> olistparams = FXCollections.observableArrayList(s.ConsultforUIArray(consults[10],columnsdb[9]));
+  cbtypecomp.setItems(olistparams);
 c.validateTextFile(txthdev,lblcompinfo);txthdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
 c.validateTextFile(txtwdev,lblcompinfo);txtwdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
 c.validateTextFile(txtbulkdev,lblcompinfo);txtbulkdev.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
 c.validateTextFile(txtcolordis,lblcompinfo);txtcolordis.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(20));
 c.validateTextFile(txtcapbat,lblcompinfo);txtcapbat.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(20));
 c.validateTextFile(txtweight,lblcompinfo);txtweight.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
-c.validateTextFile(result1,lblcompinfo);
-c.validateTextFile(result2,lblcompinfo);
-c.validateTextFile(result3,lblcompinfo);
-c.validateTextFile(result4,lblcompinfo);
-c.validateTextFile(result5,lblcompinfo);
+c.validateTextFile(result1,lblcompinfo);result1.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(result2,lblcompinfo);result2.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(result3,lblcompinfo);result3.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(result4,lblcompinfo);result4.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
+c.validateTextFile(result5,lblcompinfo);result5.addEventFilter(KeyEvent.KEY_TYPED, c.numericValidation(10));
   photo.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
     @Override
     public void handle(MouseEvent event) {
-       
+        if(adb.b==1) {
+      String dv=adb.returnID(devicedisp);
         int ramdom=new Random().nextInt(1000000000);
         adb.execGeneric(capturedis[0]+String.valueOf(ramdom)+capturedis[1], null, adb.b);
-        adb.execGeneric(pullimg+String.valueOf(ramdom)+capturedis[1]+" "+folderimg[0], null, adb.b);
-        listimg[tpng]=folderimg[0]+"\\"+String.valueOf(ramdom)+capturedis[1];
+        adb.execGeneric(pullimg[0]+String.valueOf(ramdom)+capturedis[1]+" "+folderimg[1]+dv, null, adb.b);
+        //adb.execGeneric(pullimg[0]+String.valueOf(ramdom2)+capturedis[1]+" "+folderimg[0]+device, null, adb.b)
+        listimg[tpng]="file:"+folderimgA[1]+dv+"/"+String.valueOf(ramdom)+capturedis[1];
         System.out.println(listimg[tpng]);
         tpng++;
         lblimg.setText(String.valueOf(tpng));
-        
+        photo.setDisable(true);
+    }
+        else{}
     }
 });
   chkpref.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -685,8 +786,94 @@ c.validateTextFile(result5,lblcompinfo);
         adb.execTerminal(web);
     }
 });
+  cbbench.setOnAction(new EventHandler() {
 
+            @Override
+            public void handle(Event event) {
+                binitbech.setVisible(true);
+            }
+        });
+ date=new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+ cbfilterimg.setOnAction(new EventHandler() {
 
+            @Override
+            public void handle(Event event) {
+                if(cbfilterimg.getSelectionModel().getSelectedItem()=="otras" ||cbfilterimg.getSelectionModel().getSelectedItem()=="dispositivo"){
+                banyimg.setVisible(true);
+                }
+                else{
+                banyimg.setVisible(false);banyimg.setDisable(true);
+                }
+                
+            }
+        });
+ cbtypecomp.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        String[] farr = new String[1000];
+        String[] v=s.ConsultforUIArray("select nvalues as t from params where nparams='"+newValue.toString()+"'", "t");
+            for (String v1 : v) {
+                farr = v1.split(";");
+            }
+        ObservableList<String> ol = FXCollections.observableArrayList(farr);
+        cbspecomp.setItems(ol);
+    }
+        });
+  cbspecomp.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String[] val={"bd","nd"};
+
+  tablechart.setEditable(true);
+  columnaselect.setCellValueFactory(new PropertyValueFactory<>(val[0]));
+  columnaselect.setCellFactory(CheckBoxTableCell.forTableColumn(columnaselect));
+  columnaselect.setEditable(true);
+  columnanchart.setCellValueFactory(new PropertyValueFactory<>(val[1]));
+
+ tablechart.setItems(datachart);
+   if(adb.b==1) {
+      device=adb.returnID(devicedisp);
+String e;
+        switch(cbtypecomp.getSelectionModel().getSelectedItem().toString()){
+            case("tamaño"):
+                e=s.ConsultforUIString("select id_device as t from device,cpu where id_device!='"+device+"' and id_cpu in(select id_cpu_c from device_cpu where core_cpu='"+cbspecomp.getSelectionModel().getSelectedItem().toString()+"')","t");
+                if(e!=null){
+                    createRowsChart(datachart,e);
+                    lblversus.setText("");
+                }
+                else{
+                lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                }
+                break;
+            case("cores"):
+                e=s.ConsultforUIString("select id_device as t from device,cpu where id_device!='"+device+"' and id_cpu in(select id_cpu_c from device_cpu where core_cpu='"+cbspecomp.getSelectionModel().getSelectedItem().toString()+"')","t");
+                if(e!=null){
+                    createRowsChart(datachart,e);
+                    lblversus.setText("");
+                }
+                else{
+                lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                }
+                break;
+            case("general"):
+                e=s.ConsultforUIString("select id_device as t from device where id_device!='"+device+"'","t");
+                if(e!=null){
+                    createRowsChart(datachart,e);
+                }
+                else{
+                lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                }
+                break;
+        }
+   }
+//        String[] farr = new String[1000];
+//        String[] v=s.ConsultforUIArray("select nvalues as t from params where nparams='"+newValue.toString()+"'", "t");
+//            for (String v1 : v) {
+//                farr = v1.split(";");
+//            }
+//new code
+    }
+        });
     }
     public void buttonLoadTab(ActionEvent actionEvent){
       switch(actionEvent.getSource().toString()){
@@ -755,6 +942,7 @@ c.validateTextFile(result5,lblcompinfo);
 
             break;
         case("tabcomp"):
+            baddfails.setDisable(false);
            String apps=files.oneString(files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b)));
            c.getInfoTabComp(lblcompinfo,new TextField[]{txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtweight},new MenuButton[]{choicematerialdev,choiceband,choicewifi,choicesensor},new ComboBox[]{cbbluetooth,cbtypedis,cbtactildis,cbtypebat,cbprov,cbcertgoogle},cpdev);
            String blu=s.ConsultforUIString("select id_blu from bluetooth where type_blu='"+c.values[7][0]+"'", "id_blu");
@@ -846,8 +1034,97 @@ c.validateTextFile(result5,lblcompinfo);
             tabdash.getSelectionModel().select(tabapp);         
             
 
-            break;        
-            
+            break;
+            case("tabapp"):
+                bcontinue.setDisable(true);
+            break;
+            case("tabtest"):
+                Boolean bol = null;
+                List result=new LinkedList();
+                String[] valids =new String[100];
+                String[] va=s.ConsultforUIArray("select name_test as t from test", "t");
+                String[]fi=va;
+                 
+            if(adb.confirmMessage("Aviso",question1[1])){
+                s.generateInfoIdent(tabdash,columnitem,columndescription);
+                tabdash.getSelectionModel().select(tabcomp);
+                bcomponente.setDisable(false);                         
+           
+                    for(int i=0;i<columnantest.getTableView().getItems().size();i++){
+                      valids[i]=(String) columnantest.getCellData(i);
+                    }
+                    valids=new HashSet<>(Arrays.asList(valids)).toArray(new String[0]);
+                    valids=files.RemoveNullValue(valids);
+                    for(int y=0;y<valids.length;y++){
+                            for(int x=0;x<va.length;x++){
+                                if(valids[y]==null){}
+                                else{
+                                if(va[x].contains(valids[y])){
+                                     for(int e=0;e<fi.length;e++){
+                                         if(fi[e].contains(valids[y])){
+                                         fi[e]="";
+                                         fi=files.RemoveNullValue3(fi);
+                                         }
+                                     }
+                                     
+                                }
+                                 else{
+                                 
+                                }
+                                }
+                               
+                            }
+                    }
+                    for(String z:fi){
+                        //System.out.println(z);
+                    int n=s.ConsultforUIInt("select id_test as n from test where name_test='"+z+"'","n");    
+                    System.out.println(n);
+                    bol=s.Addelement("insert into device_test values("+n+",'"+devi+"',1,'N/A',0,0,0,0,0)");
+                    }
+                    
+                        tabdash.getSelectionModel().select(tabimage); 
+                     }
+                
+            else{
+                adb.alertMessage("Debe agregar al menos un valor");
+            }
+                break;
+            case("tabimage"):
+                String[] val={"uf","nf","df","imgf","datef"};
+
+  tablefails.setEditable(true);
+  columnafuser.setCellValueFactory(new PropertyValueFactory<>(val[0]));
+  columnafname.setCellValueFactory(new PropertyValueFactory<>(val[1]));
+  columnafdesc.setCellValueFactory(new PropertyValueFactory<>(val[2]));
+  columnafimg.setCellValueFactory(new PropertyValueFactory<>(val[3]));
+  columnafdate.setCellValueFactory(new PropertyValueFactory<>(val[4]));
+
+  tablefails.setItems(datafail);
+                 if(adb.confirmMessage("Aviso",question1[1])){
+                     String[][] lfails=s.getBD(0,"select * from device_failure",new String[]{"id_fail","id_dev","name_fail","desc_fail","id_img_fail","date_fail_dev","id_user"});
+for(int i=0;i<files.RemoveNullArray(lfails).length;i++){
+//       for(String c:files.RemoveNullValue2(f)){
+//             System.out.println(c);
+////             data.add(new Device(desc[x],c));
+////             x++;
+//             } 
+ 
+    createRowsFails(datafail,lfails[i][6],lfails[i][2],lfails[i][3],lfails[i][4],lfails[i][5]);
+    
+}
+                 
+
+tabdash.getSelectionModel().select(tabfails);  
+lblinfofail.setText("a través del click derecho puede eliminar registro de falla");
+            }
+                
+            else{
+                adb.alertMessage("ha ocurrido un problema");
+            }     
+                break;
+                case("tabfails"):
+                    tabdash.getSelectionModel().select(tabcompare); 
+                break;
         }
     
     }
@@ -907,6 +1184,28 @@ c.validateTextFile(result5,lblcompinfo);
                     txtdf.setText(row.getItem().df.getValue());
                 }
             });
+            
+            
+        final ContextMenu contextMenu=new ContextMenu();
+
+            MenuItem deliItem=new MenuItem("eliminar");
+            deliItem.setOnAction((ActionEvent event) -> {
+                tablefails.getItems().remove(row.getItem());
+                int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                if(s.Addelement("delete from device_failure where id_fail="+i)){
+                    if(s.Addelement("delete from image where id_image="+i)){
+                    
+                    }
+                }
+            });
+            contextMenu.getItems().addAll(deliItem);
+            row.contextMenuProperty().bind(
+      Bindings.when(Bindings.isNotNull(row.itemProperty()))
+      .then(contextMenu)
+      .otherwise((ContextMenu)null));
+            
+            
+           
             return row;
         }
     
@@ -968,8 +1267,15 @@ c.validateTextFile(result5,lblcompinfo);
     }
     public void bench(String val){
       if(adb.b==1) {
-        switch(val){
+          tpng=0;
+         
+          result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+          result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+          cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+          bsavebech.setDisable(false);
+          switch(val){
             case("antutu"):
+                 photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione TEST para iniciar la prueba");
@@ -979,11 +1285,12 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[0], estatusbench, probarapp, bsavebech,photo);
                 result1.setDisable(false);
                 lblr1.setDisable(false);
-                lblimg.setDisable(false);
+                lblimg.setDisable(false);lblimg.setText("");
                 lblcapt.setDisable(false);
                 binitbech.setDisable(false);
                 break;
             case("battery benchmark"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start bench para iniciar la prueba");
@@ -992,10 +1299,11 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[6], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
             break;
             case("AndEBench"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione START para iniciar la prueba");
@@ -1004,10 +1312,11 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
             break;
             case("3DMark"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN para iniciar la prueba");
@@ -1016,7 +1325,7 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[5], outConsole, adb.b);
                 result1.setDisable(false);
                 lblr1.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
                 adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[2], estatusbench, probarapp, bsavebech,photo);                
 
@@ -1032,6 +1341,7 @@ c.validateTextFile(result5,lblcompinfo);
 //                binitbech.setDisable(false);    
 //            break;
             case("Geekbench"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN BENCHMARKS para iniciar la prueba");
@@ -1040,12 +1350,13 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[7], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);
                 adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[3], estatusbench, probarapp, bsavebech,photo);                
 
             break;
             case("Vellamo"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
@@ -1054,12 +1365,13 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[3], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);result3.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);lblr3.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false); 
                 adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[1], estatusbench, probarapp, bsavebech,photo);                
 
             break;
             case("Basemark X"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
@@ -1068,10 +1380,11 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[9], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
             break;
             case("Basemark OS II"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione RUN BENCHMARK para iniciar la prueba");
@@ -1082,10 +1395,11 @@ c.validateTextFile(result5,lblcompinfo);
                 result4.setDisable(false);result5.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);lblr3.setDisable(false);
                 lblr4.setDisable(false);lblr5.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
             break;
             case("Display Tester"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("presione start para iniciar la prueba");
@@ -1094,10 +1408,12 @@ c.validateTextFile(result5,lblcompinfo);
                 adb.execGeneric(start[0]+startapps[2], outConsole, adb.b);
                 result1.setDisable(false);result2.setDisable(false);
                 lblr1.setDisable(false);lblr2.setDisable(false);
-                lblimg.setDisable(false);lblcapt.setDisable(false);
+                lblimg.setDisable(false);lblcapt.setDisable(false);lblimg.setText("");
                 binitbech.setDisable(false);    
             break;
             case("twitter"):
+                photo.setDisable(false);
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("inicie sesion y pruebe la aplicación");
@@ -1105,8 +1421,10 @@ c.validateTextFile(result5,lblcompinfo);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[10], outConsole, adb.b);
                 cbcompatible.setDisable(false);lblr0.setDisable(false);
+                lblimg.setText("");
                 break;
             case("instagram"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("inicie sesion y pruebe la aplicación");
@@ -1114,8 +1432,10 @@ c.validateTextFile(result5,lblcompinfo);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[11], outConsole, adb.b);
                 cbcompatible.setDisable(false);lblr0.setDisable(false);
+                lblimg.setText("");
                 break;
             case("facebook"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("inicie sesion y pruebe la aplicación");
@@ -1123,8 +1443,10 @@ c.validateTextFile(result5,lblcompinfo);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[12], outConsole, adb.b);
                 cbcompatible.setDisable(false);lblr0.setDisable(false);
+                lblimg.setText("");
                 break;
             case("whatsapp"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("inicie sesion y pruebe la aplicación");
@@ -1132,8 +1454,10 @@ c.validateTextFile(result5,lblcompinfo);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[13], outConsole, adb.b);
                 cbcompatible.setDisable(false);lblr0.setDisable(false);
+                lblimg.setText("");
                 break;
             case("skype"):
+                photo.setDisable(false);
                 result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
                 cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
                 estatusbench.setText("inicie sesion y pruebe la aplicación");
@@ -1141,6 +1465,7 @@ c.validateTextFile(result5,lblcompinfo);
                 lblphoto.setVisible(true);
                 adb.execGeneric(start[0]+startapps[14], outConsole, adb.b);
                 cbcompatible.setDisable(false);lblr0.setDisable(false);
+                lblimg.setText("");
                 break;
         }   
 
@@ -1153,80 +1478,297 @@ c.validateTextFile(result5,lblcompinfo);
     bench(files.getValueCb(cbbench));
     }
     public void saveRBench(ActionEvent actionEvent){
-if(!result1.getText().equals("")&&!lblimg.getText().equals("")){
+         if(adb.b==1){
+  devi=adb.returnID(devicedisp);
+  bcontinue.setDisable(false);
   tabletest.setEditable(true);
   columnantest.setCellValueFactory(new PropertyValueFactory<>("nt"));
   columnartest.setCellValueFactory(new PropertyValueFactory<>("rt"));
   columnaitest.setCellValueFactory(new PropertyValueFactory<>("it"));
+  columnaitest1.setCellValueFactory(new PropertyValueFactory<>("it1"));
+  columnaitest2.setCellValueFactory(new PropertyValueFactory<>("it2"));
+  columnaitest3.setCellValueFactory(new PropertyValueFactory<>("it3"));
+  columnaitest4.setCellValueFactory(new PropertyValueFactory<>("it4"));
   tabletest.setItems(dataBench);
   String cb=files.getValueCb(cbbench);
-
-        switch(cb){
-        
+  
+  int n=s.ConsultforUIInt("select id_test as n from test where name_test='"+cb+"'","n");
+  String[] sfortest=new String[10];
+  sfortest[0]=result1.getText();sfortest[1]=result2.getText();sfortest[2]=result3.getText();sfortest[3]=result4.getText();sfortest[4]=result5.getText();
+  int vimg=s.ConsultforUIInt("select count(id_image) as t from image", "t");
+  bsavebech.setDisable(false);
+  switch(cb){      
             case("antutu"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                if(!result1.getText().equals("")&&!lblimg.getText().equals("")){
+               // System.out.println(devi+" HOLAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    for(String str:files.RemoveNullValue2(listimg)){
+                        vimg++;
+                               s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                               if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+",0,0,0,0)")){
+                               estatusbench.setText("Se han guardado los datos correctamente");   
+                               createRowsBench(dataBench,cb,str,sfortest[0],"N/A","N/A","N/A","N/A");
+                               result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                               result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                               lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                                 ObservableList<String> olistbech = FXCollections.observableArrayList(s.ConsultforUIArray("select name_test from test where name_test!='"+cb+"'",columnsdb[8]));
+                                 cbbench.setItems(olistbech);
+                               }          
+                    }            
+                } 
+                else{
+                    adb.alertMessage(mesagges[6]);
+                }
+                
+                //createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
                 break;
             case("battery benchmark"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+",0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],"N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                           cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("AndEBench"):
-                createRowsBench(dataBench,cb,result1.getText()+";"+result2.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+",0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],"N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                           cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("3DMark"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+",0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],"N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                           cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("Geekbench"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+",0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],"N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                           cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("Vellamo"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+","+sfortest[2]+",0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],sfortest[2],"N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("Basemark X"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+",0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],"N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("Basemark OS II"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+","+sfortest[2]+","+sfortest[3]+","+sfortest[4]+")")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],sfortest[2],sfortest[3],sfortest[4]);
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("Display Tester"):
-                createRowsBench(dataBench,cb,result1.getText(),files.oneString(listimg));
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'N/A',"+sfortest[0]+","+sfortest[1]+",0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],sfortest[1],"N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("twitter"):
-                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                String comp=files.getValueCb(cbcompatible);
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'"+comp+"',0,0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,sfortest[0],"N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("instagram"):
-                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                comp=files.getValueCb(cbcompatible);
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'"+comp+"',0,0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,"N/A","N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("facebook"):
-                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                comp=files.getValueCb(cbcompatible);
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'"+comp+"',0,0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,"N/A","N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("whatsapp"):
-                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                comp=files.getValueCb(cbcompatible);
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'"+comp+"',0,0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,"N/A","N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
             case("skype"):
-                createRowsBench(dataBench,cb,files.getValueCb(cbcompatible),files.oneString(listimg));
+                comp=files.getValueCb(cbcompatible);
+                for(String str:files.RemoveNullValue2(listimg)){
+                    vimg++;
+                           s.Addelement("insert into image values("+vimg+",'"+devi+"','test','"+date+"','"+str+"')");
+                           if(s.Addelement("insert into device_test values("+n+",'"+devi+"',"+vimg+",'"+comp+"',0,0,0,0,0)")){
+                           estatusbench.setText("Se han guardado los datos correctamente");
+                           createRowsBench(dataBench,cb,str,"N/A","N/A","N/A","N/A","N/A");
+                           result1.setText("");result2.setText("");result3.setText("");result4.setText("");result5.setText("");cbcompatible.getSelectionModel().select(null);cbbench.getSelectionModel().select(null);
+                           result1.setDisable(true);result2.setDisable(true);result3.setDisable(true);result4.setDisable(true);;result5.setDisable(true);
+                               cbcompatible.setDisable(true);lblr0.setDisable(true);lblr1.setDisable(true);lblr2.setDisable(true);lblr3.setDisable(true);lblr4.setDisable(true);lblr5.setDisable(true);
+                           lblcapt.setDisable(true);lblimg.setDisable(true);lblimg.setText("");bsavebech.setDisable(true);photo.setVisible(false);lblphoto.setVisible(false);
+                           }
+                }
                 break;
+            
         }
         
-       } 
-else{
-    adb.alertMessage(mesagges[6]);
+
+}
+         else{
+    adb.alertMessage(mesagges[0]);
 }
     }
-    public void Img(String path){
+    public void Img(String path, String consult){
+        
          ImageView imageView = null;
         File folder=new File(path);
+        if(folder.exists()){
         File[] listFiles=folder.listFiles();
-        if(listFiles.length>0){
+       
+         if(adb.b==1) {
+      device=adb.returnID(devicedisp);
+        if(listFiles.length>1){
+            
             tilePane.getChildren().clear();
-            lblmsjimg.setText("presione 2 click izquierdo para visualizar / derecho para descartar imagen");
-        for(final File file:listFiles){
+            lblmsjimg.setText("presione doble click izquierdo para ampliar la imagen");
+        for(int f=0;f<listFiles.length+1;f++){
+            System.out.println(listFiles[f].getName());
+if(cbfilterimg.getSelectionModel().getSelectedItem()=="dispositivo"){
+    if(s.Consultation(consult+listFiles[f].getName()+"'")!=0){
                 try {
-                    imageView=createImageView(file);
+                    imageView=createImageView(listFiles[f],"mspaint "+listFiles[f]);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             tilePane.getChildren().addAll(imageView);
-          
+        }
+            else{}
+}
+else{
+    if(cbfilterimg.getSelectionModel().getSelectedItem()=="otras"){
+    if(s.Consultation(consult+listFiles[f].getName()+"'")!=0){
+                try {
+                    imageView=createImageView(listFiles[f],"mspaint "+listFiles[f]);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            tilePane.getChildren().addAll(imageView);
+        }
+            else{}
+}
+    else{
+            if(s.Consultation(consult+listFiles[f].getName()+"')")!=0){
+                try {
+                    imageView=createImageView(listFiles[f],"mspaint "+listFiles[f]);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            tilePane.getChildren().addAll(imageView);
+        } 
+            else{}
+    }
+    
+        }
         }
         imageView.setImage(null);
         listFiles=null;
@@ -1237,15 +1779,34 @@ else{
         lblmsjimg.setText("no hay imagenes disponibles");
         }
     }
-    private ImageView createImageView(final File imageFile) throws FileNotFoundException{
+            else{
+    adb.alertMessage(mesagges[0]);
+    }
+        }
+                else{
+    adb.alertMessage("no existe directorio válido para el dispositivo");
+    }
+    }
+    private ImageView createImageView(final File imageFile,String sentence) throws FileNotFoundException{
         // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
         // The last two arguments are: preserveRatio, and use smooth (slower)
         // resizing
         FileInputStream fileInputStream = new FileInputStream(imageFile);
-        
+  Stage newStage = new Stage();
   Image image = null;
   ImageView imageView1=new ImageView();
   BorderPane borderPane = new BorderPane();
+  Scene scene1=new Scene(borderPane,Color.WHITE);
+                             
+                            newStage.setScene(scene1);
+                            newStage.initModality(Modality.WINDOW_MODAL);
+  Button edit=new Button("Editar");
+  edit.setStyle("    -fx-background-color:\n" +
+"        #FF9640;\n" +
+"    -fx-font-family: \"Síragon\";\n" +
+"    -fx-text-fill: white;\n" +
+"    -fx-font-size: 14;");
+  
   image = new Image(fileInputStream, 150, 0, true,
           true);
              ImageView imageView = new ImageView(image);
@@ -1266,14 +1827,25 @@ else{
                             imageView1.setSmooth(true);
                             imageView1.setCache(true);
                             borderPane.setCenter(imageView1);
-                            borderPane.setStyle("-fx-background-color: null");
-                            Stage newStage = new Stage();
+                            BorderPane.setAlignment(imageView1, Pos.CENTER);
+                            borderPane.setTop(edit);
+                            edit.setOnAction(new EventHandler<ActionEvent>() {
+
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    adb.execCmd(null, sentence);
+                                newStage.close();
+                                }
+                            });
+                            BorderPane.setAlignment(edit, Pos.CENTER);
+                            borderPane.setStyle("-fx-background-color: null");  
                             newStage.setWidth(application.stage.getWidth());
                             newStage.setHeight(application.stage.getHeight());
                             newStage.setTitle(imageFile.getName());
-                            Scene scene1 = new Scene(borderPane,Color.WHITE);
-                            newStage.setScene(scene1);
+
                             newStage.show();
+                            
+                            
                         } catch (FileNotFoundException ex) {
                             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
                         } finally {
@@ -1292,19 +1864,19 @@ else{
                    
                 }
            
-                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-            if (mouseEvent.getClickCount() == 2) {
-                
-                listdelimg[z]=imageFile.getAbsolutePath();
-                imageFile.deleteOnExit();
-                tilePane.getChildren().remove(imageView);
-                
-                
-               z++;
-
-            }
-                    
-                }
+//                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+//            if (mouseEvent.getClickCount() == 2) {
+//                
+//                listdelimg[z]=imageFile.getAbsolutePath();
+//                imageFile.deleteOnExit();
+//                tilePane.getChildren().remove(imageView);
+//                
+//                
+//               z++;
+//
+//            }
+//                    
+//                }
             
             });
            image=null;
@@ -1316,21 +1888,25 @@ else{
         return imageView;
     }
     public void Loadimg(ActionEvent actionEvent){
+        if(adb.b==1) {
+            banyimg.setDisable(false);
+      String devic=adb.returnID(devicedisp);
         switch(files.getValueCb(cbfilterimg)){
             case("pruebas"):
-                Img("C:\\application\\img\\test");
+                Img("C:\\application\\img\\test\\"+devic,"select id_img_test from device_test where id_img_test=(select id_image from image where type_img='test' and file_img like'%");
             break;
             case("fallas"):
-                Img("C:\\application\\img\\fails");
+                Img("C:\\application\\img\\fails\\"+devic,"select id_img_fail as t from device_failure where id_img_fail=(select id_image from image where type_img='falla' and file_img like'%");
             break;
             case("dispositivo"):
-                Img("C:\\application\\img\\device");
+                Img("C:\\application\\img\\device\\"+devic,"select id_image from image where type_img='dispositivo' and file_img like'%");
             break;
             case("otras"):
-                Img("C:\\application\\img\\others");
+                Img("C:\\application\\img\\others\\"+devic,"select id_image from image where type_img='otras' and file_img like'%");
             break;    
 
         }
+         }
     } 
     public void deleteImg(ActionEvent actionEvent){
      Path path;
@@ -1347,6 +1923,7 @@ else{
                 }
     }
     public void addfails(ActionEvent actionEvent){
+        imgc="";
         // Create the custom dialog.
             fail[1]="";fail[2]="";fail[3]="";
     Button bcapfails=new Button("capturar imagen");   
@@ -1368,11 +1945,13 @@ else{
     grid.add(lblimgfail, 1, 2);
 
     ButtonBar.setType(actionFail, ButtonType.OK_DONE);
+    
     actionFail.disabledProperty().set(true);
    // bcapfails.setOnAction(actioncapinmg);
     // Do some validation (using the Java 8 lambda syntax).
     namefail.textProperty().addListener((observable, oldValue, newValue) -> {
         actionFail.disabledProperty().set(newValue.trim().isEmpty());
+        actioncapinmg.disabledProperty().set(newValue.trim().isEmpty());
     });
     actioncapinmg.disabledProperty().addListener((observable, oldValue, newValue) -> {
         lblimgfail.setText(imgc);
@@ -1387,6 +1966,7 @@ else{
     namefail.setText("");
     descriptionfail.setText("");
     descriptionfail.setWrapText(true);
+    lblimgfail.setText("");
     dlg.show();
     
     } 
@@ -1472,6 +2052,49 @@ else{
         break;
 
     }
+    }
+    public Boolean addImage(ActionEvent actionEvent) throws FileNotFoundException, IOException{
+        ExtensionFilter filter = new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.jpeg");
+          FileChooser fileChooser=new FileChooser();
+          Node node = (Node) actionEvent.getSource();
+          fileChooser.getExtensionFilters().add(filter);
+              fileChooser.setInitialDirectory(new File(folderLogs));
+     File directory=fileChooser.showOpenDialog(node.getScene().getWindow());
+
+             //  File directory = new File(folderLogs);
+//if (directory.isDirectory()) {
+    if (directory!=null) {
+
+        //return files.FileToArray2(directory.getPath(),"",null,null,null);
+        System.out.println(directory.getPath());
+            int i=s.ConsultforUIInt("select count(id_image)as t from image","t");
+    i+=1;
+    String correct=directory.getPath();
+
+    if(cbfilterimg.getSelectionModel().getSelectedItem()=="dispositivo"){
+        File f1=new File(directory.getPath());
+        File f2=new File("C:\\application\\img\\device\\"+device+"\\"+directory.getName());
+        FileUtils.copyFile(f1, f2);
+        s.Addelement("insert into image values("+i+",'"+device+"','"+cbfilterimg.getSelectionModel().getSelectedItem()+"','"+date+"','"+"file:"+"C:/application/img/device/"+device+"/"+directory.getName()+"')");
+    }
+    else{
+        if(cbfilterimg.getSelectionModel().getSelectedItem()=="otras"){
+        File f1=new File(directory.getPath());
+        File f2=new File("C:\\application\\img\\others\\"+device+"\\"+directory.getName());
+        FileUtils.copyFile(f1, f2);
+        s.Addelement("insert into image values("+i+",'"+device+"','"+cbfilterimg.getSelectionModel().getSelectedItem()+"','"+date+"','"+"file:"+"C:/application/img/others/"+device+"/"+directory.getName()+"')");
+    }
+        else{
+        File f1=new File(directory.getPath());
+        File f2=new File("C:\\application\\img\\others\\"+device+"\\"+directory.getName());
+        FileUtils.copyFile(f1, f2);
+        s.Addelement("insert into image values("+i+",'"+device+"','"+cbfilterimg.getSelectionModel().getSelectedItem()+"','"+date+"','"+"file:"+"C:/application/img/device/"+device+"/"+directory.getName()+"')");
+    }
+    }
+ 
+
+    } 
+    return true;
     }
     }
     

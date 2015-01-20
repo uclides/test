@@ -12,13 +12,14 @@ import javafx.beans.property.SimpleStringProperty;
  * @author project
  */
 public class Fail {
-        public SimpleStringProperty uf,nf,df,imgf;
+        public SimpleStringProperty uf,nf,df,imgf,datef;
 
-public Fail(String suf,String snf,String sdf,String simf){
+public Fail(String suf,String snf,String sdf,String simf,String sdatef){
 this.uf=new SimpleStringProperty(suf);
 this.nf=new SimpleStringProperty(snf);
 this.df=new SimpleStringProperty(sdf);
 this.imgf=new SimpleStringProperty(simf);
+this.datef=new SimpleStringProperty(sdatef);
 }
 public String getUf(){
 return uf.get();
@@ -43,5 +44,11 @@ return imgf.get();
 }
 public void getImgf(String fimt){
 imgf.set(fimt);
+}
+public String getDatef(){
+return datef.get();
+}
+public void getDatef(String fdatef){
+datef.set(fdatef);
 }
 }

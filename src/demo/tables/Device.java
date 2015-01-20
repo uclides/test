@@ -33,4 +33,5 @@ device.set(fdevice);
 public SimpleStringProperty deviceProperty() {
     return this.device;
 }
+
 }
