@@ -442,7 +442,7 @@
                                                 <TextField fx:id="result3" disable="true" layoutX="675.0" layoutY="291.0" />
                                                 <TextField fx:id="result4" disable="true" layoutX="675.0" layoutY="323.0" />
                                                 <TextField fx:id="result5" disable="true" layoutX="675.0" layoutY="354.0" />
-                                                <Button fx:id="bsavebech" layoutX="915.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="25.0" prefWidth="110.0" text="guardar" />
+                                                <Button fx:id="bsavebech" layoutX="915.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="25.0" prefWidth="110.0" styleClass="standar-button" text="guardar" />
                                                 <Label fx:id="lblr1" disable="true" layoutX="601.0" layoutY="233.0" text="Resultado 1:" />
                                                 <Label fx:id="lblr2" disable="true" layoutX="601.0" layoutY="263.0" text="Resultado 2:" />
                                                 <Label fx:id="lblr3" disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:" />
@@ -583,12 +583,12 @@
                                                       <content>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
                                                                <children>
-                                                                  <BarChart layoutX="29.0" layoutY="14.0" legendSide="LEFT" prefHeight="315.0" prefWidth="700.0" titleSide="LEFT">
+                                                                  <BarChart fx:id="barChart" layoutX="29.0" layoutY="14.0" maxHeight="315.0" maxWidth="700.0" minHeight="315.0" minWidth="700.0" prefHeight="315.0" prefWidth="700.0">
                                                                     <xAxis>
-                                                                      <CategoryAxis side="BOTTOM" />
+                                                                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                                                                     </xAxis>
                                                                     <yAxis>
-                                                                      <NumberAxis side="LEFT" />
+                                                                      <NumberAxis fx:id="yAxis" side="LEFT" />
                                                                     </yAxis>
                                                                   </BarChart>
                                                                </children>
