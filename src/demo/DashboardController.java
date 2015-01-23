@@ -143,7 +143,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TabPane tabdash;
     @FXML
-    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails;
+    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails,
+            tabbar1,tabbar2,tabbar3,tabbar4,tabbar5,tabbar6,tabbar7;
     @FXML
     TitledPane  accorIdentificacion,accorBenchmark,accorImagenes,accorVersus,
             accorFallas,accorReporte,accorMantenimiento,accorAyuda;
@@ -1155,7 +1156,7 @@ String[] arr;
                   
                 }
                 else{
-                            s.Addelement("insert into device values ('"+device+"','"+s.name_dev+"','"+s.model_dev+"','"+s.ver_so+"','"+s.kernel_dev+"','"+s.build_dev+"','"+s.locale_dev+"','"+s.sto_ext_sd_t+"','"+s.sto_ext_sd_d+"','"+s.sto_s2sd_t+"','"+s.sto_s2sd_d+"','"+s.sto_inter_t+"','"+s.sto_inter_d+"','"+s.sto_sys_t+"','"+s.sto_sys_d+"','"+s.cache_sys_t+"','"+s.cache_sys_d+"','"+s.ram_t+"','"+s.ram_d+"','"+s.ram_l+"','"+c.values[4][0]+"','"+c.values[0][0]+"','"+c.values[1][0]+"','"+c.values[2][0]+"','"+c.values[16][0]+"',"+blu+","+cert+",'"+apps+"')");
+                            s.Addelement("insert into device values ('"+device+"','"+s.name_dev+"','"+s.model_dev+"','"+s.ver_so+"','"+s.kernel_dev+"','"+s.build_dev+"','"+s.locale_dev+"','"+s.sto_ext_sd_t+"','"+s.sto_ext_sd_d+"','"+s.sto_s2sd_t+"','"+s.sto_s2sd_d+"','"+s.sto_inter_t+"','"+s.sto_inter_d+"','"+s.sto_sys_t+"','"+s.sto_sys_d+"','"+s.cache_sys_t+"','"+s.cache_sys_d+"','"+s.ram_t+"','"+s.ram_d+"','"+s.ram_l+"','"+c.values[4][0]+"','"+c.values[0][0]+"','"+c.values[1][0]+"','"+c.values[2][0]+"','"+c.values[16][0]+"',"+Integer.valueOf(blu)+","+cert+",'"+apps+"')");
                             s.Addelement("insert into display values('"+device+"',"+type_d+","+s.p_width_dev+","+s.p_height_dev+","+type_tac+",'"+s.p_size_dev+"','"+s.p_refresh_dev+"','"+s.p_density_dev+"','"+c.values[9][0]+"')");                          
                             if(s.n_cam_dev.contains("2")){
                                       s.Addelement("insert into device_cam values ('"+device+"','primary','"+c1[c1.length-1]+"',"+files.booleanToint("true",s.sta_flash.trim())+",'"+files.oneString(s.firsttab[0]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[1]).replaceAll(" ","")+"','"+files.oneString(s.firsttab[4]).replaceAll(" ","")+"','"+s.focus_mode+"','"+s.max_focus_area+"','"+s.whitebalance_cam.replaceAll("\\s|null|\\]|\\[|", "")+"','"+s.scene_mode_cam.replaceAll("\\s|null|\\]|\\[|", "")+"',"+files.booleanToint("true",s.stabilization_video.trim())+",'"+s.quality_img+"','"+s.quality_thumb+"')");
@@ -2162,45 +2163,8 @@ else{
         createRowsChart(datachart,"fedwjfwpf");
     }
     public void getCherDeviceTrue(ActionEvent actionEvent){
-  //   ObservableList<XYChart.Data<String, Number>> antutu = FXCollections.observableArrayList();
-     ObservableList<XYChart.Series<String, Number>> devi = FXCollections.observableArrayList();
-     XYChart.Series<String, Number> series = new XYChart.Series<>();
-     List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
-     
-        String[] selecte=new String[100];
-        int x=0;
-        for(Chart c:tablechart.getItems()){
-            if(c.getBd()==true){
-                selecte[x]=c.getNd();
-                //GenerateChart(null);
-            }
-            else{
-            }
-            x++;
-        }for(int v=0;v<files.RemoveNullValue2(selecte).length;v++){
-            
-            String[][] arrays=s.getBD(1, "select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_dev_test in(select id_device from device where id_device='"+selecte[v]+"')", new String[]{"id_dev_test","id_test_test","result_test1","result_test2","result_test3","result_test4","result_test5"} );
-            
-            for(int a=0;a<files.RemoveNullArray(arrays).length;a++){
-                for(int b=0;b<files.RemoveNullValue2(arrays[a]).length;b++){
-                    switch(arrays[a][b]){
-                        case("1"):
-                           XYChart.Series<String, Number> ser = new XYChart.Series<>();
-                            ser.setName(arrays[a][0]);
-                            ser.getData().add(new XYChart.Data<>(arrays[v][0],Integer.valueOf(arrays[v][2])));
-                            devi.add(ser);
-        
-                            break;
-
-                    }
-
-                }
-              
-            }
-         
-        }
-        seriesList.addAll(devi);
-          GenerateChart(seriesList);
+                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=1 and id_dev_test in(select id_device from device where id_device='","antutu"), "Antutu Benchmark", "Dispositivos", "Resultados");
+  
     }
     public void checkInduction(String val){
         if(s.Consultation("select * from user_preferences where u_pref="+val+" and id_pref=1 and desc_pref='true'")==0){
@@ -2309,36 +2273,57 @@ else{
     } 
     return true;
     }
-    public void GenerateChart(List<XYChart.Series<String, Number>>  serie){
-
-
-        barChart.setTitle("Antutu Benchmark");
-        xAxis.setLabel("Dispositivos"); 
-        yAxis=new NumberAxis("Resultados", 0, 20000, 1000);
+    public void GenerateChart(BarChart<String,Number> bar,List<XYChart.Series<String, Number>>  serie,String title,String labelx,String labely){
+        bar.setTitle(title);
+        xAxis.setLabel(labelx); 
+        yAxis=new NumberAxis(labely, 0, 0, 0);
         
-        
- 
-//        XYChart.Series series1 = new XYChart.Series();
-//        series1.setName("2003");       
-//        series1.getData().add(new XYChart.Data("", 2000));
-//      
-//        
-//        XYChart.Series series2 = new XYChart.Series();
-//        series2.setName("2004");
-//        series2.getData().add(new XYChart.Data("", 1900));
-// 
-//        
-//        XYChart.Series series3 = new XYChart.Series();
-//        series3.setName("2005");
-//        series3.getData().add(new XYChart.Data("", 1600));
-
        for(XYChart.Series<String, Number> s: serie){
-        barChart.getData().add(s);
-       }
-
-     
+        bar.getData().add(s);
+       }  
+    }
+    public List<XYChart.Series<String, Number>> GenerateGraphicsData(String sql,String typetest){
+             ObservableList<XYChart.Series<String, Number>> obs = FXCollections.observableArrayList();
+     List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
+     String[] selecte=new String[100];
+        int x=0;
+        for(Chart c:tablechart.getItems()){
+            if(c.getBd()==true){
+                selecte[x]=c.getNd();
+            }
+            else{
+            }
+            x++;
+        }for(int v=0;v<files.RemoveNullValue2(selecte).length;v++){
+            XYChart.Series<String, Number> ser = new XYChart.Series<>();
+            String[][] arrays=s.getBD(1,sql+selecte[v]+"')", new String[]{"id_dev_test","id_test_test","result_test1","result_test2","result_test3","result_test4","result_test5"} ); 
+            for(int a=0;a<files.RemoveNullArray(arrays).length;a++){
+                
+                for(int b=0;b<files.RemoveNullValue2(arrays[a]).length;b++){    
+                    ser.setName(arrays[a][0]);
+                            ser.getData().add(new XYChart.Data<>(arrays[a][0],Integer.valueOf(arrays[a][2])));
+                          
+                }
+            }
+              obs.add(ser);
+            
+        }
+        seriesList.addAll(obs);
+          //GenerateChart(seriesList,"Antutu BenchMark","Resultados","Dispositivos");
+    return seriesList;
+    }
+    public void nextChart(ActionEvent actionEvent){
+//            switch(i){
+//                case(0):
+//                   
+//                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_dev_test in(select id_device from device where id_device='","antutu"), "Antutu Benchmark", "Dispositivos", "Resultados");
+//                    break;
+//                case(1):
+                     barChart.getData().removeAll();
+                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_dev_test in(select id_device from device where id_device='","AndEBench"), "Antutu Benchmark", "Dispositivos", "Resultados");
+//                    break;
+//            }
         
-       
     }
     }
     
