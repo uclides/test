@@ -19,6 +19,7 @@ import eu.hansolo.enzo.notification.Notification.Notifier;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -622,7 +623,7 @@ timer.schedule(new TimerTask() {
              bool = execDetectDevice(devicedisp);
              if(bool==1)
              {
-                 
+             
                  if(x==1||x==0){
                      label.setText(detect);
                      execTerminal(removeFadb);
@@ -731,4 +732,54 @@ button.setDisable(false);
     }
     return items;
     }   
+    public void checkDir(int lines,String[] commands,String value) {
+    try {
+        Boolean exist=false;
+        
+        Runtime rt = Runtime.getRuntime();
+        //Process pr = rt.exec("cmd /c dir");
+        Process pr = rt.exec(commands[0]);
+        
+        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        
+        String line=null;
+        String [] temp = new String [10];
+        int x=0;
+        while((line=input.readLine()) != null) {
+            temp[x]=line;
+            //System.out.print(temp[x]);
+            
+            x++;
+            
+        }
+        if(temp[lines].contains(value)){
+            exist=true;
+            
+        }
+        
+        //System.out.println("Exited with error code "+exitVal);
+        if(!exist){
+            
+            // Execute command
+            for(int i=0;i<commands.length;i++){
+                Process child = Runtime.getRuntime().exec(commands[i]);
+                
+                // Get output stream to write from it
+                OutputStream out = child.getOutputStream();
+                
+                out.write("cd C:/ /r/n".getBytes());
+                out.flush();
+                out.write("dir /r/n".getBytes());
+                out.close();
+            }
+        }
+        else{System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");}
+        int exitVal = pr.waitFor();
+    } catch (InterruptedException | IOException ex) {
+        Logger.getLogger(adb.class.getName()).log(Level.SEVERE, null, ex);
+    }
+ 
+            
+
+        }
 }

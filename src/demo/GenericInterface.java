@@ -152,6 +152,18 @@ public interface GenericInterface {
         "Displayed Displayed com.primatelabs.geekbench/.BenchmarkDocumentActivity"};
     String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
     String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
-
-    
+    String[]valRepGe={"id_device","name_dev","model_dev","ver_so","kernel","build_dev","locale_dev","cert_google","sto_ext_sd_t",
+    "sto_ext_sd_d","sto_s2sd_t","sto_s2sd_d","sto_inter_t","sto_inter_d","sto_sys_t","sto_sys_d","cache_sys_t","cache_sys_d",
+    "ram_t","ram_d","ram_l","h_dev","w_dev","bulk_dev","weight_dev"};
+    String[]valRepOherS={"Acelerómetro","Giroscopio","Magnetómetro","Sensor de proximidad","Sensor de luz","Barómetro",
+    "Sensor de ritmo card","Termómetro y sensor ","Podómetro","Detector de huellas"};
+    String[]valRepMob={"850 MHz","900 MHz","1800 MHz","1900 MHz","2100 MHz"};
+    String[]valRepWf={"802.11","802.11a","802.11b","802.11c","802.11g","802.11n"};
+    String[]valRepcpu={"name_cpu","frec_cpu","core_cpu","feature_cpu","revision_cpu","hard_cpu","gpu"};
+    String[]valRepdis={"x_dis","y_dis","name_tactil","name_dis","size_dis","dpi_dis","r_rate","contrast"};
+    String[]valRepcam={"mp_cam","flash_cam","supp_img_cam","supp_vid_cam","dis_focus","focus_enabled","focus_area","whitebalance","scene_mode","sta_vid","q_jpeg","q_thum"};
+    String[] valRepbat={"battery.type_bat","capacity"};
+    String[] valRepmat={"aluminio y plastico","plastico"};
+    String[] valRepimgdev={"img_device","img_device1","img_device2","img_device3","img_device4","img_device5","img_device6","img_device7"};
+    String[] valRepimgtest={"img_devicet","img_devicet1","img_devicet2","img_devicet3","img_devicet4","img_devicet5","img_devicet6","img_devicet7"};
 }

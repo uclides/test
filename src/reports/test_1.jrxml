@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="9fbf3b9c-789e-4107-a4d0-03670b3d0395">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="492"/>
+	<parameter name="datecreate" class="java.util.Date"/>
+	<parameter name="id_device" class="java.lang.String"/>
+	<parameter name="name_dev" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="model_dev" class="java.lang.String"/>
+	<parameter name="ver_so" class="java.lang.String"/>
+	<parameter name="kernel" class="java.lang.String"/>
+	<parameter name="build_dev" class="java.lang.String"/>
+	<parameter name="locale_dev" class="java.lang.String"/>
+	<parameter name="cert_google" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_ext_sd_t" class="java.lang.String"/>
+	<parameter name="sto_ext_sd_d" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_s2sd_t" class="java.lang.String"/>
+	<parameter name="sto_s2sd_d" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_inter_t" class="java.lang.String"/>
+	<parameter name="sto_inter_d" class="java.lang.String"/>
+	<parameter name="sto_sys_t" class="java.lang.String"/>
+	<parameter name="sto_sys_d" class="java.lang.String"/>
+	<parameter name="cache_sys_t" class="java.lang.String"/>
+	<parameter name="cache_sys_d" class="java.lang.String"/>
+	<parameter name="ram_t" class="java.lang.String"/>
+	<parameter name="ram_d" class="java.lang.String"/>
+	<parameter name="ram_l" class="java.lang.String"/>
+	<parameter name="h_dev" class="java.lang.String"/>
+	<parameter name="w_dev" class="java.lang.String"/>
+	<parameter name="bulk_dev" class="java.lang.String"/>
+	<parameter name="weight_dev" class="java.lang.String"/>
+	<parameter name="type_blu" class="java.lang.String"/>
+	<parameter name="Acelerómetro" class="java.lang.String"/>
+	<parameter name="Giroscopio" class="java.lang.String"/>
+	<parameter name="Magnetómetro" class="java.lang.String"/>
+	<parameter name="Sensor de proximidad" class="java.lang.String"/>
+	<parameter name="Sensor de luz" class="java.lang.String"/>
+	<parameter name="Barómetro" class="java.lang.String"/>
+	<parameter name="Sensor de ritmo card" class="java.lang.String"/>
+	<parameter name="Termómetro y sensor " class="java.lang.String"/>
+	<parameter name="Podómetro" class="java.lang.String"/>
+	<parameter name="Detector de huellas" class="java.lang.String"/>
+	<parameter name="850 MHz" class="java.lang.String"/>
+	<parameter name="900 MHz" class="java.lang.String"/>
+	<parameter name="1800 MHz" class="java.lang.String"/>
+	<parameter name="1900 MHz" class="java.lang.String"/>
+	<parameter name="2100 MHz" class="java.lang.String"/>
+	<parameter name="x_dis" class="java.lang.String"/>
+	<parameter name="y_dis" class="java.lang.String"/>
+	<parameter name="name_tactil" class="java.lang.String"/>
+	<parameter name="name_dis" class="java.lang.String"/>
+	<parameter name="size_dis" class="java.lang.String"/>
+	<parameter name="r_rate" class="java.lang.String"/>
+	<parameter name="dpi_dis" class="java.lang.String"/>
+	<parameter name="contrast" class="java.lang.String"/>
+	<parameter name="mp_cam" class="java.lang.String"/>
+	<parameter name="flash_cam" class="java.lang.String"/>
+	<parameter name="supp_img_cam" class="java.lang.String"/>
+	<parameter name="supp_vid_cam" class="java.lang.String"/>
+	<parameter name="dis_focus" class="java.lang.String"/>
+	<parameter name="focus_enabled" class="java.lang.String"/>
+	<parameter name="whitebalance" class="java.lang.String"/>
+	<parameter name="scene_mode" class="java.lang.String"/>
+	<parameter name="sta_vid" class="java.lang.String"/>
+	<parameter name="q_jpeg" class="java.lang.String"/>
+	<parameter name="q_thum" class="java.lang.String"/>
+	<parameter name="mp_cam1" class="java.lang.String"/>
+	<parameter name="flash_cam1" class="java.lang.String"/>
+	<parameter name="supp_img_cam1" class="java.lang.String"/>
+	<parameter name="supp_vid_cam1" class="java.lang.String"/>
+	<parameter name="dis_focus1" class="java.lang.String"/>
+	<parameter name="focus_enabled1" class="java.lang.String"/>
+	<parameter name="sta_vid1" class="java.lang.String"/>
+	<parameter name="whitebalance1" class="java.lang.String"/>
+	<parameter name="scene_mode1" class="java.lang.String"/>
+	<parameter name="q_jpeg1" class="java.lang.String"/>
+	<parameter name="q_thum1" class="java.lang.String"/>
+	<parameter name="battery.type_bat" class="java.lang.String"/>
+	<parameter name="capacity" class="java.lang.String"/>
+	<parameter name="name_mat" class="java.lang.String"/>
+	<parameter name="name_provider" class="java.lang.String"/>
+	<parameter name="color" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="421" y="0" width="43" height="20" uuid="366dd99c-ade3-4c47-9852-dfbc3ecc9085"/>
+				<text><![CDATA[fecha:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="464" y="0" width="91" height="20" uuid="6237443f-51a3-4663-84d9-5c182b09066a"/>
+				<textFieldExpression><![CDATA[$P{datecreate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="128" height="52" uuid="2ae7d4e1-7986-417e-af25-ad3bb39599ce"/>
+				<imageExpression><![CDATA["C:\\application\\img\\device\\siragon.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<summary>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="8bd35761-f8db-4ef8-a3ca-977247a2fcc0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="0" width="127" height="20" uuid="8aebba49-2c20-4250-b17d-696975873813"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Pantalla]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="20" width="284" height="20" uuid="04057603-bc32-413e-92d7-180523b99837"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ancho: "+$P{x_dis}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="40" width="284" height="20" uuid="adb4ff5e-0f2f-4899-9765-9f260da85575"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" alto: "+$P{y_dis}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="60" width="284" height="20" uuid="b993a9a5-e5c7-41de-b49b-b9c4c8ca4219"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" tipo táctil: "+$P{name_tactil}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="80" width="284" height="20" uuid="32e5114d-4c97-448d-b9cb-9a3c8aaaf86a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" tipo de técnologia: "+$P{name_dis}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="20" width="271" height="20" uuid="788b0fbf-fbe7-4525-a120-4777141e10f4"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" tamaño: "+$P{size_dis}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="40" width="271" height="20" uuid="781a28e9-4693-4ec1-8324-92eee408349d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" frecuencia de actualización: "+$P{r_rate}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="60" width="271" height="20" uuid="fc071944-7dd8-4f61-8744-9ae7daf71bc0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" dpi: "+$P{dpi_dis}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="80" width="271" height="20" uuid="3b84128c-3842-401d-b2d6-1accd4dca457"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" contraste: "+$P{contrast}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="120" width="284" height="20" uuid="5f87c35b-5c58-440e-9600-bb92d203f5f2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" megapixels: "+$P{mp_cam}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="100" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="8d8abdbf-63ba-46af-b2f5-5ce20e465ad8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="189" y="100" width="176" height="20" uuid="fe2f527a-4f81-467c-84fb-630924f6f2d9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Camara Principal]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="120" width="271" height="20" uuid="c3ee5066-d416-4c6a-8f62-e383154a98d1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" flash: "+$P{flash_cam}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="196" width="555" height="62" uuid="103701f1-9999-4f05-bc52-f0cea91a82f0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" resolución de videos soportadas: "+$P{supp_vid_cam}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="258" width="555" height="20" uuid="88fb313c-b980-4f59-a16e-8ad60cc24e5a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" focos disponibles: "+$P{dis_focus}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="298" width="555" height="20" uuid="2290b5c9-e00a-4ff1-add1-48f09ba67d2d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" balance de blancos: "+$P{whitebalance}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="140" width="555" height="56" uuid="16781c90-cd08-4324-ae44-d11eaaa73ae5"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" resolución de imagenes soportadas: "+$P{supp_img_cam}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="278" width="284" height="20" uuid="471f684a-5c96-4339-977b-6ab5e4a2ba21"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" estabilizador de video: "+$P{sta_vid}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="338" width="271" height="20" uuid="6879c1e9-bff8-4e95-ac73-5975d8ae2128"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" calidad jpeg: "+$P{q_jpeg}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="278" width="271" height="20" uuid="bc23360f-3ec3-46a7-9821-1cb28a29d162"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" foco activo: "+$P{focus_enabled}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="318" width="555" height="20" uuid="70a45b6e-b46b-42de-94b0-f915b866533b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" modos de escena: "+$P{scene_mode}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="338" width="284" height="20" uuid="babb9557-e47e-4aab-8e99-9cc6402040af"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" calidad miniaturas: "+$P{q_thum}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="536" width="271" height="20" uuid="d1983278-d6d5-4a6a-88a4-f04b4c907856"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" foco activo: "+$P{focus_enabled1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="596" width="271" height="20" uuid="8162d0a7-4c99-4c7d-b18a-f53e0013191a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" calidad jpeg: "+$P{q_jpeg1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="556" width="555" height="20" uuid="6c61167e-4e68-4c45-a6c6-4edee048212a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" balance de blancos: "+$P{whitebalance1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="536" width="284" height="20" uuid="edbea23e-71fb-4b6c-b0a3-80be10f02aa3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" estabilizador de video: "+$P{sta_vid1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="516" width="555" height="20" uuid="5d24e8b7-a268-4dad-912c-bd7629633352"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" focos disponibles: "+$P{dis_focus1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="398" width="555" height="56" uuid="b19a5127-4b55-4b5e-87dc-8b6567c1de65"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" resolución de imagenes soportadas: "+$P{supp_img_cam1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="378" width="271" height="20" uuid="b94a63e8-9350-4d01-a739-6345161c0923"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" flash: "+$P{flash_cam1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="596" width="284" height="20" uuid="513a429f-66ad-4eef-9413-bf3861d1d612"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" calidad miniaturas: "+$P{q_thum1}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="358" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="6feaeaae-7d72-425a-bc2f-3332f993132f"/>
+			</rectangle>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="576" width="555" height="20" uuid="4473d6bc-6675-4983-b6da-8461f6865a26"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" modos de escena: "+$P{scene_mode1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="378" width="284" height="20" uuid="951d476f-70ad-4d7b-9b04-adc1831d197a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" megapixels: "+$P{mp_cam1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="454" width="555" height="62" uuid="ec834471-411c-4011-a502-042b6776a023"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" resolución de videos soportadas: "+$P{supp_vid_cam1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="189" y="358" width="193" height="20" uuid="98856375-f6b9-4706-8cd5-beff0504d26e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Camara Secundaria]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="616" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="e67c118f-12d2-4d61-b579-86b2fc6af5b3"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="258" y="616" width="82" height="20" uuid="de3fb9cc-6cac-4d43-ad63-49df77201c95"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[otros]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="636" width="271" height="20" uuid="3a479359-c35d-4f14-a19e-1a774c365dc4"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" tipo de bateria: "+$P{battery.type_bat}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="656" width="271" height="20" uuid="35c33aab-9f6b-4c0c-8646-7bd8af4ceffa"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" capacidad: "+$P{capacity}+"mAh"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="636" width="284" height="40" uuid="676f7dba-3ce9-43e6-9ebb-aa4976730d26"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" materiales en diseño: "+$P{name_mat}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="676" width="271" height="20" uuid="88d1c352-0aaf-4b35-a056-fe9a3a478da7"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" color semejante: "+$P{color}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="271" y="676" width="284" height="20" uuid="9557f6fb-d84e-4343-942b-025055ee265a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" proveedor: "+$P{name_provider}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

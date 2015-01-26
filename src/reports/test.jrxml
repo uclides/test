@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="9fbf3b9c-789e-4107-a4d0-03670b3d0395">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="datecreate" class="java.util.Date"/>
+	<parameter name="id_device" class="java.lang.String"/>
+	<parameter name="name_dev" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="model_dev" class="java.lang.String"/>
+	<parameter name="ver_so" class="java.lang.String"/>
+	<parameter name="kernel" class="java.lang.String"/>
+	<parameter name="build_dev" class="java.lang.String"/>
+	<parameter name="locale_dev" class="java.lang.String"/>
+	<parameter name="cert_google" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_ext_sd_t" class="java.lang.String"/>
+	<parameter name="sto_ext_sd_d" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_s2sd_t" class="java.lang.String"/>
+	<parameter name="sto_s2sd_d" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sto_inter_t" class="java.lang.String"/>
+	<parameter name="sto_inter_d" class="java.lang.String"/>
+	<parameter name="sto_sys_t" class="java.lang.String"/>
+	<parameter name="sto_sys_d" class="java.lang.String"/>
+	<parameter name="cache_sys_t" class="java.lang.String"/>
+	<parameter name="cache_sys_d" class="java.lang.String"/>
+	<parameter name="ram_t" class="java.lang.String"/>
+	<parameter name="ram_d" class="java.lang.String"/>
+	<parameter name="ram_l" class="java.lang.String"/>
+	<parameter name="h_dev" class="java.lang.String"/>
+	<parameter name="w_dev" class="java.lang.String"/>
+	<parameter name="bulk_dev" class="java.lang.String"/>
+	<parameter name="weight_dev" class="java.lang.String"/>
+	<parameter name="type_blu" class="java.lang.String"/>
+	<parameter name="Acelerómetro" class="java.lang.String"/>
+	<parameter name="Giroscopio" class="java.lang.String"/>
+	<parameter name="Magnetómetro" class="java.lang.String"/>
+	<parameter name="Sensor de proximidad" class="java.lang.String"/>
+	<parameter name="Sensor de luz" class="java.lang.String"/>
+	<parameter name="Barómetro" class="java.lang.String"/>
+	<parameter name="Sensor de ritmo card" class="java.lang.String"/>
+	<parameter name="Termómetro y sensor " class="java.lang.String"/>
+	<parameter name="Podómetro" class="java.lang.String"/>
+	<parameter name="Detector de huellas" class="java.lang.String"/>
+	<parameter name="850 MHz" class="java.lang.String"/>
+	<parameter name="900 MHz" class="java.lang.String"/>
+	<parameter name="1800 MHz" class="java.lang.String"/>
+	<parameter name="1900 MHz" class="java.lang.String"/>
+	<parameter name="2100 MHz" class="java.lang.String"/>
+	<parameter name="802.11" class="java.lang.String"/>
+	<parameter name="802.11a" class="java.lang.String"/>
+	<parameter name="802.11b" class="java.lang.String"/>
+	<parameter name="802.11c" class="java.lang.String"/>
+	<parameter name="802.11g" class="java.lang.String"/>
+	<parameter name="802.11n" class="java.lang.String"/>
+	<parameter name="name_cpu" class="java.lang.String"/>
+	<parameter name="frec_cpu" class="java.lang.String"/>
+	<parameter name="core_cpu" class="java.lang.String"/>
+	<parameter name="feature_cpu" class="java.lang.String"/>
+	<parameter name="revision_cpu" class="java.lang.String"/>
+	<parameter name="hard_cpu" class="java.lang.String"/>
+	<parameter name="gpu" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="421" y="0" width="43" height="20" uuid="366dd99c-ade3-4c47-9852-dfbc3ecc9085"/>
+				<text><![CDATA[fecha:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="464" y="0" width="91" height="20" uuid="6237443f-51a3-4663-84d9-5c182b09066a"/>
+				<textFieldExpression><![CDATA[$P{datecreate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="128" height="52" uuid="2ae7d4e1-7986-417e-af25-ad3bb39599ce"/>
+				<imageExpression><![CDATA["C:\\application\\img\\device\\siragon.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="33" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="802" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="163" width="374" height="20" uuid="101465e6-2460-4114-929d-18bcf1eac45c"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" localidad :"+$P{locale_dev}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="183" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="8bd35761-f8db-4ef8-a3ca-977247a2fcc0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="183" width="127" height="20" uuid="8aebba49-2c20-4250-b17d-696975873813"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Memoria]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="203" width="284" height="20" uuid="04057603-bc32-413e-92d7-180523b99837"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" almacenamiento externo total: "+$P{sto_ext_sd_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="223" width="284" height="20" uuid="adb4ff5e-0f2f-4899-9765-9f260da85575"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento externo disponible: "+$P{sto_ext_sd_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="243" width="284" height="20" uuid="b993a9a5-e5c7-41de-b49b-b9c4c8ca4219"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento s2sd total: "+$P{sto_s2sd_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="263" width="284" height="20" uuid="32e5114d-4c97-448d-b9cb-9a3c8aaaf86a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento s2sd disponible: "+$P{sto_s2sd_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="283" width="284" height="20" uuid="788b0fbf-fbe7-4525-a120-4777141e10f4"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento interno total: "+$P{sto_inter_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="303" width="284" height="20" uuid="781a28e9-4693-4ec1-8324-92eee408349d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento interno disponible: "+$P{sto_inter_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="203" width="271" height="20" uuid="fc071944-7dd8-4f61-8744-9ae7daf71bc0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento total sistema: "+$P{sto_sys_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="223" width="271" height="20" uuid="3b84128c-3842-401d-b2d6-1accd4dca457"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" almacenamiento sistema disponible: "+$P{sto_sys_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="243" width="271" height="20" uuid="b6775ae9-6db7-4008-b49a-4723132863f1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" caché total: "+$P{cache_sys_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="263" width="271" height="20" uuid="81564a57-9fa1-441a-beb8-75c656dba10e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" caché disponible: "+$P{cache_sys_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="283" width="271" height="20" uuid="7c0ab5e5-3438-4957-bb1f-544100e9321d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" memoria RAM total: "+$P{ram_t}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="303" width="271" height="20" uuid="e1f82297-e9aa-4974-9f39-38c9a742d1fb"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" memoria RAM disponible: "+$P{ram_d}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="323" width="271" height="20" uuid="39d1fbb8-ab81-428d-bada-f47060fdbb6e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" memoria RAM lde: "+$P{ram_l}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="343" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="f583fc52-d686-4f22-ae7e-5903c8308396"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="343" width="127" height="20" uuid="368f5c31-838d-424f-aa6f-f0dd34de44d9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Fisica]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="374" y="20" width="181" height="163" uuid="296d8167-b2a4-4aa0-af65-0bb007d52a4e"/>
+				<imageExpression><![CDATA["C:\\application\\img\\device\\Desert.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="40" width="374" height="20" uuid="d7bbbbb7-0a13-41ab-b238-60352828160f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" nombre: "+$P{name_dev}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="0" y="20" width="374" height="20" uuid="71185851-1b0b-4b4b-8994-6c97fc52b705"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" ID: "+$P{id_device}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="60" width="374" height="23" uuid="75da08c7-798a-48c7-87a4-028f6e8789f0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" modelo: "+$P{model_dev}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="83" width="374" height="20" uuid="6a569c90-94e9-4631-b979-c081c534f38b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" version S.O: "+$P{ver_so}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="103" width="374" height="20" uuid="c84925f0-5c3c-41d6-a513-af6c839f8387"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" kernel: "+$P{kernel}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="123" width="374" height="20" uuid="4ada3e77-c9f0-462e-bd26-4382dd30d26e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" compilación: "+$P{build_dev}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="143" width="374" height="20" uuid="8c3f29d4-c3e0-4ba7-9eae-5c20dee7f7d9"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" cert. google: "+$P{cert_google}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="b1ea104b-e4ae-4906-ac1b-57ca7725a82b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="0" width="111" height="20" uuid="5103ea93-af60-4ef6-b295-28ff4c849c47"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Básica]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="363" width="284" height="20" uuid="8c4d4649-b547-465a-aaf5-0a43f087a6d3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" alto: "+$P{h_dev}+"mm"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="383" width="284" height="20" uuid="6bd98c4e-fc61-4e4a-812b-58fb0cb1b0a8"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" ancho: "+$P{w_dev}+"mm"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="363" width="271" height="20" uuid="e7abd114-4dc8-4cfb-87d4-a68eab04fc28"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" grosor: "+$P{bulk_dev}+"mm"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="383" width="271" height="20" uuid="2711d263-9ee2-4d2f-8555-524695154ef3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" peso:"+$P{weight_dev}+"gr"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="403" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="5554e7a3-355d-4c2f-af10-9d85847edc1c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="175" y="403" width="222" height="20" uuid="96e1dccb-0fc7-4875-be16-c9bf76a26ca4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Conexiones Inalámbricas]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="423" width="284" height="20" uuid="0fe827f7-6af2-48f1-b7b8-cd85eaf1f114"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" soporte bluetooth: "+$P{type_blu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="523" width="284" height="20" uuid="5f87c35b-5c58-440e-9600-bb92d203f5f2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Acelerómetro :"+$P{Acelerómetro}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="503" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="8d8abdbf-63ba-46af-b2f5-5ce20e465ad8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="213" y="503" width="151" height="20" uuid="fe2f527a-4f81-467c-84fb-630924f6f2d9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Sensores]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="543" width="284" height="20" uuid="c3ee5066-d416-4c6a-8f62-e383154a98d1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Giroscopio: "+$P{Giroscopio}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="563" width="284" height="20" uuid="103701f1-9999-4f05-bc52-f0cea91a82f0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Magnetómetro: "+$P{Magnetómetro}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="583" width="284" height="20" uuid="88fb313c-b980-4f59-a16e-8ad60cc24e5a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Sensor de proximidad: "+$P{Sensor de proximidad}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="603" width="284" height="20" uuid="2290b5c9-e00a-4ff1-add1-48f09ba67d2d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Sensor de luz: "+$P{Sensor de luz}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="523" width="271" height="20" uuid="16781c90-cd08-4324-ae44-d11eaaa73ae5"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Barómetro: "+$P{Barómetro}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="543" width="271" height="20" uuid="471f684a-5c96-4339-977b-6ab5e4a2ba21"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Sensor de ritmo card: "+$P{Sensor de ritmo card}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="563" width="271" height="20" uuid="6879c1e9-bff8-4e95-ac73-5975d8ae2128"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Termómetro y sensor : "+$P{Termómetro y sensor }]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="583" width="271" height="20" uuid="bc23360f-3ec3-46a7-9821-1cb28a29d162"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Podómetro: "+$P{Podómetro}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="603" width="271" height="20" uuid="70a45b6e-b46b-42de-94b0-f915b866533b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" Detector de huellas: "+$P{Detector de huellas}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="623" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="24bb472c-a84c-484f-ac1e-f86508ddb351"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="189" y="623" width="161" height="20" uuid="426bf100-9ec5-47d1-b98d-36ff5fbb9b22"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Redes Móviles]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="643" width="284" height="20" uuid="25885120-e146-45d9-8fc6-07b537492fe0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 850 MHz: "+$P{850 MHz}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="663" width="284" height="20" uuid="bbec60ae-098f-405b-bbbe-e69a10354463"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 900 MHz: "+$P{900 MHz}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="683" width="284" height="20" uuid="babb9557-e47e-4aab-8e99-9cc6402040af"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 1800 MHz: "+$P{1800 MHz}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="643" width="271" height="20" uuid="70a2b5f9-888e-4a6c-a84f-5adb607d6b8b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 1900 MHz: "+$P{1900 MHz}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="663" width="271" height="20" uuid="4cacfb75-fa7e-4e51-b284-a688c83eea06"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 2100 MHz: "+$P{2100 MHz}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="703" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="31d6dec7-57ac-4266-a292-43c8713ac33a"/>
+			</rectangle>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="443" width="284" height="20" uuid="325e45cc-0351-44a7-bc40-d764d40772d2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11: "+$P{802.11}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="463" width="284" height="20" uuid="e4215fa4-07c7-469e-ae99-525ca5ecc416"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11a: "+$P{802.11a}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="483" width="284" height="20" uuid="e94cfcf2-fd82-42f8-8cd9-2fff6aa2b0ff"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11b: "+$P{802.11b}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="423" width="271" height="20" uuid="70b73951-c9e2-4a70-b57c-533c65be34ef"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11c: "+$P{802.11c}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="443" width="271" height="20" uuid="d715d4dc-acfc-4250-832d-6cbb108b0313"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11g: "+$P{802.11g}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="463" width="271" height="20" uuid="90568a7b-18ac-4570-9cb5-c4677568e1df"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" 802.11n: "+$P{802.11n}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="223" y="703" width="111" height="20" uuid="dfa175b9-1a5a-4a66-ab74-3c9bb4005789"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información CPU]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="723" width="284" height="20" uuid="971a89ff-2271-4b0b-b3d7-206596a0d977"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" nombre: "+$P{name_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="743" width="284" height="20" uuid="00a79d79-cad1-4e7e-8d53-99aaca483a5a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" frecuencia: "+$P{frec_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="763" width="284" height="20" uuid="3dbe6e22-f2e7-4cbc-b553-2da097eb3a57"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" cores: "+$P{core_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="783" width="555" height="19" uuid="10a8c4c8-3a04-4193-8272-34d7e9c1c54a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" caracteristicas: "+$P{feature_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="723" width="271" height="20" uuid="9905ce03-8ab5-4d63-a154-45a922b93464"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" revision: "+$P{revision_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="743" width="271" height="20" uuid="50094269-ca42-48be-a06d-8a18c9d1e703"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" hard_cpu: "+$P{hard_cpu}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="284" y="763" width="271" height="20" uuid="026ea3a8-cafd-4d17-9114-c8498728a8ea"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[" gpu: "+$P{gpu}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

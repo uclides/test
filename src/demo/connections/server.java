@@ -421,6 +421,24 @@ public ObservableList<String> user;
         }
         return file.RemoveNullValue2(values);
 }
+        public String[] ConsultforUIArray2(String s,String[] column){
+         String[] values=new String[100];
+         int x=0;
+        try {
+            conn = DriverManager.getConnection(url+dbName,userName,password);
+             st= conn.createStatement();
+             resultSet=st.executeQuery(s);
+            while(resultSet.next()){
+                
+                values[x]= resultSet.getString(column[x]);
+               x++;
+            }
+            return file.RemoveNullValue2(values);
+        } catch (SQLException ex) {
+            adb.alertMessage(mesagges[2]); 
+        }
+        return file.RemoveNullValue2(values);
+}
     public void generateInfoComp(){
    
     }
@@ -451,4 +469,25 @@ public ObservableList<String> user;
     
   return values;
     }
+    public Connection getConnection(){
+
+        try {
+            conn = DriverManager.getConnection(url+dbName,userName,password);
+
+        } catch (SQLException ex) {
+            adb.alertMessage(mesagges[2]); 
+        }
+   return conn;      
+}
+    public void setClose(){
+
+        try {
+
+conn.close();
+        } catch (SQLException ex) {
+            adb.alertMessage(mesagges[2]); 
+        }
+      
+}
+    
 }

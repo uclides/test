@@ -118,6 +118,7 @@ import org.controlsfx.control.ButtonBar.ButtonType;
 import org.controlsfx.control.action.AbstractAction;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
+import reports.Reports;
 
 
 /**
@@ -128,7 +129,7 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
             exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg,borrarimgs,baddfails,
-            bfails,bprev,bnext,bcreatec,binduction,badvantage,brestore,banyimg;
+            bfails,bprev,bnext,bcreatec,binduction,badvantage,brestore,banyimg,bfreport,bgreport,generatereport,btest;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
             lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper,lblinfod,lblinfofail,lblversus;
@@ -141,10 +142,10 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     Accordion accordion;
     @FXML
-    TabPane tabdash;
+    TabPane tabdash,tabchart;
     @FXML
-    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails,
-            tabbar1,tabbar2,tabbar3,tabbar4,tabbar5,tabbar6,tabbar7;
+    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails,tabreport,
+            tabbar1,tabbar4,tabbar5,tabbar6,tabbar7,tabbar8,tabbar9,tabbar10,tabbar11;
     @FXML
     TitledPane  accorIdentificacion,accorBenchmark,accorImagenes,accorVersus,
             accorFallas,accorReporte,accorMantenimiento,accorAyuda;
@@ -225,16 +226,17 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     CheckBox chkpref;
     @FXML
-    BarChart<String,Number> barChart;
+    BarChart<String,Number> barChart,barChart3,barChart4,barChart5,barChart6,barChart7,barChart8,barChart9,barChart10;
     @FXML
-    CategoryAxis xAxis;
+    CategoryAxis xAxis,xAxis1=new CategoryAxis();
     @FXML
-    NumberAxis yAxis;
+    NumberAxis yAxis,yAxis1= new NumberAxis();;
     Task task2;
      int tpng=0;int z=0;int fpng=0;
     //instances
  adb adb = new adb();
  files files=new files();
+Reports reporte=new Reports();
   String[] info,info2,info3,info4,info5,info6,info7,info8,info9,
           info10,info11,info12,info13,info14,info15,info16,
           info17,info18,info19,info20,info21;
@@ -260,6 +262,7 @@ String[] out = new String[100];
 server s=new server();
 Controls c=new Controls();
 String[] foldersdevice=new String[10];
+
     int count;
 public int VAL;
 final TextField namefail = new TextField();
@@ -267,6 +270,7 @@ final TextArea descriptionfail = new TextArea();
 final Label lblimgfail =new Label();
 final Action actionFail,actioncapinmg,actionRestore;
 String imgc,imgtest;
+
 public DashboardController(){  
 
         this.tableinfodevice = new TableView<>();
@@ -372,6 +376,9 @@ else{
        if(tableinfodevice.getItems().isEmpty())
        {
   if(adb.b==1) {
+       
+      adb.checkDir(1, new String[]{"adb shell ls /storage/sdcard0/app-siragon","adb shell mkdir -p /storage/sdcard0/app-siragon/ADB","adb shell mkdir -p /storage/sdcard0/app-siragon/captures","adb shell mkdir -p /storage/sdcard0/app-siragon/result-benchmark","adb shell mkdir -p /storage/sdcard0/app-siragon/apk"},"No such file or directory");
+  
       device=adb.returnID(devicedisp);
         for(String st:new String[]{folderimg[0],folderimg[1],folderimg[2],folderimg[3]}){
       int x=0;
@@ -423,19 +430,22 @@ adb.execGeneric("adb shell am start -n org.uguess.android.sysinfo/.SiragonInfo",
 ProgressBar(1);
 if(!files.checkDir("/storage/sdcard0/logs", ".zip")){
 adb.execGeneric(pullfile,outConsole,adb.b);
+lblinfod.setText("Información obtenida correctamente");
 }
+lblinfod.setText("Información obtenida correctamente");
 //adb.execGeneric(pullfile,outConsole,adb.b);
 pushInfo();
                            // activedevice.setText("verifica estatus del servidor");                       
 //                          profile.detectdevice.setOnAction((event) -> {
 //                              adb.execTerminal(server);
 //                           });
-                            
+                bcontinue.setVisible(true);            
      bcontinue.setDisable(false);                       
                         }
 
    }
    else{
+   
     adb.alertMessage(mesagges[0]);
     }
    }
@@ -513,6 +523,7 @@ bcontinue.setDisable(false);
          fillTableManual();
          }
          else{
+             lblinfod.setText("Es necesario generar el reporte a tráves de la aplicación móvil Opción: (Enviar informe)");
         // fillTableAuto();
          }
            
@@ -723,10 +734,9 @@ menuItemTable();
 viewMITable();
 splitPane.setOnSwipeRight(null);    
   device=adb.LoopAdb(activedevice);
-
- 
+  adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[0], estatusbench, probarapp, bsavebech,photo);
+  
   choicematerialdev.getItems().addAll(s.ConsultforUICMItem(consults[0],columnsdb[0]));
-  choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
   choiceband.getItems().addAll(s.ConsultforUICMItem(consults[1],columnsdb[1]));
   choicewifi.getItems().addAll(s.ConsultforUICMItem(consults[2],columnsdb[1]));
   choicesensor.getItems().addAll(s.ConsultforUICMItem(consults[7],columnsdb[6]));
@@ -826,6 +836,7 @@ c.validateTextFile(result5,lblcompinfo);result5.addEventFilter(KeyEvent.KEY_TYPE
  cbtypecomp.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
     @Override
     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        tablechart.getItems().removeAll(datachart);
         String[] farr = new String[1000];
         String[] v=s.ConsultforUIArray("select nvalues as t from params where nparams='"+newValue.toString()+"'", "t");
             for (String v1 : v) {
@@ -852,14 +863,16 @@ c.validateTextFile(result5,lblcompinfo);result5.addEventFilter(KeyEvent.KEY_TYPE
 String e;
 String[] arr;
         switch(cbtypecomp.getSelectionModel().getSelectedItem().toString()){
+            
                         case("memoria RAM"):
                 switch(cbspecomp.getSelectionModel().getSelectedItem().toString()){
                     case("512MB"):
-                            e=s.ConsultforUIString("select id_device as t from device where ram_t like'%0,4%'", "t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device where ram_t like'%MB%'", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -867,11 +880,13 @@ String[] arr;
                             }
                         break;
                     case("1GB"):
-                            e=s.ConsultforUIString("select id_device as t from device where ram_t like'%0,9%'", "t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device where ram_t like'%0,9%'", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -879,11 +894,13 @@ String[] arr;
                             }
                         break;
                     case("2GB"):
-                            e=s.ConsultforUIString("select id_device as t from device where ram_t like'%1,9%'", "t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device where ram_t like'%1,9%'", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -891,59 +908,13 @@ String[] arr;
                             }
                         break;
                     case("3GB"):
-                            e=s.ConsultforUIString("select id_device as t from device where ram_t like'%2,9%'", "t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device where ram_t like'%2,9%'", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
                             }
-                            else{
-                                tablechart.getItems().removeAll(datachart);
-                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                            }
-                        break;
-                    case("4.3"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 4.3 and 4.6","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
-                            }
-                            else{
-                                tablechart.getItems().removeAll(datachart);
-                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                            }
-                        break;
-                    case("4.7"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 4.7 and 4.9","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
-                            }
-                            else{
-                                tablechart.getItems().removeAll(datachart);
-                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                            }
-                        break;
-                    case("5.0"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 5.0 and 5.4","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
-                            }
-                            else{
-                                tablechart.getItems().removeAll(datachart);
-                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                            }
-                        break;
-                    case("5.5"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 5.5 and 5.9","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -956,11 +927,13 @@ String[] arr;
             case("tamaño"):
                 switch(cbspecomp.getSelectionModel().getSelectedItem().toString()){
                     case("3.5"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 3.5 and 4.2","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device,display where i_dev=id_device and size_dis between 3.5 and 4.2", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -968,11 +941,13 @@ String[] arr;
                             }
                         break;
                     case("4.3"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 4.3 and 4.6","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device,display where i_dev=id_device and size_dis between 4.3 and 4.6", "t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -980,11 +955,13 @@ String[] arr;
                             }
                         break;
                     case("4.7"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 4.7 and 4.9","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device,display where i_dev=id_device and size_dis between 4.7 and 4.9","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -992,11 +969,13 @@ String[] arr;
                             }
                         break;
                     case("5.0"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 5.0 and 5.4","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device,display where i_dev=id_device and size_dis between 5.0 and 5.4","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
@@ -1004,31 +983,95 @@ String[] arr;
                             }
                         break;
                     case("5.5"):
-                            e=s.ConsultforUIString("select id_device as t from device,display where size_dis between 5.5 and 5.9","t");
-                            if(e!=null){
-                                tablechart.getItems().removeAll(datachart);
-                                createRowsChart(datachart,e);
-                                lblversus.setText("");
+                            arr=s.ConsultforUIArray("select id_device as t from device,display where i_dev=id_device and size_dis between 5.5 and 5.9","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
                             }
                             else{
                                 tablechart.getItems().removeAll(datachart);
                             lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                            }
+                            }     
                         break;
                 }
 
                 break;
             case("cores"):
-                e=s.ConsultforUIString("select id_device as t from device,cpu where id_device!='"+device+"' and id_cpu in(select id_cpu_c from device_cpu where core_cpu='"+cbspecomp.getSelectionModel().getSelectedItem().toString()+"')","t");
-                if(e!=null){
-                    tablechart.getItems().removeAll(datachart);
-                    createRowsChart(datachart,e);
-                    lblversus.setText("");
-                }
-                else{
-                    tablechart.getItems().removeAll(datachart);
-                lblversus.setText("no existen dispositivos con la descripción seleccionada");
-                }
+                 switch(cbspecomp.getSelectionModel().getSelectedItem().toString()){
+                     case("1"):
+                            arr=s.ConsultforUIArray("select id_device as t from device,device_cpu where id_dev_cpu=id_device and id_cpu_c in(select id_cpu from cpu where core_cpu=1)","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
+                            }
+                            else{
+                                tablechart.getItems().removeAll(datachart);
+                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                            }     
+                         break;
+                     case("2"):
+                         arr=s.ConsultforUIArray("select id_device as t from device,device_cpu where id_dev_cpu=id_device and id_cpu_c in(select id_cpu from cpu where core_cpu=2)","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
+                            }
+                            else{
+                                tablechart.getItems().removeAll(datachart);
+                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                            } 
+                         break;
+                     case("4"):
+                         arr=s.ConsultforUIArray("select id_device as t from device,device_cpu where id_dev_cpu=id_device and id_cpu_c in(select id_cpu from cpu where core_cpu=4)","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
+                            }
+                            else{
+                                tablechart.getItems().removeAll(datachart);
+                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                            } 
+                         break;
+                     case("6"):
+                         arr=s.ConsultforUIArray("select id_device as t from device,device_cpu where id_dev_cpu=id_device and id_cpu_c in(select id_cpu from cpu where core_cpu=6)","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
+                            }
+                            else{
+                                tablechart.getItems().removeAll(datachart);
+                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                            } 
+                         break;
+                     case("8"):
+                         arr=s.ConsultforUIArray("select id_device as t from device,device_cpu where id_dev_cpu=id_device and id_cpu_c in(select id_cpu from cpu where core_cpu=8)","t");
+                            if(arr!=null){
+                                                tablechart.getItems().removeAll(datachart);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+
+                                createRowsChart(datachart,v1);
+                            }
+                            }
+                            else{
+                                tablechart.getItems().removeAll(datachart);
+                            lblversus.setText("no existen dispositivos con la descripción seleccionada");
+                            } 
+                         break;
+                 }
                 break;
             case("general"):
                 arr=s.ConsultforUIArray("select id_device as t from device","t");
@@ -1078,6 +1121,12 @@ String[] arr;
           case "Button[id=bfails, styleClass=button]'Información'":
             tabdash.getSelectionModel().select(tabfails);
               break;
+          case "Button[id=bfreport, styleClass=button]'Fallas'":
+            tabdash.getSelectionModel().select(tabreport);
+              break;
+          case "Button[id=bgreport, styleClass=button]'General'":
+            tabdash.getSelectionModel().select(tabreport);
+              break;
      }
     }
     public void LoadManual(ActionEvent actionEvent){       
@@ -1111,8 +1160,10 @@ String[] arr;
             if(adb.confirmMessage("Aviso",question1[1])){
                 s.generateInfoIdent(tabdash,columnitem,columndescription);
                 tabdash.getSelectionModel().select(tabcomp);
-                bcomponente.setDisable(false);                         
+                bcomponente.setDisable(false);      
+                
             }
+            
                 }
             else{
                 adb.alertMessage("Existen campos vacíos en la tabla");
@@ -1211,12 +1262,23 @@ String[] arr;
 //            for(String s:c.values[3]){
 //            
 //            }
-            tabdash.getSelectionModel().select(tabapp);         
+            if(s.ConsultforUIString("select id_device as t from device where id_device='"+device+"'", "t")==null){
             
+            }else{
+                baddfails.setDisable(false);
+            tabdash.getSelectionModel().select(tabapp);  
+            accorBenchmark.setDisable(false);
+            bapp.setDisable(false);
+            baddfails.setVisible(true);
+            }
 
             break;
             case("tabapp"):
-                bcontinue.setDisable(true);
+                baddfails.setDisable(false);
+                baddfails.setVisible(true);
+                btest.setDisable(false);
+                btest.setVisible(true);
+                tabdash.getSelectionModel().select(tabtest); 
             break;
             case("tabtest"):
                 Boolean bol = null;
@@ -1224,7 +1286,7 @@ String[] arr;
                 String[] valids =new String[100];
                 String[] va=s.ConsultforUIArray("select name_test as t from test", "t");
                 String[]fi=va;
-                 
+                 btest.setDisable(false);
             if(adb.confirmMessage("Aviso",question1[1])){
                 s.generateInfoIdent(tabdash,columnitem,columndescription);
                 //tabdash.getSelectionModel().select(tabcomp);
@@ -1304,6 +1366,9 @@ lblinfofail.setText("a través del click derecho puede eliminar registro de fall
                 break;
                 case("tabfails"):
                     tabdash.getSelectionModel().select(tabcompare); 
+                break;
+                case("tabcompare"):
+                    tabdash.getSelectionModel().select(tabreport); 
                 break;
         }
     
@@ -2163,8 +2228,20 @@ else{
         createRowsChart(datachart,"fedwjfwpf");
     }
     public void getCherDeviceTrue(ActionEvent actionEvent){
-                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=1 and id_dev_test in(select id_device from device where id_device='","antutu"), "Antutu Benchmark", "Dispositivos", "Resultados");
-  
+       List<XYChart.Series<String, Number>> obs = FXCollections.observableArrayList();
+      List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
+     Series<String, Number> ser = new Series<>();
+     String[] valuesarr={"id_dev_test","id_test_test","result_test1","result_test2","result_test3","result_test4","result_test5"};
+     
+            GenerateChart(barChart,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=1 and id_dev_test in(select id_device from device where id_device='","",2,valuesarr), "Antutu Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart3,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=4 and id_dev_test in(select id_device from device where id_device='","",2,valuesarr), "3DMark Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart4,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=5 and id_dev_test in(select id_device from device where id_device='","",2,valuesarr), "Geekbench (SINGLE-CORE) Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart5,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=5 and id_dev_test in(select id_device from device where id_device='","",3,valuesarr), "Geekbench (MULTI-CORE)", "Dispositivos", "Resultados");
+            GenerateChart(barChart6,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=6 and id_dev_test in(select id_device from device where id_device='","",2,valuesarr), "Vellamo (BROWSER)Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart7,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=6 and id_dev_test in(select id_device from device where id_device='","",3,valuesarr), "Vellamo (MULTICORE)Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart8,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_test_test=6 and id_dev_test in(select id_device from device where id_device='","",4,valuesarr), "Vellamo (METAL)Benchmark", "Dispositivos", "Resultados");
+            GenerateChart(barChart9,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_device,ram_t from device where id_device=('","memoria",1,new String[]{"id_device","ram_t"}), "Memoria RAM", "Dispositivos", "Resultados");
+            GenerateChart(barChart10,xAxis,yAxis,GenerateGraphicsData(obs,seriesList,ser,"select id_device,sto_inter_t from device where id_device=('","interna",1,new String[]{"id_device","sto_inter_t"}), "Almacenamiento Interno Total", "Dispositivos", "Resultados");
     }
     public void checkInduction(String val){
         if(s.Consultation("select * from user_preferences where u_pref="+val+" and id_pref=1 and desc_pref='true'")==0){
@@ -2273,19 +2350,24 @@ else{
     } 
     return true;
     }
-    public void GenerateChart(BarChart<String,Number> bar,List<XYChart.Series<String, Number>>  serie,String title,String labelx,String labely){
-        bar.setTitle(title);
+    public void GenerateChart(BarChart bar,CategoryAxis xAxis,NumberAxis yAxis,List<XYChart.Series<String, Number>>  serie,String title,String labelx,String labely){
+      //BarChart<String,Number> barChart,barChart1;
+
         xAxis.setLabel(labelx); 
-        yAxis=new NumberAxis(labely, 0, 0, 0);
-        
+        yAxis.setLabel(labely); 
+        bar.setTitle(title);
        for(XYChart.Series<String, Number> s: serie){
         bar.getData().add(s);
-       }  
+       }
+       
     }
-    public List<XYChart.Series<String, Number>> GenerateGraphicsData(String sql,String typetest){
-             ObservableList<XYChart.Series<String, Number>> obs = FXCollections.observableArrayList();
-     List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
-     String[] selecte=new String[100];
+    public List<XYChart.Series<String, Number>> GenerateGraphicsData(List<XYChart.Series<String, Number>> obs,List<XYChart.Series<String, Number>> seriesList,Series<String, Number> ser,String sql,String typetest,int col,String[] columarray){
+      String[] selecte=new String[100];
+
+        obs = FXCollections.observableArrayList();
+      seriesList = new ArrayList<>();
+     ser = new Series<>();
+     
         int x=0;
         for(Chart c:tablechart.getItems()){
             if(c.getBd()==true){
@@ -2295,14 +2377,108 @@ else{
             }
             x++;
         }for(int v=0;v<files.RemoveNullValue2(selecte).length;v++){
-            XYChart.Series<String, Number> ser = new XYChart.Series<>();
-            String[][] arrays=s.getBD(1,sql+selecte[v]+"')", new String[]{"id_dev_test","id_test_test","result_test1","result_test2","result_test3","result_test4","result_test5"} ); 
+            ser=new Series<>();
+            String[][] arrays=s.getBD(1,sql+selecte[v]+"')",columarray ); 
             for(int a=0;a<files.RemoveNullArray(arrays).length;a++){
                 
-                for(int b=0;b<files.RemoveNullValue2(arrays[a]).length;b++){    
-                    ser.setName(arrays[a][0]);
-                            ser.getData().add(new XYChart.Data<>(arrays[a][0],Integer.valueOf(arrays[a][2])));
-                          
+                for(int b=0;b<files.RemoveNullValue2(arrays[a]).length;b++){
+                    switch(typetest){
+                        case("memoria"):
+                                if(selecte[v].contains(device)){
+                            ser.setName(arrays[a][0]+" (EN PRUEBAS)");
+                            if(arrays[a][1].contains("GB")){
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("GB","");
+                                temp=temp.replaceAll(",", ".");
+                                Double db=Double.parseDouble(temp);
+                                db*=1024;
+                                           ser.getData().add(new XYChart.Data<>("",db));
+                                        }
+                                        else{
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("MB","");
+                                int ib=Integer.parseInt(temp);
+                                           ser.getData().add(new XYChart.Data<>("",ib));
+                                        }
+
+                            }
+                            else{
+                                    ser.setName(arrays[a][0]);
+                                  if(arrays[a][1].contains("GB")){
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("GB","");
+                                temp=temp.replaceAll(",", ".");
+                                Double db=Double.parseDouble(temp);
+                                db*=1024;
+                                           ser.getData().add(new XYChart.Data<>("",db));
+                                        }
+                                        else{
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("MB","");
+                                int ib=Integer.parseInt(temp);
+                                           ser.getData().add(new XYChart.Data<>("",ib));
+                                        }
+                            }
+
+                        break;
+                        case("interna"):
+                                if(selecte[v].contains(device)){
+                            ser.setName(arrays[a][0]+" (EN PRUEBAS)");
+                            if(arrays[a][1].contains("GB")){
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("GB","");
+                                temp=temp.replaceAll(",", ".");
+                                Double db=Double.parseDouble(temp);
+                                db*=1024;
+                                           ser.getData().add(new XYChart.Data<>("",db));
+                                        }
+                                        else{
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("MB","");
+                                int ib=Integer.parseInt(temp);
+                                           ser.getData().add(new XYChart.Data<>("",ib));
+                                        }
+
+                            }
+                            else{
+                                    ser.setName(arrays[a][0]);
+                                  if(arrays[a][1].contains("GB")){
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("GB","");
+                                temp=temp.replaceAll(",", ".");
+                                Double db=Double.parseDouble(temp);
+                                db*=1024;
+                                           ser.getData().add(new XYChart.Data<>("",db));
+                                        }
+                                        else{
+                                String temp=arrays[a][1].trim();
+                                temp=temp.replaceAll(" ", "");
+                                temp=temp.replaceAll("MB","");
+                                int ib=Integer.parseInt(temp);
+                                           ser.getData().add(new XYChart.Data<>("",ib));
+                                        }
+                            }
+
+                        break;
+                        case(""):
+                             if(selecte[v].contains(device)){
+                    ser.setName(arrays[a][0]+" (EN PRUEBAS)");
+                            ser.getData().add(new XYChart.Data<>("",Integer.valueOf(arrays[a][col])));
+                    }
+                    else{
+                          ser.setName(arrays[a][0]);
+                            ser.getData().add(new XYChart.Data<>("",Integer.valueOf(arrays[a][col])));
+                    }
+                       break; 
+                    }
+                   
                 }
             }
               obs.add(ser);
@@ -2313,17 +2489,69 @@ else{
     return seriesList;
     }
     public void nextChart(ActionEvent actionEvent){
-//            switch(i){
-//                case(0):
-//                   
-//                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_dev_test in(select id_device from device where id_device='","antutu"), "Antutu Benchmark", "Dispositivos", "Resultados");
-//                    break;
-//                case(1):
-                     barChart.getData().removeAll();
-                        GenerateChart(barChart,GenerateGraphicsData("select id_dev_test,id_test_test,result_test1,result_test2,result_test3,result_test4,result_test5 from device_test where id_dev_test in(select id_device from device where id_device='","AndEBench"), "Antutu Benchmark", "Dispositivos", "Resultados");
-//                    break;
-//            }
-        
+          List<XYChart.Series<String, Number>> obs = FXCollections.observableArrayList();
+      List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
+     Series<String, Number> ser = new Series<>();
+         switch(tabchart.getSelectionModel().getSelectedItem().getId()){
+         
+            case("tabbar1"):
+                         tabchart.getSelectionModel().select(tabbar4);           
+                break;
+            case("tabbar4"):
+                         tabchart.getSelectionModel().select(tabbar5);           
+                break;
+            case("tabbar5"):
+                         tabchart.getSelectionModel().select(tabbar6);           
+                break;
+            case("tabbar6"):
+                         tabchart.getSelectionModel().select(tabbar7);           
+                break;
+            case("tabbar7"):
+                         tabchart.getSelectionModel().select(tabbar8);           
+                break;    
+            case("tabbar8"):
+                         tabchart.getSelectionModel().select(tabbar9);           
+                break;
+            case("tabbar9"):
+                         tabchart.getSelectionModel().select(tabbar10);           
+                break;
+            case("tabbar10"):
+                         tabchart.getSelectionModel().select(tabbar11);           
+                break;
+         }
+}
+    public void prevChart(ActionEvent actionEvent){
+
+         switch(tabchart.getSelectionModel().getSelectedItem().getId()){
+         
+            case("tabbar4"):
+                         tabchart.getSelectionModel().select(tabbar1);         
+                break;
+             case("tabbar5"):
+                         tabchart.getSelectionModel().select(tabbar4);         
+                break;
+             case("tabbar6"):
+                         tabchart.getSelectionModel().select(tabbar5);         
+                break;
+             case("tabbar7"):
+                         tabchart.getSelectionModel().select(tabbar6);         
+                break;
+             case("tabbar8"):
+                         tabchart.getSelectionModel().select(tabbar7);         
+                break;
+             case("tabbar9"):
+                         tabchart.getSelectionModel().select(tabbar8);         
+                break;
+             case("tabbar10"):
+                         tabchart.getSelectionModel().select(tabbar9);         
+                break;
+             case("tabbar11"):
+                         tabchart.getSelectionModel().select(tabbar10);         
+                break;
+         }
+}
+    public void viewReport(ActionEvent actionEvent){
+Platform.runLater(new Thread(reporte.unitedReport()));
     }
     }
     

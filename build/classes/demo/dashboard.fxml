@@ -64,12 +64,12 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane fx:id="accorBenchmark" blendMode="DARKEN" style="-fx-background-color: white;" text="Benchmark">
+                                  <TitledPane fx:id="accorBenchmark" blendMode="DARKEN" disable="true" style="-fx-background-color: white;" text="Benchmark">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bapp" fx:id="bapp" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
-                                                <Button id="btest" fx:id="btest" layoutY="29.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Pruebas" />
+                                                <Button id="bapp" fx:id="bapp" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
+                                                <Button id="btest" fx:id="btest" disable="true" layoutY="29.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Pruebas" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -80,11 +80,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
+                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" disable="true" style="-fx-background-color: white;" text="Imagenes">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bimgdevice" fx:id="bimgdevice" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bimgdevice" fx:id="bimgdevice" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -95,11 +95,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                    <TitledPane fx:id="accorFallas" blendMode="DARKEN" layoutX="10.0" layoutY="109.0" style="-fx-background-color: white;" text="Fallas">
+                                    <TitledPane fx:id="accorFallas" blendMode="DARKEN" disable="true" layoutX="10.0" layoutY="109.0" style="-fx-background-color: white;" text="Fallas">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bfails" fx:id="bfails" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Información" />
+                                                <Button id="bfails" fx:id="bfails" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Información" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -110,12 +110,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane fx:id="accorVersus" blendMode="DARKEN" layoutX="10.0" layoutY="76.0" style="-fx-background-color: white;" text="Versus">
+                                    <TitledPane fx:id="accorVersus" blendMode="DARKEN" disable="true" layoutX="10.0" layoutY="76.0" style="-fx-background-color: white;" text="Versus">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bcompare" fx:id="bcompare" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Comparar" />
-                                                <Button id="bsearch" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Busqueda" />
+                                                <Button id="bcompare" fx:id="bcompare" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Comparar" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -130,8 +129,7 @@
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="breportfailure" disable="true" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Fallas" />
-                                                <Button id="breportgeneral" disable="true" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bgreport" fx:id="bgreport" layoutX="-1.0" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -519,14 +517,14 @@
                                     </Tab>
                                     <Tab fx:id="tabfails">
                                       <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="490.0" prefWidth="1039.0">
                                              <children>
                                                 <Label layoutX="14.0" text="Detalles de fallas">
                                                    <font>
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView id="tablefails" fx:id="tablefails" editable="true" layoutX="14.0" layoutY="118.0" prefHeight="377.0" prefWidth="560.0">
+                                                <TableView id="tablefails" fx:id="tablefails" editable="true" layoutX="14.0" layoutY="118.0" prefHeight="343.0" prefWidth="560.0">
                                                   <columns>
                                                     <TableColumn id="columnafuser" fx:id="columnafuser" maxWidth="98.0" prefWidth="98.0" resizable="false" text="realizada por" />
                                                     <TableColumn id="columnafname" fx:id="columnafname" maxWidth="109.0" prefWidth="109.0" resizable="false" text="nombre" />
@@ -539,7 +537,6 @@
                                                 <Label layoutX="582.0" layoutY="115.0" text="detalles historial de fallas" />
                                                 <Label layoutX="585.0" layoutY="211.0" text="descripción:" />
                                                 <TextArea fx:id="txtdf" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" layoutX="582.0" layoutY="228.0" prefHeight="75.0" prefWidth="447.0" scaleShape="false" />
-                                                <Button layoutX="920.0" layoutY="469.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="110.0" styleClass="standar-button" text="Continuar" />
                                                 <Label layoutX="585.0" layoutY="151.0" text="Nombre:" />
                                                 <TextField fx:id="txtnf" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" layoutX="582.0" layoutY="168.0" prefHeight="25.0" prefWidth="448.0" scaleShape="false" />
                                                 <Label fx:id="lblinfofail" alignment="CENTER" layoutX="179.0" layoutY="65.0" prefHeight="17.0" prefWidth="755.0" textAlignment="CENTER">
@@ -577,28 +574,156 @@
                                                       <TableColumn fx:id="columnanchart" prefWidth="192.0" text="modelo" />
                                                    </columns>
                                                 </TableView>
-                                                <TabPane layoutX="278.0" layoutY="101.0" prefHeight="350.0" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE">
+                                                <TabPane fx:id="tabchart" layoutX="278.0" layoutY="101.0" prefHeight="350.0" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE">
                                                   <tabs>
                                                     <Tab fx:id="tabbar1" text="Untitled Tab 1">
                                                       <content>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
                                                                <children>
-                                                                  <BarChart fx:id="barChart" barGap="2.0" categoryGap="2.0" layoutX="29.0" layoutY="14.0" maxHeight="315.0" maxWidth="700.0" minHeight="315.0" minWidth="700.0" prefHeight="315.0" prefWidth="700.0">
+                                                                  <BarChart fx:id="barChart" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
                                                                     <xAxis>
-                                                                      <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis" />
+                                                                      <CategoryAxis endMargin="1.0" prefHeight="21.0" prefWidth="647.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis" />
                                                                     </xAxis>
                                                                     <yAxis>
-                                                                      <NumberAxis fx:id="yAxis" autoRanging="false" minorTickLength="10.0" prefHeight="274.0" prefWidth="52.0" side="LEFT" tickLength="10.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                      <NumberAxis fx:id="yAxis" autoRanging="false" forceZeroInRange="false" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
                                                                     </yAxis>
                                                                   </BarChart>
                                                                </children>
                                                             </AnchorPane>
                                                       </content>
                                                     </Tab>
+                                                      <Tab fx:id="tabbar4" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart3" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar5" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart4" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis1111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis1111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar6" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart5" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis11111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis11111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar7" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart6" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis111111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis111111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar8" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart7" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis1111111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis1111111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar9" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart8" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis11111111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis fx:id="yAxis11111111" autoRanging="false" forceZeroInRange="false" label="Resultados" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="5000.0" upperBound="50000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar10" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart9" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis111111111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis autoRanging="false" forceZeroInRange="false" label="(MB)" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLength="15.0" tickUnit="500.0" upperBound="4000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab fx:id="tabbar11" text="Untitled Tab 1">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="754.0">
+                                                               <children>
+                                                                  <BarChart fx:id="barChart10" barGap="2.0" categoryGap="2.0" layoutY="1.0" maxHeight="344.0" maxWidth="755.0" minHeight="315.0" minWidth="700.0" prefHeight="344.0" prefWidth="755.0">
+                                                                     <xAxis>
+                                                                        <CategoryAxis endMargin="1.0" side="BOTTOM" startMargin="1.0" fx:id="xAxis1111111111" />
+                                                                     </xAxis>
+                                                                     <yAxis>
+                                                                        <NumberAxis autoRanging="false" forceZeroInRange="false" label="(MB)" minorTickCount="1" minorTickLength="10.0" prefHeight="274.0" prefWidth="78.0" side="LEFT" tickLabelGap="2.0" tickLength="15.0" tickUnit="500.0" upperBound="16000.0" />
+                                                                     </yAxis>
+                                                                  </BarChart>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
                                                   </tabs>
                                                 </TabPane>
                                                 <Button fx:id="bnext" layoutX="1011.0" layoutY="74.0" mnemonicParsing="false" onAction="#nextChart" styleClass="standar-button" text="&gt;" />
-                                                <Button fx:id="bprev" layoutX="984.0" layoutY="74.0" mnemonicParsing="false" styleClass="standar-button" text="&lt;" />
+                                                <Button fx:id="bprev" layoutX="984.0" layoutY="74.0" mnemonicParsing="false" onAction="#prevChart" styleClass="standar-button" text="&lt;" />
                                                 <Label layoutX="8.0" layoutY="124.0" text="especifique:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="14.0" />
@@ -619,15 +744,42 @@
                                           </AnchorPane>
                                        </content>
                                     </Tab>
+                                    <Tab fx:id="tabreport" text="Untitled Tab">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="generatereport" layoutX="876.0" layoutY="412.0" mnemonicParsing="false" onAction="#viewReport" prefHeight="33.0" prefWidth="149.0" styleClass="standar-button" text="Generar Reporte" />
+                                                <Label text="Reporte">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab text="Untitled Tab">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label text="Mantenimiento">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
                                 </tabs>
                               </TabPane>
-                              <Button fx:id="bcontinue" layoutX="938.0" layoutY="463.0" mnemonicParsing="false" onAction="#NextStep" prefHeight="30.0" prefWidth="87.0" styleClass="standar-button" text="continuar">
+                              <Button fx:id="bcontinue" disable="true" layoutX="938.0" layoutY="463.0" mnemonicParsing="false" onAction="#NextStep" prefHeight="30.0" prefWidth="87.0" styleClass="standar-button" text="continuar" visible="false">
                                  <font>
                                     <Font name="Síragon Regular" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="baddfails" layoutX="868.0" layoutY="463.0" mnemonicParsing="false" onAction="#addfails" prefHeight="30.0" prefWidth="55.0" styleClass="standar-button" text="falla" />
-                              <Button fx:id="badvantage" layoutX="798.0" layoutY="463.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" styleClass="standar-button" text="ventaja" />
+                              <Button fx:id="baddfails" layoutX="868.0" layoutY="463.0" mnemonicParsing="false" onAction="#addfails" prefHeight="30.0" prefWidth="55.0" styleClass="standar-button" text="falla" visible="false" />
+                              <Button fx:id="badvantage" layoutX="798.0" layoutY="463.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" styleClass="standar-button" text="ventaja" visible="false" />
                            </children>
                         </AnchorPane>
                     </items>
