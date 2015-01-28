@@ -80,11 +80,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" disable="true" style="-fx-background-color: white;" text="Imagenes">
+                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bimgdevice" fx:id="bimgdevice" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bimgdevice" fx:id="bimgdevice" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -144,10 +144,7 @@
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Usuario" />
-                                                <Button id="bmantapp" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
-                                                <Button id="bmantdevice" layoutY="58.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Dispositivo" />
-                                                <Button id="bmantprovider" layoutY="87.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Proveedor" />
+                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />

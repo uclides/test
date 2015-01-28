@@ -80,11 +80,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" disable="true" style="-fx-background-color: white;" text="Imagenes">
+                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bimgdevice" fx:id="bimgdevice" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bimgdevice" fx:id="bimgdevice" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -144,10 +144,7 @@
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Usuario" />
-                                                <Button id="bmantapp" layoutY="29.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Aplicaciones" />
-                                                <Button id="bmantdevice" layoutY="58.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Dispositivo" />
-                                                <Button id="bmantprovider" layoutY="87.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="Proveedor" />
+                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -292,12 +289,12 @@
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Button>
-                                                <TextField fx:id="txthdev" layoutX="136.0" layoutY="184.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <TextField fx:id="txtwdev" layoutX="136.0" layoutY="215.0" prefHeight="25.0" prefWidth="97.0" />
+                                                <TextField fx:id="txthdev" layoutX="102.0" layoutY="184.0" prefHeight="25.0" prefWidth="97.0" />
+                                                <TextField fx:id="txtwdev" layoutX="102.0" layoutY="215.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <TextField fx:id="txtcapbat" layoutX="659.0" layoutY="213.0" prefHeight="25.0" prefWidth="100.0" />
-                                                <TextField fx:id="txtbulkdev" layoutX="136.0" layoutY="247.0" prefHeight="25.0" prefWidth="97.0" />
+                                                <TextField fx:id="txtbulkdev" layoutX="102.0" layoutY="247.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <TextField fx:id="txtcolordis" layoutX="485.0" layoutY="214.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <Label layoutX="90.0" layoutY="220.0" text="Ancho:">
+                                                <Label layoutX="56.0" layoutY="220.0" text="Ancho:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
@@ -307,28 +304,28 @@
                                                       <Font name="Síragon Regular" size="30.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="90.0" layoutY="252.0" text="Grosor:">
+                                                <Label layoutX="56.0" layoutY="252.0" text="Grosor:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="90.0" layoutY="189.0" text="Alto:">
+                                                <Label layoutX="56.0" layoutY="189.0" text="Alto:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="90.0" layoutY="318.0" text="Material:">
+                                                <Label layoutX="56.0" layoutY="318.0" text="Material:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="90.0" layoutY="351.0" text="Color:">
+                                                <Label layoutX="56.0" layoutY="351.0" text="Color:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <ColorPicker fx:id="cpdev" layoutX="136.0" layoutY="346.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <Label layoutX="106.0" layoutY="155.0" text="Aspectos Visuales:" />
+                                                <ColorPicker fx:id="cpdev" layoutX="102.0" layoutY="346.0" prefHeight="25.0" prefWidth="97.0" />
+                                                <Label layoutX="72.0" layoutY="155.0" text="Aspectos Visuales:" />
                                                 <Label layoutX="437.0" layoutY="156.0" text="Pantalla:" />
                                                 <Label layoutX="422.0" layoutY="186.0" text="tipo:" />
                                                 <Label layoutX="423.0" layoutY="219.0" text="Contraste:">
@@ -356,31 +353,36 @@
                                                    </font>
                                                 </Label>
                                                 <Separator layoutX="412.0" layoutY="149.0" orientation="VERTICAL" prefHeight="210.0" prefWidth="6.0" />
-                                                <Separator layoutX="765.0" layoutY="148.0" orientation="VERTICAL" prefHeight="212.0" prefWidth="4.0" />
+                                                <Separator layoutX="789.0" layoutY="148.0" orientation="VERTICAL" prefHeight="212.0" prefWidth="4.0" />
                                                 <Separator layoutX="240.0" layoutY="149.0" orientation="VERTICAL" prefHeight="231.0" prefWidth="6.0" />
                                                 <Separator layoutX="584.0" layoutY="150.0" orientation="VERTICAL" prefHeight="210.0" prefWidth="9.0" />
                                                 <Label layoutX="601.0" layoutY="283.0" text="tipo:" />
                                                 <Label layoutX="422.0" layoutY="250.0" text="tactil:" />
                                                 <Separator layoutX="-1.0" layoutY="380.0" prefHeight="3.0" prefWidth="1027.0" />
                                                 <Separator layoutY="148.0" prefHeight="3.0" prefWidth="1025.0" />
-                                                <Label layoutX="771.0" layoutY="185.0" text="nombre:" />
-                                                <Label layoutX="782.0" layoutY="156.0" text="Proveedor del equipo" />
+                                                <Label layoutX="795.0" layoutY="185.0" text="nombre:" />
+                                                <Label layoutX="806.0" layoutY="156.0" text="Proveedor del equipo" />
                                                 <ComboBox fx:id="cbbluetooth" layoutX="308.0" layoutY="246.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
-                                                <ComboBox fx:id="cbprov" layoutX="822.0" layoutY="181.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
+                                                <ComboBox fx:id="cbprov" layoutX="846.0" layoutY="181.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <ComboBox fx:id="cbtactildis" layoutX="485.0" layoutY="246.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <ComboBox fx:id="cbtypedis" layoutX="485.0" layoutY="182.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <ComboBox fx:id="cbtypebat" layoutX="659.0" layoutY="181.0" prefHeight="25.0" prefWidth="100.0" promptText="seleccione" />
-                                                <ComboBox fx:id="cbcertgoogle" layoutX="822.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
+                                                <ComboBox fx:id="cbcertgoogle" layoutX="846.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <MenuButton fx:id="choicesensor" layoutX="660.0" layoutY="279.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
-                                                <MenuButton fx:id="choicematerialdev" layoutX="136.0" layoutY="313.0" mnemonicParsing="false" prefWidth="97.0" text="seleccione" AnchorPane.leftAnchor="136.0" />
-                                                <Label layoutX="782.0" layoutY="254.0" text="Certificación Google" />
-                                                <Label layoutX="771.0" layoutY="283.0" text="posee:" />
-                                                <TextField fx:id="txtweight" layoutX="136.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <Label layoutX="90.0" layoutY="284.0" text="Peso:">
+                                                <MenuButton fx:id="choicematerialdev" layoutX="102.0" layoutY="313.0" mnemonicParsing="false" prefWidth="97.0" text="seleccione" AnchorPane.leftAnchor="102.0" />
+                                                <Label layoutX="806.0" layoutY="254.0" text="Certificación Google" />
+                                                <Label layoutX="795.0" layoutY="283.0" text="posee:" />
+                                                <TextField fx:id="txtweight" layoutX="102.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" />
+                                                <Label layoutX="56.0" layoutY="284.0" text="Peso:">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
                                                 </Label>
+                                                <Label layoutX="200.0" layoutY="188.0" text="mm" />
+                                                <Label layoutX="200.0" layoutY="219.0" text="mm" />
+                                                <Label layoutX="200.0" layoutY="250.0" text="mm" />
+                                                <Label layoutX="200.0" layoutY="283.0" text="gr" />
+                                                <Label layoutX="761.0" layoutY="217.0" text="MAh" />
                                              </children>
                                           </AnchorPane>
                                        </content>

@@ -377,7 +377,7 @@ else{
        {
   if(adb.b==1) {
        
-      adb.checkDir(1, new String[]{"adb shell ls /storage/sdcard0/app-siragon","adb shell mkdir -p /storage/sdcard0/app-siragon/ADB","adb shell mkdir -p /storage/sdcard0/app-siragon/captures","adb shell mkdir -p /storage/sdcard0/app-siragon/result-benchmark","adb shell mkdir -p /storage/sdcard0/app-siragon/apk"},"No such file or directory");
+      adb.checkDir(1, new String[]{"adb shell ls /storage/sdcard0/app-siragon","adb shell mkdir -p /storage/sdcard0/app-siragon/ADB","adb shell mkdir -p /storage/sdcard0/app-siragon/captures","adb shell mkdir -p /storage/sdcard0/app-siragon/result-benchmark","adb shell mkdir -p /storage/sdcard0/app-siragon/apk","adb shell mkdir -p /storage/sdcard0/logs"},"No such file or directory");
   
       device=adb.returnID(devicedisp);
         for(String st:new String[]{folderimg[0],folderimg[1],folderimg[2],folderimg[3]}){
@@ -682,10 +682,10 @@ new Device("GPU","")
    }
    }
    public void createRowsApp(ObservableList<App> data,String[] val1){
-   
-    for(int y=1;y<files.RemoveNullValue(val1).length;y++){
+   System.out.println(files.RemoveNullValue(val1).length+"  CANTIDAD");
+    for(int y=0;y<files.RemoveNullValue(val1).length-1;y++){
 
-    data.add(new App(val1[y++]));
+    data.add(new App(val1[y]));
 
     }
 
@@ -1976,7 +1976,7 @@ lblinfofail.setText("a través del click derecho puede eliminar registro de fall
             
             tilePane.getChildren().clear();
             lblmsjimg.setText("presione doble click izquierdo para ampliar la imagen");
-        for(int f=0;f<listFiles.length+1;f++){
+        for(int f=0;f<listFiles.length;f++){
             System.out.println(listFiles[f].getName());
 if(cbfilterimg.getSelectionModel().getSelectedItem()=="dispositivo"){
     if(s.Consultation(consult+listFiles[f].getName()+"'")!=0){
@@ -2010,14 +2010,14 @@ else{
                 }
             tilePane.getChildren().addAll(imageView);
         } 
-            else{}
+            else{
+ 
+            }
     }
     
         }
         }
-        imageView.setImage(null);
-        listFiles=null;
-        folder=null;
+
         }
         else{
             tilePane.getChildren().clear();
@@ -2249,9 +2249,8 @@ else{
   }
   else{
        tabdash.getSelectionModel().select(tabdevice);
-            bcontinue.setVisible(true);
-            baddfails.setVisible(true);
-            badvantage.setVisible(true);
+
+         
   }
     }
     public void BDtoTable(int i,int y,String[] desc,TableView tv,TableColumn tc,TableColumn tc1,String[] ses){
