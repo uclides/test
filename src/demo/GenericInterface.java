@@ -12,9 +12,9 @@ package demo;
  */
 public interface GenericInterface {
     //list command//
-    String start[]={"adb shell am start -n ","adb logcat ActivityManager:V "," *:S","adb shell su -c'cp "};
-    String insgenbench="adb install -r C:\\application\\apps\\apk_benchmark\\";
-    String installSiragonapp="adb install -r C:\\application\\apps\\siragonapp.apk";
+    String start[]={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell am start -n ","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb logcat ActivityManager:V "," *:S","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell su -c'cp "};
+    String insgenbench="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb install -r C:\\application\\apps\\apk_benchmark\\";
+    String installSiragonapp="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb install -r C:\\application\\apps\\siragonapp.apk";
     String startapps[]={"org.uguess.android.sysinfo/.SiragonInfo",
     "com.antutu.ABenchMark/com.antutu.ABenchMark.ABenchMarkStart","com.eembc.coremark/.tabs",
     "com.quicinc.vellamo/.main.MainActivity","com.glbenchmark.glbenchmark27/net.kishonti.gfxbench.GfxMainActivity",
@@ -23,10 +23,10 @@ public interface GenericInterface {
     "com.rightware.BasemarkX_Free/com.unity3d.player.UnityPlayerProxyActivity",
     "com.twitter.android/.StartActivity","com.instagram.android/.activity.MainTabActivity",
     "com.facebook.katana/.LoginActivity","com.whatsapp/.Main","com.skype.raider/.Main"};
-    String pullfile="adb pull /sdcard/logs C:\\application\\deviceRegisters";
-    String devicedisp="adb devices";
-    String removeFadb="adb shell rm /storage/sdcard0/ADB/*";
-    String down="adb shell input keyevent 20";
+    String pullfile="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /sdcard/logs C:\\application\\deviceRegisters";
+    String devicedisp="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb devices";
+    String removeFadb="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell rm /storage/sdcard0/ADB/*";
+    String down="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell input keyevent 20";
     String web="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
    + " file:///C:/Users/project/Documents/GitHub/test/src/demo/manual/index.html";
 
@@ -37,8 +37,8 @@ public interface GenericInterface {
     String[] folderimg={"C:\\\\application\\\\img\\\\fails\\\\","C:\\application\\img\\test\\","C:\\application\\img\\others\\","C:\\application\\img\\device\\"};
     String[] ftemp={"C:\\application\\img\\fails\\temp","C:\\application\\img\\test\\temp","C:\\application\\img\\others\\temp","C:\\application\\img\\device\\temp"};
     String[] folderimgA={"C:/application/img/fails/","C:/application/img/test/","C:/application/img/others/","C:/application/img/device/"};
-    String pullimg[]={"adb pull /sdcard/app-siragon/captures/","/"};
-    String runlogcat="adb logcat *:W > /storage/sdcard0/app-siragon/ADB/";
+    String pullimg[]={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /sdcard/app-siragon/captures/","/"};
+    String runlogcat="C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb logcat *:W > /storage/sdcard0/app-siragon/ADB/";
     String folderfail="C:\\\\\\\\application\\\\\\\\\\img\\\\\\\\test\\\\\\\\";
     //list message
     String detect="Dispositivo detectado";
@@ -100,7 +100,7 @@ public interface GenericInterface {
     String exrecord="dispositivo se encuentra registrado";
     String question="¿Desea ver los registros?";
     String question2="¿Desea continuar sin un dispositivo conectado?";
-    String[] question1={"¿Desea obtener la información para su uso?","¿Esta seguro de continuar con la informacón actual?","¿Desea reiniciar el proceso de evaluación?"};
+    String[] question1={"¿Desea obtener la información para su uso?","¿Esta seguro de continuar con la informacón actual?","¿Desea reiniciar el proceso de evaluación?","¿Desea eliminar registro de la Base de Datos?","¿Desea agregar registro de la Base de Datos?"};
     String[] listvalues={"Dispositivo:","Almacenamiento Externo SD:","Almacenamiento A2SD:","Informacion de Pantalla:","Soporte imagen camara trasetra:",
     "Soporte video camara trasera:","otras caracteristicas:","Soporte imagen camara frontal:","Soporte video camara frontal:",
     "Focus Mode Values:","camaras:","Soporte Flash:","Almacenamiento Interno:","Almacenamiento del Sistema:","Caché del Sistema:",
@@ -130,7 +130,7 @@ public interface GenericInterface {
     String[] red={"Red",null,null};
     String[] profeature={"Caracteristicas","CPU implementador","CPU arquitectura","CPU variante","CPU parte","CPU revision","Hardware","Revision","Serial",null};
     String stest="select * from user";
-    String[] capturedis={"adb shell screencap -p /storage/sdcard0/app-siragon/captures/",".png"};
+    String[] capturedis={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell screencap -p /storage/sdcard0/app-siragon/captures/",".png"};
     String[] consults={"select name_mat from material","select val_net from network where type_net='mobile'",
       "select val_net from network where type_net='wifi'","select type_blu from bluetooth",
       "select * from display_type","select * from display_tactil","select * from battery",
@@ -142,16 +142,16 @@ public interface GenericInterface {
         "instalando aplicación ","ha finalizado la prueba correctamente, ingrese el resultado obtenido",
         "ingrese resultado de la prueba o agrege capturas de pantallas de la prueba"};
     String[] moveresultsappbench={"/data/data/com.antutu.ABenchMark/files/ranking.xml /storage/sdcard0/app-siragon/result-benchmark'"};
-    String[] moveappbench={"adb shell su -c 'cp /data/app/com.antutu.ABenchMark-1.apk /storage/sdcard0/app-siragon/apk'"};
-    String[] sendapptoPcbench={"adb pull /storage/sdcard0/app-siragon/apk C:\\application\\apps\\apk_benchmark"};
-    String[] sendfiletoPcbench={"adb pull /storage/sdcard0/app-siragon/result-benchmark/ranking.xml C:\\application\\apps\\result_benchmark"};
+    String[] moveappbench={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell su -c 'cp /data/app/com.antutu.ABenchMark-1.apk /storage/sdcard0/app-siragon/apk'"};
+    String[] sendapptoPcbench={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/app-siragon/apk C:\\application\\apps\\apk_benchmark"};
+    String[] sendfiletoPcbench={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/app-siragon/result-benchmark/ranking.xml C:\\application\\apps\\result_benchmark"};
     String[] apkbenchinstall={"com.antutu.ABenchMark-1.apk","com.quicinc.vellamo-1.apk","com.futuremark.dmandroid.application-2.apk"};
     String[] chantxtbt={"instalar aplicaciones","obtener aplicaciones","verificar aplicaciones"};
     String[] finishapp={"com.antutu.benchmark.UPDATE_ON_FINISHED","act=com.quicinc.vellamo.B_RESULTS",
         "AppLaunch_LaunchTime:com.futuremark.dmandroid.application/.activity.MainActivity",
         "Displayed Displayed com.primatelabs.geekbench/.BenchmarkDocumentActivity"};
     String[] pathfilebench={"C:\\application\\apps\\result_benchmark\\ranking.xml"};
-    String[] stopapp={"adb shell am force-stop com.antutu.ABenchMark"};
+    String[] stopapp={"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell am force-stop com.antutu.ABenchMark"};
     String[]valRepGe={"id_device","name_dev","model_dev","ver_so","kernel","build_dev","locale_dev","cert_google","sto_ext_sd_t",
     "sto_ext_sd_d","sto_s2sd_t","sto_s2sd_d","sto_inter_t","sto_inter_d","sto_sys_t","sto_sys_d","cache_sys_t","cache_sys_d",
     "ram_t","ram_d","ram_l","h_dev","w_dev","bulk_dev","weight_dev"};
@@ -164,6 +164,11 @@ public interface GenericInterface {
     String[]valRepcam={"mp_cam","flash_cam","supp_img_cam","supp_vid_cam","dis_focus","focus_enabled","focus_area","whitebalance","scene_mode","sta_vid","q_jpeg","q_thum"};
     String[] valRepbat={"battery.type_bat","capacity"};
     String[] valRepmat={"aluminio y plastico","plastico"};
-    String[] valRepimgdev={"img_device","img_device1","img_device2","img_device3","img_device4","img_device5","img_device6","img_device7"};
-    String[] valRepimgtest={"img_devicet","img_devicet1","img_devicet2","img_devicet3","img_devicet4","img_devicet5","img_devicet6","img_devicet7"};
+    String[] valRepimgdev={"img_device","img_device1","img_device2","img_device3","img_device4","img_device5","img_device6","img_device7","img_device8"};
+    String[] valRepimgtest={"img_devicet","img_devicet1","img_devicet2","img_devicet3","img_devicet4","img_devicet5","img_devicet6","img_devicet7","img_devicet8"};
+    String[]valRepimgfail={"img_devicef","img_devicef1","img_devicef2","img_devicef3","img_devicef4","img_devicef5","img_devicef6","img_devicef7","img_devicef8"};
+    String[]valRepdesimgfail={"descripcion1","descripcion3","descripcion3","descripcion4","descripcion5","descripcion6","descripcion7","descripcion8","descripcion9"};
+    String[]paramsfuncge={"tapa","gomas","antena","logo","mancha","golpes","cierre","camobs","senobs","encendido","speakerprinc","susyreac","tactil","notificaciones","35","vol",
+    "driver","mtp","toolbar","charge","wifi","mhl","miracast","hostpot","files","restore","otg",
+    "emparejar","gps","funccam","tv","root","simcard","sendmsj","receivemsj","patron","llamadasal","llamadaent","apn","contact","app"};
 }

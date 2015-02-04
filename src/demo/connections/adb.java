@@ -395,15 +395,15 @@ t.start();
                    
                                              if(execDetectDevice(devicedisp)==1){
                  
-                      if(execTerminal("adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){      
+                      if(execTerminal("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){      
                     showMonitor();
                                         }
                                          }
                                              else{
                                            checkDevice();
-                                                  if(execDetectDevice("adb devices")==1){
+                                                  if(execDetectDevice("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb devices")==1){
                                     
-                            if(execTerminal("adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){
+                            if(execTerminal("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/"+Id+" c:\\application\\logs\\"+Id+".txt")){
                                 
                     showMonitor();
                     
@@ -653,16 +653,16 @@ timer.schedule(new TimerTask() {
                 
                                              if(execDetectDevice(devicedisp)==1){
                  
-                      if(execTerminal("adb pull /storage/sdcard0/app-siragon/ADB c:\\application\\logs\\")){      
+                      if(execTerminal("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/app-siragon/ADB c:\\application\\logs\\")){      
                           showMonitor();
                                         }
                                          }
                                              else{
                                                  try {
                                                      checkDevice();
-                                                     if(execDetectDevice("adb devices")==1){
+                                                     if(execDetectDevice("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb devices")==1){
                                                          
-                                                         if(execTerminal("adb pull /storage/sdcard0/ADB c:\\application\\logs\\")){
+                                                         if(execTerminal("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb pull /storage/sdcard0/ADB c:\\application\\logs\\")){
                                                              
                                                              showMonitor();
                                                              
@@ -743,7 +743,7 @@ button.setDisable(false);
         BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
         
         String line=null;
-        String [] temp = new String [10];
+        String [] temp = new String [100];
         int x=0;
         while((line=input.readLine()) != null) {
             temp[x]=line;

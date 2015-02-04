@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javax.imageio.ImageIO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -42,8 +46,7 @@ public class Reports implements GenericInterface{
     files f=new files();
     List<Map<String, Object>> ParamList = new ArrayList<>();
     List<File> filesreport = new ArrayList<>();
-    JasperPrint jasperPrint1,jasperPrint2,jasperPrint3,jasperPrint4;
-
+    JasperPrint jasperPrint1,jasperPrint2,jasperPrint3,jasperPrint4,jasperPrint5,jasperPrint6,jasperPrint7;
 public Reports(){
  
 
@@ -51,7 +54,7 @@ public Reports(){
 
 public Map<String, Object> generateParams(String[] infobasic,String[] infosuppor,
         String[] infomobile,String[] infowf,String[] infocpu,String[] infodis,String[] infocam1,
-        String[] infobat,String[] infomat,String[] infimgdev,String[] infimgtest){
+        String[] infobat,String[] infomat,String[] infimgdev,String[] infimgtest,String[]infimgfail,String[]infimgdesfail,String despos,String desneg,List<String> lista,String[] txtlista){
     Map <String,Object> parameters = new HashMap<>(); 
     String value;
     String []array;
@@ -124,6 +127,13 @@ public Map<String, Object> generateParams(String[] infobasic,String[] infosuppor
     }           
                           
     }
+if(!lista.isEmpty()){
+    /////////////////////////////
+for(int v=0;v<lista.size();v++){
+    parameters.put(txtlista[v],lista.get(v));
+}
+}
+    
  array=s.ConsultforUIArray("select file_img as t from image,device where type_img='dispositivo' and id_dev=id_device and id_dev='SP-5110'","t");            
 
         for(int r=0;r<array.length;r++){
@@ -164,25 +174,52 @@ public Map<String, Object> generateParams(String[] infobasic,String[] infosuppor
     }           
                           
     }
-    
+         array=s.ConsultforUIArray("select file_img as t from image,device where type_img='falla' and id_dev=id_device and id_dev='SP-5110'","t");            
+
+        for(int r=0;r<array.length;r++){
+      if(array[r] == null){
+
+    }
+    else{
+    String idming=s.ConsultforUIString("select id_image as t from image,device,device_failure where id_image= id_img_fail and type_img='falla' and id_device=image.id_dev and id_device=device_failure.id_dev and file_img='"+array[r]+"'", "t");
+    String desc=s.ConsultforUIString("select name_fail as t from device_failure where id_img_fail="+idming, "t");
+    value=array[r].replaceAll("file:", "").trim();
+    String url =value.replaceAll("[/]+", "\\\\\\\\").trim();
+    BufferedImage image;
+         try {
+             image = ImageIO.read(new File(url).getAbsoluteFile());
+         parameters.put(infimgfail[r], image );
+         parameters.put(infimgdesfail[r], desc );
+         } catch (IOException ex) {
+             Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }           
+                          
+    }
     parameters.put("name_mat",temp); 
     parameters.put("color",s.ConsultforUIString("select color as t from device where id_device='SP-5110'", "t"));
     parameters.put("name_provider",s.ConsultforUIString("select name_provider as t from provider,device,device_provider where id_device=id_dev_prov and id_provider=id_prov and id_device='SP-5110'", "t"));
     parameters.put("datecreate",utilDate);
-
+    parameters.put("Positive",despos);
+    parameters.put("Negative",desneg);
+    
         
 return parameters;
 }  
 
-public Runnable unitedReport(){
+public Runnable unitedReport(String path,String[] datareport,Button[] buttons,List<String> valuesdevice,String[]paramasvalues,Label label,TextArea[] tfs){
          try {
-             ParamList.add(generateParams(valRepGe,valRepOherS,valRepMob,valRepWf,valRepcpu,valRepdis,valRepcam,valRepbat,valRepmat,valRepimgdev,valRepimgtest));
+             ParamList.add(generateParams(valRepGe,valRepOherS,valRepMob,valRepWf,valRepcpu,valRepdis,valRepcam,
+                     valRepbat,valRepmat,valRepimgdev,valRepimgtest,valRepimgfail,valRepdesimgfail,datareport[2],datareport[3],
+                     valuesdevice,paramasvalues));
              Map<String, Object> parameters = ParamList.get(0);
              filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test.jasper"));
              filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_1.jasper"));
              filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_2.jasper"));
              filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_3.jasper"));
-             
+             filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_4.jasper"));
+             filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_5.jasper"));
+             filesreport.add(new File("C:\\Users\\project\\Documents\\GitHub\\test\\src\\reports\\test_6.jasper"));
 //CreateReport(filesreport, ParamList);
              JasperReport jasperReport = (JasperReport) JRLoader.loadObject(filesreport.get(0).getAbsoluteFile());
              //Map<String, Object> parameters = parameters;
@@ -197,13 +234,37 @@ public Runnable unitedReport(){
              JasperReport jasperReport4 = (JasperReport) JRLoader.loadObject(filesreport.get(3).getAbsoluteFile());
              //Map<String, Object> parameters = parameters;
              jasperPrint4 = JasperFillManager.fillReport(jasperReport4, parameters, s.getConnection());
+             JasperReport jasperReport5 = (JasperReport) JRLoader.loadObject(filesreport.get(4).getAbsoluteFile());
+             //Map<String, Object> parameters = parameters;
+             jasperPrint5 = JasperFillManager.fillReport(jasperReport5, parameters, s.getConnection());
+             JasperReport jasperReport6 = (JasperReport) JRLoader.loadObject(filesreport.get(5).getAbsoluteFile());
+             //Map<String, Object> parameters = parameters;
+             jasperPrint6 = JasperFillManager.fillReport(jasperReport6, parameters, s.getConnection());
              
+              JasperReport jasperReport7 = (JasperReport) JRLoader.loadObject(filesreport.get(6).getAbsoluteFile());
+             //Map<String, Object> parameters = parameters;
+             jasperPrint7 = JasperFillManager.fillReport(jasperReport7, parameters, s.getConnection());
              JRExporter exporter = new JRPdfExporter();
-             try (FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\project\\Documents\\GitHub\\mipdf.pdf")) {
+             try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
                  exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, fileOutputStream);
                  //The following is the important line
-                 exporter.setParameter(JRExporterParameter.JASPER_PRINT_LIST, Arrays.asList(jasperPrint1, jasperPrint2,jasperPrint3,jasperPrint4));
+                 exporter.setParameter(JRExporterParameter.JASPER_PRINT_LIST, Arrays.asList(jasperPrint1, jasperPrint2,jasperPrint7,jasperPrint3,jasperPrint4,jasperPrint5,jasperPrint6));
                  exporter.exportReport();
+                
+                    int irep=s.ConsultforUIInt("select count(id_rep) as t from report","t");
+                    irep++;
+                    s.Addelement("insert into report values("+irep+",'"+datareport[0]+".pdf"+"','N/D','"+"file:C:/application/pdf/"+datareport[0]+".pdf"+"','pdf','"+datareport[1]+"')");
+                    s.Addelement("insert into device_report values('"+datareport[0]+"',"+irep+")"); 
+             String[]list=f.GetNameVariousFile("C:\\application\\pdf");
+             for(String valid:list){
+                 if(valid.contains(datareport[0])){
+                     buttons[1].setVisible(false);
+                 buttons[0].setVisible(true);
+                 label.setText("Se ha creado informe correctamente");
+                 tfs[0].setText("");tfs[1].setText("");
+                 }
+             }
+             
              }
          } catch (JRException | FileNotFoundException ex) {
              Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,28 +274,5 @@ public Runnable unitedReport(){
          return null;
       
 }
-//public void CreateReport(List<File> reportFiles, List<Map<String, Object>> ParamList){
-//         try {
-//             
-//             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportFiles.get(0).getAbsoluteFile());
-//             Map<String, Object> parameters = ParamList.get(0);
-//             jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, s.getConnection());
-//             
-//             if(ParamList.size()>1){
-//                 for(int i=0; i < ParamList.size(); i++)
-//                 {
-//                     JasperPrint jasperPrint_next = JasperFillManager.fillReport(jasperReport, ParamList.get(0),s.getConnection());
-//                     List pages = jasperPrint_next.getPages();
-//                     for (int j = 0; j < pages.size(); j++) {
-//                         JRPrintPage object = (JRPrintPage) pages.get(j);
-//                         jasperPrint.addPage(object);
-//                     }
-//                     
-//                 }
-//             }
-//         JasperViewer.viewReport(jasperPrint);
-//         } catch (JRException ex) {
-//             Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
-//         }
-//}
+
 }

@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e447bb75-c4cb-47c0-a53d-75ca9a088156">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tapa" class="java.lang.String"/>
+	<parameter name="gomas" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="antena" class="java.lang.String"/>
+	<parameter name="mancha" class="java.lang.String"/>
+	<parameter name="cierre" class="java.lang.String"/>
+	<parameter name="camobs" class="java.lang.String"/>
+	<parameter name="senobs" class="java.lang.String"/>
+	<parameter name="golpes" class="java.lang.String"/>
+	<parameter name="encendido" class="java.lang.String"/>
+	<parameter name="speakerprinc" class="java.lang.String"/>
+	<parameter name="susyreac" class="java.lang.String"/>
+	<parameter name="notificaciones" class="java.lang.String"/>
+	<parameter name="tactil" class="java.lang.String"/>
+	<parameter name="35" class="java.lang.String"/>
+	<parameter name="vol" class="java.lang.String"/>
+	<parameter name="driver" class="java.lang.String"/>
+	<parameter name="charge" class="java.lang.String"/>
+	<parameter name="mtp" class="java.lang.String"/>
+	<parameter name="toolbar" class="java.lang.String"/>
+	<parameter name="wifi" class="java.lang.String"/>
+	<parameter name="mhl" class="java.lang.String"/>
+	<parameter name="hostpot" class="java.lang.String"/>
+	<parameter name="miracast" class="java.lang.String"/>
+	<parameter name="files" class="java.lang.String"/>
+	<parameter name="restore" class="java.lang.String"/>
+	<parameter name="otg" class="java.lang.String"/>
+	<parameter name="emparejar" class="java.lang.String"/>
+	<parameter name="gps" class="java.lang.String"/>
+	<parameter name="funccam" class="java.lang.String"/>
+	<parameter name="tv" class="java.lang.String"/>
+	<parameter name="root" class="java.lang.String"/>
+	<parameter name="simcard" class="java.lang.String"/>
+	<parameter name="llamadasal" class="java.lang.String"/>
+	<parameter name="llamadaent" class="java.lang.String"/>
+	<parameter name="sendmsj" class="java.lang.String"/>
+	<parameter name="receivemsj" class="java.lang.String"/>
+	<parameter name="patron" class="java.lang.String"/>
+	<parameter name="apn" class="java.lang.String"/>
+	<parameter name="contact" class="java.lang.String"/>
+	<parameter name="app" class="java.lang.String"/>
+	<parameter name="datecreate" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="52" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="f19b68ce-ae61-4e12-a82b-5d3232666ccf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="244" y="52" width="100" height="20" uuid="02131422-c892-4023-aed0-688047ad00f1"/>
+				<text><![CDATA[Aspecto Visual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="426" height="20" uuid="d4f87a11-924d-40a2-838e-a2f5f90b5af0"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Cierre correcto tapa trasera]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="72" width="129" height="20" uuid="cdff4816-55f9-48d5-96b9-4aaacab3d530"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{tapa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="426" height="20" uuid="fae36727-4594-44fc-b3e0-53371e5df89f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Colocación adeduada de Gomas protectoras de puertos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="92" width="129" height="20" uuid="c2a96ace-62fd-4c40-964c-2a04154dc90e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{gomas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="132" width="426" height="20" uuid="4193b6a4-094c-4b4d-b3b1-481b579a0bfe"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Logo en perfecto estado (Impreso en cover)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="132" width="129" height="20" uuid="f2ba8c86-4d60-4148-bb99-70f464afb841"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{logo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="112" width="426" height="20" uuid="ba536b3c-326b-4bb7-98f8-f7c6e0af8206"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Posicion correcta de antena superior / Inferior parte trasera]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="112" width="129" height="20" uuid="8d9acf5d-2948-47a7-811a-303e8abb63a4"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{antena}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="152" width="162" height="20" uuid="29d52d71-eaab-456e-8fea-6f7dcb285a46"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Panel sin manchas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="162" y="152" width="129" height="20" uuid="bf9a38f8-383c-4ec5-b70f-f21771b7834e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{mancha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="172" width="426" height="20" uuid="beec4543-dae5-4341-b184-fec78ce9f457"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Cierre completo del equipo (botones, pestaña en posicion correcta, tornillos completos)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="172" width="129" height="20" uuid="43b959b3-d4a1-41f5-a50c-4ee79b194eca"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{cierre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="192" width="426" height="20" uuid="e686238c-b66c-41aa-8559-c6bbe12a1cd3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Camara sin obstruccion (frontal / trasero)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="192" width="129" height="20" uuid="85968b1f-58e8-4719-90f7-24c6b6bd6508"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{camobs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="212" width="426" height="20" uuid="98e03218-8a57-44ab-84e0-f4b4a1194c57"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Sensores sin obstruccion (Luminosidad / Proximidad)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="212" width="129" height="20" uuid="b9122244-18dc-4883-8bd7-191e947cb8c7"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{senobs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="152" width="135" height="20" uuid="fd74ab96-ab45-4eb7-a92a-6580e5c20b91"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ No presenta golpes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="152" width="129" height="20" uuid="df03c83d-29f3-4e41-a457-55fc2144b479"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{golpes}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="232" width="555" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="b34565e6-2f20-410a-9300-6daefe8115eb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="205" y="232" width="139" height="20" uuid="8334537b-43ab-4df8-a083-ee82a352d3dc"/>
+				<text><![CDATA[Funcionamiento General]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="252" width="137" height="20" uuid="534fb9bd-fd07-4142-bcb3-ed70e24a3dd3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Encendido]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="252" width="129" height="20" uuid="d4fef61d-ec21-405e-923c-6f3679add0b2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{encendido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="252" width="160" height="20" uuid="7ca53098-7d2c-4c5a-80a7-205b689439b1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ sonido speaker principal]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="252" width="129" height="20" uuid="5c094661-5d77-4186-a5ed-435a324c5cab"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{speakerprinc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="272" width="137" height="20" uuid="8c9f33bb-9af3-4bca-ae50-4938dbf356a6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Suspension y reactivacion]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="272" width="129" height="20" uuid="d8944984-c9b6-4ab3-ab8e-cfc7e18bce02"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{susyreac}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="292" width="426" height="20" uuid="af86c18c-7adf-4ee6-9c7e-235ff996ea07"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ LED ( Llamada/Mensaje /Carga de Batería/Teclas Físicas de Navegación) ( Opcional )                                             ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="292" width="129" height="20" uuid="e99563fe-a44a-47d2-a4c1-54801f2e3444"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{notificaciones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="272" width="160" height="20" uuid="c920bf55-8f97-421a-8ae1-6da90114a5d2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Funcion pantalla tactil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="272" width="129" height="20" uuid="e77cd8cb-f22c-4a61-acd9-2dfd4e99eaf1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{tactil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="312" width="162" height="20" uuid="d337cea0-c09b-408a-ba84-d8b476166e32"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Funcionamiento Audio 3.5 mm]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="312" width="129" height="20" uuid="e322dae6-bdc5-4a95-96f3-71b2ad283bfb"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{35}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="312" width="178" height="20" uuid="92b49afd-2836-4f2e-841b-6763460f6523"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Funcionamiento tecla Volumen +/-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="468" y="312" width="86" height="20" uuid="25f72907-4532-484b-b253-01a0f111c6f3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{vol}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="332" width="426" height="20" uuid="03ad6ac6-1da9-4d65-89ae-da8f45d0b817"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Instalación Correcta de Drivers ( Dispositivo Modo Instalador)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="332" width="129" height="20" uuid="6f1aecb4-7a13-462f-8288-51a8ceacb64f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{driver}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="401" width="137" height="20" uuid="ca55d14a-53c0-4660-b368-3f68e56d041d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Carga de Batería( AC/ USB) ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="401" width="129" height="20" uuid="3ce07cad-29f0-4ee0-8029-0c4c7b346048"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{charge}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="352" width="426" height="20" uuid="04e5dc36-238f-46f9-93aa-3a0944667e87"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Transferencia de Archivos (MTP/ Tarjeta de Almacenamiento)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="352" width="129" height="20" uuid="9aa4ea07-fdb8-4c18-afac-884152c54c24"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{mtp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="372" width="426" height="29" uuid="06e933a5-a598-4a57-a8f0-63de977c6ee6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Activar/Desactivar Barra de Notificaciones ( WIFI/Bluetooth/GPS/Rotación Sincronización/ Hotspoot/ Modo Avión)                                  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="372" width="129" height="29" uuid="d73c8075-15f8-4760-b986-5944ffc31a09"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{toolbar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="401" width="160" height="20" uuid="ad7e92af-521d-4ac8-badf-5c9bdda9b24a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Conectar a Red WIFI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="401" width="129" height="20" uuid="a3439286-488e-4449-8222-ea4d02055d2c"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{wifi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="421" width="137" height="20" uuid="c111c9a5-5191-4463-9a29-04f7db7b01b6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Conectar a MHL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="421" width="129" height="20" uuid="d4c9d812-124b-4912-88c3-ec9c288d5b31"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{mhl}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="441" width="426" height="20" uuid="4e71fabe-61f7-401b-a1a4-e086ab1af24d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Compartir red a través de Hotspot  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="441" width="129" height="20" uuid="08da21b2-2dd2-4599-879b-24e6818ea97d"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{hostpot}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="421" width="160" height="20" uuid="b62264a2-f634-4cdd-8897-68fda7c316cd"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Conectar a través de Miracast   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="421" width="129" height="20" uuid="3bcbfb3b-d2ea-400c-8d75-4d81e3e276d9"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{miracast}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="461" width="426" height="30" uuid="7e9892aa-f30d-458e-a5ab-f359c61791e6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Probar Aplicaciones Envío y Recepción de Archivos a través de ellas   (Waze/ Facebook/ Whatsapp)   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="461" width="129" height="30" uuid="ce0bb64f-3b99-4f47-abf1-e3093b8b60c1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{files}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="491" width="137" height="20" uuid="7047fd19-371e-495b-9bab-9497a74f2a99"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Restauración de Fabrica                                                                                     ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="491" width="129" height="20" uuid="b683cdac-f679-4368-8347-d57e34b573ee"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{restore}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="491" width="160" height="20" uuid="5c333709-9493-425f-b8ae-b97a05b15b9f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Conectar a traves de OTG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="491" width="129" height="20" uuid="0c8e5138-fabb-4d24-959c-efe58cd59fc2"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{otg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="511" width="426" height="20" uuid="caaadc60-6e59-497a-b2c2-354fae1b7f99"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Emparejar a Dispositivo Bluetooth y Compartir  Archivo
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="511" width="129" height="20" uuid="4748fda3-285a-4fd2-977d-ec78da25201f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{emparejar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="551" width="426" height="20" uuid="acc76497-5fd2-48bf-b2ec-bba4d5ce6835"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Función de Cámara Frontal/Trasera( Flash/ Zoom/ Modos de Captura)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="531" width="129" height="20" uuid="2deeefa9-1826-48d5-b1ae-18559da9feed"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{gps}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="531" width="426" height="20" uuid="79db8cb0-4e8f-44d7-8879-875bbeefa939"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Ubicar posición por el GPS ( Realizar en lugar Despejado )]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="551" width="129" height="20" uuid="b40e4d64-9989-4aae-af8d-943ae790920e"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{funccam}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="571" width="162" height="20" uuid="45c11e4c-4840-40b0-83dd-90c3789ca816"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Señal  TV Digital / Analógica ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="571" width="104" height="20" uuid="9c820525-a257-4b7c-a32d-8e9306021011"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{tv}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="571" width="160" height="20" uuid="92bc0fed-57a2-4fd8-8177-f3bbd319d3d8"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Verificación Acceso Root]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="571" width="129" height="20" uuid="9c5298c1-e221-4161-a793-5b1d27d6c5e3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{root}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="591" width="162" height="20" uuid="6d0bad6e-3ba8-4a6a-9db5-db8917dd236b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Reconocimiento de  SIM CARD ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="591" width="104" height="20" uuid="4cec2880-953c-4b8a-8711-40307703bf27"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{simcard}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="631" width="303" height="20" uuid="993535d6-a577-4a26-86b7-de45cf2f46c6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Llamada Saliente SIM1/ SIM 2 ( Altavoz/ Normal) ( Opcional)
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="302" y="631" width="252" height="20" uuid="e33193d2-3327-47db-8fce-e1fc95db9c20"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{llamadasal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="651" width="303" height="20" uuid="492f6040-1fb1-4403-845a-5e0c07142f37"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Llamada Entrante SIM1/ SIM 2 ( Altavoz/ Normal) ( Opcional)
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="302" y="651" width="252" height="20" uuid="1e41f607-2cbb-41f0-b440-2081d24102bb"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{llamadaent}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="591" width="160" height="20" uuid="a4907cad-9567-45eb-847c-a3cb40b9db29"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Enviar mensaje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="591" width="129" height="20" uuid="d0d5e2da-41ed-4281-81a6-6e1dbe9acea5"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{sendmsj}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="611" width="162" height="20" uuid="3643959f-c931-4a77-8704-eff550e142af"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ recibir mensaje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="611" width="104" height="20" uuid="8efc91af-8702-4479-b54c-8bcf7c87a9ed"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{receivemsj}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="611" width="221" height="20" uuid="5e4e7f12-054b-4f46-b2b5-8fe3e201d5f7"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Bloqueo de seguridad (Patron-PIN-Password)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="611" width="68" height="20" uuid="6a305824-2436-4b99-9dc5-0bbcfb782cb5"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{patron}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="671" width="403" height="20" uuid="7762dc5d-90f3-4971-af78-161024067592"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Configuración Red Móvil ( APN / Operador de Red en  modo manual / automático)
+
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="671" width="152" height="20" uuid="3509bb12-4e37-4bcb-8b92-398f2f454913"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{apn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="691" width="403" height="20" uuid="025ea6d0-55ad-44e5-8f0f-7f5417904075"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Operaciones Contacto Teléfono ( Agregar/Modificar/ Borrar)
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="691" width="152" height="20" uuid="1ca563b1-2c82-490d-9b1c-eb8ffe5dcfb8"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{contact}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="711" width="403" height="20" uuid="0602240f-5f63-4689-96d1-9e0d66fbff38"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Verificar Descarga de Aplicaciones  desde el Escritorio/equipo (googleplay)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="711" width="152" height="20" uuid="7af242a0-78e8-401d-a12e-a4df11f67d81"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#FF9900"/>
+					<topPen lineWidth="0.5" lineColor="#FF9900"/>
+					<leftPen lineWidth="0.5" lineColor="#FF9900"/>
+					<bottomPen lineWidth="0.5" lineColor="#FF9900"/>
+					<rightPen lineWidth="0.5" lineColor="#FF9900"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{app}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="128" height="52" uuid="ec9de7f8-06b6-4c60-9f40-3439ba4296c2"/>
+				<imageExpression><![CDATA["C:\\application\\img\\device\\siragon.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

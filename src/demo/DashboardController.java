@@ -19,24 +19,23 @@ import demo.connections.server;
 import demo.tables.Apk;
 import demo.tables.Chart;
 import demo.tables.Fail;
+import demo.tables.Mant;
 import demo.tables.Tst;
 import demo.tables.Update;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -75,7 +74,6 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -90,7 +88,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -99,7 +96,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -129,10 +125,12 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     Button detectdevice,bdevice,bcontinue,bcontinue2,bcomponente,bprovider,bapp,bcompare,
             exit,bmanual,baddcomporprov,bmore,bprocapp,binstapp,binitbech,bsavebech,bxml,bloadimg,borrarimgs,baddfails,
-            bfails,bprev,bnext,bcreatec,binduction,badvantage,brestore,banyimg,bfreport,bgreport,generatereport,btest;
+            bfails,bprev,bnext,bcreatec,binduction,badvantage,brestore,banyimg,bfreport,bgreport,
+            generatereport,btest,visualize,addmant,addnewmant,bmant,bimgdevice;
     @FXML
     Label activedevice,user,permission,dateuser,lblcompinfo,estatusapp,estatusbench,lblr0,lblr1,
-            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper,lblinfod,lblinfofail,lblversus;
+            lblr2,lblr3,lblr4,lblr5,lblimg,lblcapt,lblphoto,lblfilter,lblmsjimg,helper,lblinfod,lblinfofail,lblversus,
+            lbldesmant,lblmant1,lblmant2,lblmant3,lblmant4,lblmant5,lblmant6,lblinfomant,lblreport;
     @FXML
     TextField txtnf;
     @FXML
@@ -144,17 +142,17 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TabPane tabdash,tabchart;
     @FXML
-    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails,tabreport,
+    Tab tabinduction,tabdevice,tabcomp,tabapp,tabtest,tabimage,tabcompare,tabfails,tabreport,tabmant,
             tabbar1,tabbar4,tabbar5,tabbar6,tabbar7,tabbar8,tabbar9,tabbar10,tabbar11;
     @FXML
     TitledPane  accorIdentificacion,accorBenchmark,accorImagenes,accorVersus,
             accorFallas,accorReporte,accorMantenimiento,accorAyuda;
     @FXML
-    TextArea outConsole;
+    TextArea outConsole,positive,negative;
     @FXML
     ProgressBar bardashboard; 
     @FXML
-    ProgressIndicator probarapp; 
+    ProgressIndicator probarapp,progreport; 
     @FXML
     TableView<Device> tableinfodevice;
     @FXML
@@ -169,6 +167,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     TableView<Fail> tablefails;
     @FXML
     TableView<Chart> tablechart;
+    @FXML
+    TableView<Mant> tablemant;
     @FXML
     TableColumn<Device,String> columnitem,columndescription;
     @FXML
@@ -206,10 +206,12 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     @FXML
     TableColumn<Chart,String> columnanchart;
     @FXML
+    TableColumn<Mant,String> columnamant1,columnamant2,columnamant3,columnamant4,columnamant5;
+    @FXML
     SplitPane splitPane; 
     @FXML
     ComboBox tecnologiadisplay,cbtypedis,cbtactildis,cbtypebat,cbbluetooth,cbprov,cbcertgoogle,cbbench,cbcompatible,
-             cbfilterimg,cbtypecomp,cbspecomp;
+             cbfilterimg,cbtypecomp,cbspecomp,cbmante;
     @FXML
     ColorPicker cpdev;
     @FXML
@@ -217,7 +219,8 @@ public class DashboardController extends AnchorPane implements Initializable,Gen
     
     @FXML 
     TextField txthdev,txtwdev,txtbulkdev,txtweight,txtcolordis,txtcapbat,txtelemadd1,
-              txtelemadd2,txtelemadd3,result1,result2,result3,result4,result5;
+              txtelemadd2,txtelemadd3,result1,result2,result3,result4,result5,
+            txtmant1,txtmant2,txtmant3,txtmant4,txtmant5,txtmant6;
     List<CheckMenuItem> itemsband,itemswifi;
     @FXML
     ScrollPane scrollPane;
@@ -245,6 +248,7 @@ Reports reporte=new Reports();
   String[] listimgfail=new String[100];
   String[] listdelimg=new String[100];
   String[] listdelimgfail=new String[100];
+  List<String> functiondevice=new ArrayList<>();
   String[] fail=new String[10];
   String idu,device,date,devi;
    ObservableList<Device> data=FXCollections.observableArrayList();
@@ -254,6 +258,7 @@ Reports reporte=new Reports();
    ObservableList<Tst> dataBench=FXCollections.observableArrayList();
     ObservableList<Fail> datafail=FXCollections.observableArrayList();
     ObservableList<Chart>datachart=FXCollections.observableArrayList();
+    ObservableList<Mant>datamant=FXCollections.observableArrayList();
    public ObservableList<String> attrLogin;
 private Main application;
 LoginController login=new LoginController();
@@ -268,7 +273,7 @@ public int VAL;
 final TextField namefail = new TextField();
 final TextArea descriptionfail = new TextArea();
 final Label lblimgfail =new Label();
-final Action actionFail,actioncapinmg,actionRestore;
+final Action actionFail,actioncapinmg,actionRestore,actionfunc;
 String imgc,imgtest;
 
 public DashboardController(){  
@@ -362,7 +367,13 @@ else{
 
             }
         };
-
+        this.actionfunc=new AbstractAction("Aceptar") {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                
+            }
+        };
 
 }
     public void setApp(Main application){
@@ -377,7 +388,7 @@ else{
        {
   if(adb.b==1) {
        
-      adb.checkDir(1, new String[]{"adb shell ls /storage/sdcard0/app-siragon","adb shell mkdir -p /storage/sdcard0/app-siragon/ADB","adb shell mkdir -p /storage/sdcard0/app-siragon/captures","adb shell mkdir -p /storage/sdcard0/app-siragon/result-benchmark","adb shell mkdir -p /storage/sdcard0/app-siragon/apk","adb shell mkdir -p /storage/sdcard0/logs"},"No such file or directory");
+      adb.checkDir(1, new String[]{"C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell ls /storage/sdcard0/app-siragon","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell mkdir -p /storage/sdcard0/app-siragon/ADB","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell mkdir -p /storage/sdcard0/app-siragon/captures","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell mkdir -p /storage/sdcard0/app-siragon/result-benchmark","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell mkdir -p /storage/sdcard0/app-siragon/apk","C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell mkdir -p /storage/sdcard0/logs"},"No such file or directory");
   
       device=adb.returnID(devicedisp);
         for(String st:new String[]{folderimg[0],folderimg[1],folderimg[2],folderimg[3]}){
@@ -426,7 +437,7 @@ else{
                             ProgressBar(2);
 adb.execGeneric(installSiragonapp,outConsole,adb.b);
 ProgressBar(1);
-adb.execGeneric("adb shell am start -n org.uguess.android.sysinfo/.SiragonInfo",outConsole,adb.b);
+adb.execGeneric("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell am start -n org.uguess.android.sysinfo/.SiragonInfo",outConsole,adb.b);
 ProgressBar(1);
 if(!files.checkDir("/storage/sdcard0/logs", ".zip")){
 adb.execGeneric(pullfile,outConsole,adb.b);
@@ -485,10 +496,16 @@ pushInfo();
    columnappdevice.setCellValueFactory(new PropertyValueFactory<>(valapdetect));
 
    tableapp.setItems(dataapp);
-
+if(new File(folderegister).listFiles().length==0){
+info21 = files.RemoveNullValue2(adb.execGeneric("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell pm list package", outConsole, adb.b));
+        
+createRowsApp(dataapp,info21);
+}
+else{
    info21 = files.PushInfoApp(valappinstall);
         
 createRowsApp(dataapp,info21);
+}
 if(!tableapp.getItems().isEmpty()){
    bprocapp.setText(chantxtbt[0]);
    bprocapp.setOnAction(installApp());
@@ -505,7 +522,7 @@ bprocapp.setOnAction(new EventHandler<ActionEvent>() {
 
    tableappupdate.setItems(dataappUp);
 
-   info21 = files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b));
+   info21 = files.RemoveNullValue2(adb.execGeneric("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell pm list package", outConsole, adb.b));
         
 createRowsAppUp(dataappUp,info21);
 bcontinue.setDisable(false);
@@ -608,25 +625,60 @@ new Device(valpfr,info4[5])
    columndescription.setCellFactory(TextFieldTableCell.<Device>forTableColumn());
 
     data=FXCollections.observableArrayList(
-new Device(valdev,""),
-new Device(valmod,""),
-new Device(valprod,""),
-new Device(valmarc,""),
-new Device(valrel,""),
-new Device(valbui,""),
-new Device(valoc,""),
-new Device(valker,""),
-new Device(valextt,""),
-new Device(valextd,""),
-new Device(vala2sdt,""),
-new Device(vala2sdd,""),
-new Device(valph,""),
-new Device(valpw,""),
-new Device(valpd,""),
-new Device(valps,""),
-new Device(valpfr,""),
+new Device("Dispositivo",""),
+new Device("Modelo",""),
+new Device("Producto",""),
+new Device("Marca",""),
+new Device("Release",""),
+new Device("Build",""),
+new Device("Locale",""),
+new Device("Kernel",""),
+new Device("Almacenamiento externo SD total",""),
+new Device("Almacenamiento externo SD Disponible",""),
+new Device("Almacenamiento A2SD total",""),
+new Device("Almacenamiento A2SD Disponible",""),
+new Device("Pantalla Height",""),
+new Device("Pantalla Width",""),
+new Device("Pantalla density",""),
+new Device("Pantalla size",""),
+new Device("Pantalla refresh rate",""),
+new Device("soporte resolución imagenes camara principal ",""),
+new Device("soporte resolución video camara principal ",""),
+new Device("soporte resolución imagenes camara secundaria ",""),
+new Device("soporte resolución video camara secundaria ",""),
+new Device("modo de foco cámara ",""),
+new Device("Focus mode",""),
+new Device("Max Num Focus Areas",""),
+new Device("Whitebalance Values",""),
+new Device("Scene mode Values",""),
+new Device("Stabilization Video",""),
+new Device("Quality JPEG",""),
+new Device("Quality Thumbnail",""),
+new Device("numero camara  ",""),
+new Device("estatus flash ",""),
+new Device("Almacenamiento Interno Total",""),
+new Device("Almacenamiento Interno Disponible",""),
+new Device("Almacenamiento del Sistema Total",""),
+new Device("Almacenamiento del Sistema Disponible",""),
+new Device("Caché del Sistema Total",""),
+new Device("Caché del Sistema Disponible",""),
+new Device("Memoria RAM Total",""),
+new Device("Memoria RAM Disponible",""),
+new Device("Memoria RAM Idle",""),
+new Device("Tipo CPU",""),
+new Device("Frecuencia CPU",""),
+new Device("Red",""),
+new Device("Caracteristicas",""),
+new Device("CPU implementador",""),
+new Device("CPU arquitectura",""),
+new Device("CPU variante",""),
+new Device("CPU parte",""),
+new Device("CPU revision",""),
+new Device("Hardware",""),
+new Device("Revision",""),
+new Device("Serial",""),
 new Device("Cores CPU",""),
-new Device("GPU","")         
+new Device("GPU","")        
 );
    tableinfodevice.setItems(data);
 
@@ -728,10 +780,16 @@ new Device("GPU","")
     data.add(new Chart(va2));
 
    }
+   public void createRowsMant(ObservableList<Mant> data,String va1,String va2,String va3,String va4,String va5){
+
+    data.add(new Mant(va1,va2,va3,va4,va5));
+
+   }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 menuItemTable();
 viewMITable();
+mantTable();
 splitPane.setOnSwipeRight(null);    
   device=adb.LoopAdb(activedevice);
   adb.execConsole(start[1]+startapps[1]+start[2], outConsole, adb.b,finishapp[0], estatusbench, probarapp, bsavebech,photo);
@@ -753,6 +811,7 @@ splitPane.setOnSwipeRight(null);
   cbcertgoogle.getItems().addAll("si","no");
   cbcompatible.getItems().addAll("si","no");
   cbfilterimg.getItems().addAll("pruebas","fallas","dispositivo","otras");
+  cbmante.getItems().addAll("bluetooth","material","proveedor","network","sensores","usuario");
   ObservableList<String> olistbech = FXCollections.observableArrayList(s.ConsultforUIArray(consults[9],columnsdb[8]));
   cbbench.setItems(olistbech);
   ObservableList<String> olistparams = FXCollections.observableArrayList(s.ConsultforUIArray(consults[10],columnsdb[9]));
@@ -1097,6 +1156,140 @@ String[] arr;
 //new code
     }
         });
+  cbmante.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+    tablemant.setEditable(true);
+  columnamant1.setCellValueFactory(new PropertyValueFactory<>("mant1"));
+  columnamant2.setCellValueFactory(new PropertyValueFactory<>("mant2"));
+  columnamant3.setCellValueFactory(new PropertyValueFactory<>("mant3"));
+  columnamant4.setCellValueFactory(new PropertyValueFactory<>("mant4"));
+  columnamant5.setCellValueFactory(new PropertyValueFactory<>("mant5"));
+  tablemant.setItems(datamant);
+
+String e;
+String[] arr;
+lbldesmant.setVisible(false);
+        switch(cbmante.getSelectionModel().getSelectedItem().toString()){
+            
+                        case("bluetooth"):
+                            lblinfomant.setText("");
+                            arr=s.ConsultforUIArray("select type_blu as t from bluetooth", "t");
+                            if(arr!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+                                createRowsMant(datamant,v1,"","","","");
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+                        case("material"):
+                            lblinfomant.setText("");
+                            arr=s.ConsultforUIArray("select name_mat as t from material", "t");
+                            if(arr!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (String v1 : files.RemoveNullValue2(arr)) {
+                                createRowsMant(datamant,v1,"","","","");
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+                        case("proveedor"):
+                            lblinfomant.setText("");
+                            String[][]array=s.getBD(0, "select name_provider,contacts_provider,detail_provider from provider", new String[]{"name_provider","contacts_provider","detail_provider"});
+                            if(array!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (int i=0;i<array.length;i++) {
+                                
+                                
+                                createRowsMant(datamant,array[i][0],array[i][1],array[i][2],array[i][3],"");
+                                
+                                
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+                        case("network"):
+                            lblinfomant.setText("");
+                            array=s.getBD(0, "select type_net,val_net from network", new String[]{"type_net","val_net"});
+                            if(array!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (int i=0;i<array.length;i++) {
+                                
+                                
+                                createRowsMant(datamant,array[i][0],array[i][1],"","","");
+                                
+                                
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+                        case("sensores"):
+                            lblinfomant.setText("");
+                            array=s.getBD(0, "select name_sup,desc_sup,type from other_support", new String[]{"name_sup","desc_sup","type"});
+                            if(array!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (int i=0;i<array.length;i++) {
+                                
+                                
+                                createRowsMant(datamant,array[i][0],array[i][1],array[i][2],"","");
+                                
+                                
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+                        case("usuario"):
+                            lblinfomant.setText("");
+                            array=s.getBD(0, "select id_user,name_user,password,permission,avatar,sesion from user", new String[]{"id_user","name_user","password","permission","avatar","sesion"});
+                            if(array!=null){
+                                                tablemant.getItems().removeAll(datamant);
+                            for (int i=0;i<array.length;i++) {
+                                
+                                
+                                createRowsMant(datamant,array[i][0],array[i][1],array[i][2],array[i][3],array[i][4]);
+                                
+                                
+                            }
+                            addnewmant.setVisible(true);
+                            }
+                            else{
+                                tablemant.getItems().removeAll(datamant);
+                            lblversus.setText("no existen elementos");
+                            }
+                        break;
+            
+        }
+   
+//        String[] farr = new String[1000];
+//        String[] v=s.ConsultforUIArray("select nvalues as t from params where nparams='"+newValue.toString()+"'", "t");
+//            for (String v1 : v) {
+//                farr = v1.split(";");
+//            }
+//new code
+    }
+        });
     }
     public void buttonLoadTab(ActionEvent actionEvent){
       switch(actionEvent.getSource().toString()){
@@ -1126,6 +1319,13 @@ String[] arr;
               break;
           case "Button[id=bgreport, styleClass=button]'General'":
             tabdash.getSelectionModel().select(tabreport);
+            bcontinue.setVisible(false);
+              break;
+              case "Button[id=bmant, styleClass=button]'General'":
+            tabdash.getSelectionModel().select(tabmant);
+            bcontinue.setVisible(false);
+            baddfails.setVisible(false);
+            badvantage.setVisible(false);
               break;
      }
     }
@@ -1173,8 +1373,9 @@ String[] arr;
 
             break;
         case("tabcomp"):
+            
             baddfails.setDisable(false);
-           String apps=files.oneString(files.RemoveNullValue2(adb.execGeneric("adb shell pm list package", outConsole, adb.b)));
+           String apps=files.oneString(files.RemoveNullValue2(adb.execGeneric("C:\\Users\\project\\AppData\\Local\\Android\\android-studio\\sdk\\platform-tools\\adb shell pm list package", outConsole, adb.b)));
            c.getInfoTabComp(lblcompinfo,new TextField[]{txthdev,txtwdev,txtbulkdev,txtcolordis,txtcapbat,txtweight},new MenuButton[]{choicematerialdev,choiceband,choicewifi,choicesensor},new ComboBox[]{cbbluetooth,cbtypedis,cbtactildis,cbtypebat,cbprov,cbcertgoogle},cpdev);
            String blu=s.ConsultforUIString("select id_blu from bluetooth where type_blu='"+c.values[7][0]+"'", "id_blu");
            int cert= files.booleanToint("si",c.values[15][0]);
@@ -1188,6 +1389,8 @@ String[] arr;
            String[] c1=files.RemoveNullValue2(s.firsttab[0]);
            String[] c2=files.RemoveNullValue2(s.firsttab[2]);
             if(s.Consultation("select * from device where id_device='"+device+"'")!=0){
+                accorBenchmark.setDisable(false);
+                bapp.setDisable(false);
                 s.UpdatElement("update device set name_dev= ?,model_dev= ?,ver_so= ?,kernel= ?,build_dev= ?,locale_dev= ?,sto_ext_sd_t= ?,sto_ext_sd_d= ?,sto_s2sd_t= ?,sto_s2sd_d= ?,sto_inter_t= ?,sto_inter_d= ?,sto_sys_t= ?,sto_sys_d= ?,cache_sys_t= ?,cache_sys_d= ?,ram_t= ?,ram_d= ?,ram_l= ?,color= ?,h_dev= ?,w_dev= ?,bulk_dev= ?,weight_dev= ?,id_blu= ?,cert_google= ?,all_app_dev= ? where id_device='"+device+"'",
                         new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0},
                         new String[]{s.name_dev,s.model_dev,s.ver_so,s.kernel_dev,s.build_dev,s.locale_dev,s.sto_ext_sd_t,s.sto_ext_sd_t,s.sto_ext_sd_d,s.sto_s2sd_t,s.sto_s2sd_d,s.sto_inter_t,s.sto_inter_d,s.sto_sys_t,s.sto_sys_d,s.cache_sys_t,s.cache_sys_d,s.ram_t,s.ram_d,s.ram_l,c.values[4][0],c.values[0][0],c.values[1][0],c.values[2][0],c.values[16][0],apps},
@@ -1207,6 +1410,8 @@ String[] arr;
                   
                 }
                 else{
+                accorBenchmark.setDisable(false);
+                bapp.setDisable(false);
                             s.Addelement("insert into device values ('"+device+"','"+s.name_dev+"','"+s.model_dev+"','"+s.ver_so+"','"+s.kernel_dev+"','"+s.build_dev+"','"+s.locale_dev+"','"+s.sto_ext_sd_t+"','"+s.sto_ext_sd_d+"','"+s.sto_s2sd_t+"','"+s.sto_s2sd_d+"','"+s.sto_inter_t+"','"+s.sto_inter_d+"','"+s.sto_sys_t+"','"+s.sto_sys_d+"','"+s.cache_sys_t+"','"+s.cache_sys_d+"','"+s.ram_t+"','"+s.ram_d+"','"+s.ram_l+"','"+c.values[4][0]+"','"+c.values[0][0]+"','"+c.values[1][0]+"','"+c.values[2][0]+"','"+c.values[16][0]+"',"+Integer.valueOf(blu)+","+cert+",'"+apps+"')");
                             s.Addelement("insert into display values('"+device+"',"+type_d+","+s.p_width_dev+","+s.p_height_dev+","+type_tac+",'"+s.p_size_dev+"','"+s.p_refresh_dev+"','"+s.p_density_dev+"','"+c.values[9][0]+"')");                          
                             if(s.n_cam_dev.contains("2")){
@@ -1230,7 +1435,10 @@ String[] arr;
                                     int lastcpu=s.ConsultforUIInt("select count(*) as t from cpu", "t");
                                     lastcpu+=1;
                                     s.Addelement("insert into cpu values ("+lastcpu+",'"+s.name_cpu+"','"+s.frec_cpu+"',"+s.core_cpu+",'"+s.feature_cpu.replaceAll(" ",";")+"','"+s.revision_cpu+"','"+s.revision_cpu+"','"+s.gpu+"')");
-                                }
+                                    int cpu=s.ConsultforUIInt("select id_cpu as sel from cpu where name_cpu='"+s.name_cpu+"'", "sel");    
+
+                                 s.Addelement("insert into device_cpu values ('"+device+"',"+cpu+")");
+                            }
                             for(int i=0;i<mat;i++){
                             int ma=s.ConsultforUIInt("select id_mat from material where name_mat='"+c.values[3][i]+"'", "id_mat");
                             s.Addelement("insert into device_mat values ('"+device+"',"+ma+")");
@@ -1270,15 +1478,18 @@ String[] arr;
             accorBenchmark.setDisable(false);
             bapp.setDisable(false);
             baddfails.setVisible(true);
+            badvantage.setVisible(true);
             }
 
             break;
             case("tabapp"):
+                
                 baddfails.setDisable(false);
                 baddfails.setVisible(true);
                 btest.setDisable(false);
                 btest.setVisible(true);
                 tabdash.getSelectionModel().select(tabtest); 
+                btest.setDisable(false);
             break;
             case("tabtest"):
                 Boolean bol = null;
@@ -1323,7 +1534,8 @@ String[] arr;
                     System.out.println(n);
                     bol=s.Addelement("insert into device_test values("+n+",'"+devi+"',1,'N/A',0,0,0,0,0)");
                     }
-                    
+                    accorImagenes.setDisable(false);
+                    bimgdevice.setDisable(false);
                         tabdash.getSelectionModel().select(tabimage); 
                      }
                 
@@ -1358,6 +1570,8 @@ for(int i=0;i<files.RemoveNullArray(lfails).length;i++){
 
 tabdash.getSelectionModel().select(tabfails);  
 lblinfofail.setText("a través del click derecho puede eliminar registro de falla");
+accorFallas.setDisable(false);
+bfails.setDisable(false);
             }
                 
             else{
@@ -1366,9 +1580,15 @@ lblinfofail.setText("a través del click derecho puede eliminar registro de fall
                 break;
                 case("tabfails"):
                     tabdash.getSelectionModel().select(tabcompare); 
+                    accorVersus.setDisable(false);
+                    bcompare.setDisable(false);
                 break;
                 case("tabcompare"):
                     tabdash.getSelectionModel().select(tabreport); 
+                    baddfails.setVisible(false);
+                    badvantage.setVisible(false);
+                    accorReporte.setDisable(false);
+                    bgreport.setDisable(false);
                 break;
         }
     
@@ -1387,12 +1607,12 @@ lblinfofail.setText("a través del click derecho puede eliminar registro de fall
             MenuItem modItem=new MenuItem("modificar");
             modItem.setOnAction((ActionEvent event) -> {
                 columndescription.setCellFactory(TextFieldTableCell.<Device>forTableColumn());
-             
+                
             });
             MenuItem addItem=new MenuItem("agregar");
             addItem.setOnAction((ActionEvent event) -> {
                 data.add(tableinfodevice.getSelectionModel().getSelectedIndex()+1,
-                        new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));          
+                        new Device(tableinfodevice.getSelectionModel().getSelectedItem().getItem(),""));  
             });
             MenuItem deliItem=new MenuItem("eliminar");
             deliItem.setOnAction((ActionEvent event) -> {
@@ -1442,6 +1662,82 @@ lblinfofail.setText("a través del click derecho puede eliminar registro de fall
                     
                     }
                 }
+            });
+            contextMenu.getItems().addAll(deliItem);
+            row.contextMenuProperty().bind(
+      Bindings.when(Bindings.isNotNull(row.itemProperty()))
+      .then(contextMenu)
+      .otherwise((ContextMenu)null));
+            
+            
+           
+            return row;
+        }
+    
+    }
+    );
+    }
+    public void mantTable(){
+    tablemant.setRowFactory(
+    new Callback<TableView<Mant>, TableRow<Mant>>(){
+
+        @Override
+        public TableRow<Mant> call(TableView<Mant> param) {
+            final TableRow<Mant> row=new TableRow<>();
+            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                   
+                }
+            });
+            
+            
+        final ContextMenu contextMenu=new ContextMenu();
+
+            MenuItem deliItem=new MenuItem("eliminar");
+            deliItem.setOnAction((ActionEvent event) -> {
+                
+                switch(cbmante.getSelectionModel().getSelectedItem().toString()){
+
+                   case("bluetooth"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from bluetooth where type_blu='"+row.getItem().mant1.getValue()+"'");
+                  }
+                       break;
+                   case("material"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from material where name_mat='"+row.getItem().mant1.getValue()+"'");
+                  }
+                       break;
+                   case("proveedor"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from provider where name_provider='"+row.getItem().mant1.getValue()+"'");
+                  }
+                       break;
+                   case("network"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from network where val_net='"+row.getItem().mant2.getValue()+"'");
+                  }
+                       break;
+                   case("sensores"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from other_support where name_sup='"+row.getItem().mant1.getValue()+"'");
+                  }
+                       break;
+                   case("usuario"):
+                    // int i=s.ConsultforUIInt("select id_fail as t from device_failure where id_img_fail="+row.getItem().imgf.getValue()+" and name_fail='"+row.getItem().nf.getValue()+"' and desc_fail='"+row.getItem().df.getValue()+"'", "t");
+                  if(adb.confirmMessage("Aviso",question1[3])){
+                    s.Addelement("delete from user where id_user='"+row.getItem().mant1.getValue()+"'");
+                  }
+                       break;
+                }
+                tablemant.getItems().remove(row.getItem());
             });
             contextMenu.getItems().addAll(deliItem);
             row.contextMenuProperty().bind(
@@ -2550,9 +2846,339 @@ else{
          }
 }
     public void viewReport(ActionEvent actionEvent){
-Platform.runLater(new Thread(reporte.unitedReport()));
+        
+Platform.runLater(new Thread(reporte.unitedReport("C:\\application\\pdf\\"+device+".pdf",new String[]{device,date,positive.getText(),negative.getText()},new Button[]{visualize,generatereport},functiondevice,paramsfuncge,lblreport,new TextArea[]{positive,negative})));
+
+    }
+    public void openReport(ActionEvent actionEvent){
+    if (Desktop.isDesktopSupported()) {
+    try {
+        File myFile = new File("C:\\application\\pdf\\"+device+".pdf");
+        Desktop.getDesktop().open(myFile);
+    } catch (IOException ex) {
+        // no application registered for PDFs
+    }
+}
+    }
+    public void getElementsMant(ActionEvent actionEvent){
+    tablemant.setEditable(true);
+  columnamant1.setCellValueFactory(new PropertyValueFactory<>("mant1"));
+  columnamant2.setCellValueFactory(new PropertyValueFactory<>("mant2"));
+  columnamant3.setCellValueFactory(new PropertyValueFactory<>("mant3"));
+  columnamant4.setCellValueFactory(new PropertyValueFactory<>("mant4"));
+  columnamant5.setCellValueFactory(new PropertyValueFactory<>("mant5"));
+  tablemant.setItems(datamant);
+
+  switch(cbmante.getSelectionModel().getSelectedItem().toString()){
+
+                   case("bluetooth"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("tipo de Bluetooth:");
+                       lblmant1.setVisible(true);
+                       txtmant1.setVisible(true);
+                       break;
+                   case("material"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("tipo de Material:");
+                       lblmant1.setVisible(true);
+                       txtmant1.setVisible(true);
+                       break;
+                   case("proveedor"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("nombre:");lblmant2.setText("contacto:");lblmant3.setText("detalles:");
+                       lblmant1.setVisible(true);lblmant2.setVisible(true);lblmant3.setVisible(true);
+                       txtmant1.setVisible(true);txtmant2.setVisible(true);txtmant3.setVisible(true);
+                       break;
+                   case("network"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("tipo:");lblmant2.setText("valor:");
+                       lblmant1.setVisible(true);lblmant2.setVisible(true);
+                       txtmant1.setVisible(true);txtmant2.setVisible(true);
+                       break;
+                   case("sensores"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("nombre:");lblmant2.setText("descripcion:");lblmant3.setText("tipo:");
+                       lblmant1.setVisible(true);lblmant2.setVisible(true);lblmant3.setVisible(true);
+                       txtmant1.setVisible(true);txtmant2.setVisible(true);txtmant3.setVisible(true);
+                       break;
+                   case("usuario"):
+                       lbldesmant.setVisible(true);
+                       lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);
+                       txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);
+                       txtmant1.setText("");txtmant2.setText("");txtmant3.setText("");txtmant4.setText("");
+                       lblmant1.setText("nombre:");lblmant2.setText("contraseña:");lblmant3.setText("permisos:");lblmant4.setText("avatar:");
+                       lblmant1.setVisible(true);lblmant2.setVisible(true);lblmant3.setVisible(true);lblmant4.setVisible(true);
+                       txtmant1.setVisible(true);txtmant2.setVisible(true);txtmant3.setVisible(true);txtmant4.setVisible(true);
+                       break;
+                }
+    }
+    public void SaveElementMant(ActionEvent actionEvent){
+     switch(cbmante.getSelectionModel().getSelectedItem().toString()){
+
+                   case("bluetooth"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_blu) as t from bluetooth","t");
+                           pos++;
+                       if(s.Addelement("insert into bluetooth values("+pos+",'"+txtmant1.getText()+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lbldesmant.setVisible(false);
+                          lblmant1.setVisible(false);
+                          txtmant1.setVisible(false);
+                          
+                       }
+                       }
+                       break;
+                   case("material"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_mat) as t from material","t");
+                           pos++;
+                       if(s.Addelement("insert into material values ("+pos+",'"+txtmant1.getText()+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lblmant1.setVisible(false);
+                          txtmant1.setVisible(false);lbldesmant.setVisible(false);
+                       }
+                       }
+               
+                       break;
+                   case("proveedor"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_provider) as t from provider","t");
+                           pos++;
+                       if(s.Addelement("insert into provider values ("+pos+",'"+txtmant1.getText()+"','"+txtmant2.getText()+"','"+txtmant3.getText()+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);
+                          txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);lbldesmant.setVisible(false);
+                       }
+                       }
+                       break;
+                   case("network"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_net) as t from network","t");
+                           pos++;
+                       if(s.Addelement("insert into network values ("+pos+",'"+txtmant1.getText()+"','"+txtmant2.getText()+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lblmant1.setVisible(false);lblmant2.setVisible(false);
+                          txtmant1.setVisible(false);txtmant2.setVisible(false);lbldesmant.setVisible(false);
+                       }
+                       }
+                       break;
+                   case("sensores"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_sup)as t from other_support","t");
+                           pos++;
+                       if(s.Addelement("insert into other_support values ("+pos+",'"+txtmant1.getText()+"','"+txtmant2.getText()+"','"+txtmant3.getText()+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);
+                          txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);lbldesmant.setVisible(false);
+                       }
+                       }
+                       break;
+                   case("usuario"):
+                       if(adb.confirmMessage("Aviso",question1[4])){
+                           int pos=s.ConsultforUIInt("select count(id_user) as t from user", "t");
+                           pos++;
+                       if(s.Addelement("insert into user values ("+pos+",'"+txtmant1.getText()+"','"+txtmant2.getText()+"',"+txtmant3.getText()+",'"+txtmant4.getText()+"','"+date+"')")){
+                          lblinfomant.setText("elemento agregado correctamente");
+                          lblmant1.setVisible(false);lblmant2.setVisible(false);lblmant3.setVisible(false);lblmant4.setVisible(false);lblmant5.setVisible(false);
+                          txtmant1.setVisible(false);txtmant2.setVisible(false);txtmant3.setVisible(false);txtmant4.setVisible(false);txtmant5.setVisible(false);
+                          lbldesmant.setVisible(false);
+                       }
+                       }
+                       break;
+                }
+    }
+    public void checkFuncDevice(ActionEvent actionEvent){
+      Dialog dlg = new Dialog(application.stage, "Funciones del dispositivo");  
+     
+        Action actionfunc;
+        Button aButton=new Button();
+
+    CheckBox[] cb=new CheckBox[41];
+    if(!functiondevice.isEmpty())
+    {
+      for(int i=0;i<cb.length;i++){
+        if(functiondevice.get(i).contains("true")){
+        cb[i]=new CheckBox();
+        cb[i].setSelected(true);
+        }
+        else{
+        cb[i]=new CheckBox();
+        cb[i].setSelected(false);
+        }
+    }
+    }  
+    else{
+    for(int i=0;i<cb.length;i++){    
+        cb[i]=new CheckBox();
+   
     }
     }
+ 
+    GridPane grid = new GridPane();
+    ScrollPane scrollPane=new ScrollPane();
+    scrollPane.setMaxHeight(500);
+    scrollPane.setMaxWidth(800);
+    scrollPane.setContent(grid);
+    scrollPane.setPannable(true);
+//    grid.setMaxHeight(300);
+//    grid.setMaxWidth(500);
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(0, 10, 0, 10));
+
+    
+
+    grid.add(new Label("Cierre correcto tapa trasera: "), 0, 0);
+    grid.add(cb[0], 1, 0);
+    grid.add(new Label("Colocación adeduada de Gomas protectoras de puertos: "), 0, 1);
+    grid.add(cb[1], 1, 1);
+    grid.add(new Label("Posicion correcta de antena superior / Inferior parte trasera"), 0, 2);
+    grid.add(cb[2], 1, 2);
+    grid.add(new Label("Logo en perfecto estado (Impreso en cover)"), 0, 3);
+    grid.add(cb[3], 1, 3);
+    grid.add(new Label("Panel sin manchas"), 0, 4);
+    grid.add(cb[4], 1, 4);
+    grid.add(new Label("No presenta golpes"), 0, 5);
+    grid.add(cb[5], 1, 5);
+    grid.add(new Label("Cierre completo del equipo (botones, pestaña en posicion correcta, tornillos completos)"), 0,6 );
+    grid.add(cb[6], 1,6 );
+    grid.add(new Label("Camara sin obstruccion (frontal / trasero)"),0 , 7);
+    grid.add(cb[7], 1, 7);
+    grid.add(new Label("Sensores sin obstruccion (Luminosidad / Proximidad)"),0 ,8 );
+    grid.add(cb[8],1 ,8 );
+    grid.add(new Label("Encendido"),0 ,9 );
+    grid.add(cb[9], 1, 9);
+    grid.add(new Label("Sonido speaker principal"), 0, 10);
+    grid.add(cb[10],1 ,10 );
+    grid.add(new Label("Suspension y reactivacion"),0 , 11);
+    grid.add(cb[11], 1,11);
+    grid.add(new Label("Funcion pantalla tactil"),0 ,12 );
+    grid.add(cb[12],1 ,12 );
+    grid.add(new Label("LED ( Llamada/Mensaje /Carga de Batería/Teclas Físicas de Navegación"),0 ,13 );
+    grid.add(cb[13], 1,13 );
+    grid.add(new Label("Funcionamiento Audio 3.5 mm"),0 , 14);
+    grid.add(cb[14], 1,14 );
+    grid.add(new Label("Funcionamiento tecla Volumen +/-"), 0, 15);
+    grid.add(cb[15], 1,15 );
+    grid.add(new Label("Instalación Correcta de Drivers ( Dispositivo Modo Instalador)"),0 ,16 );
+    grid.add(cb[16],1 , 16);
+    grid.add(new Label("Transferencia de Archivos (MTP/ Tarjeta de Almacenamiento)"),0 ,17 );
+    grid.add(cb[17],1 ,17 );
+    grid.add(new Label("Activar/Desactivar Barra de Notificaciones ( WIFI/Bluetooth/GPS/Rotación Sincronización/ Hotspoot/ Modo Avión)"),0 ,18 );
+    grid.add(cb[18], 1, 18);
+    grid.add(new Label("Carga de Batería ( AC/ USB)"),0 ,19 );
+    grid.add(cb[19], 1,19 );
+    grid.add(new Label("Conectar a Red WIFI"), 0, 20);
+    grid.add(cb[20], 1, 20);
+    grid.add(new Label("Conectar a MHL"),0 ,21 );
+    grid.add(cb[21],1 ,21 );
+    grid.add(new Label("Conectar a través de Miracast "),0 ,22 );
+    grid.add(cb[22], 1,22 );
+    grid.add(new Label("Compartir red a través de Hotspot "),0 ,23 );
+    grid.add(cb[23], 1,23 );
+    grid.add(new Label("Probar Aplicaciones Envío y Recepción de Archivos a través de ellas   (Waze/ Facebook/ Whatsapp)"),0 ,24 );
+    grid.add(cb[24],1 , 24);
+    grid.add(new Label("Restauración de Fabrica "),0, 25);
+    grid.add(cb[25], 1,25 );
+    grid.add(new Label("Conectar a traves de OTG"),0 , 26);
+    grid.add(cb[26], 1, 26);
+    grid.add(new Label("Emparejar a Dispositivo Bluetooth y Compartir  Archivo"),0 ,27 );
+    grid.add(cb[27], 1,27 );
+    grid.add(new Label("Ubicar posición por el GPS"),0 ,28 );
+    grid.add(cb[28], 1, 28);
+    grid.add(new Label("Función de Cámara Frontal/Trasera( Flash/ Zoom/ Modos de Captura)"), 0, 29);
+    grid.add(cb[29], 1,29 );
+    grid.add(new Label("Señal  TV Digital / Analógica "), 0,30 );
+    grid.add(cb[30],1 , 30);
+    grid.add(new Label("Verificación Acceso Root"), 0,31 );
+    grid.add(cb[31], 1,31 );
+    grid.add(new Label("Reconocimiento de  SIM CARD "),0 ,32 );
+    grid.add(cb[32], 1,32 );
+    grid.add(new Label("Enviar mensaje"),0 , 33);
+    grid.add(cb[33], 1,33 );
+    grid.add(new Label("Recibir mensaje"), 0,34 );
+    grid.add(cb[34],1 ,34 );
+    grid.add(new Label("Bloqueo de seguridad (Patron-PIN-Password)"),0 ,35 );
+    grid.add(cb[35], 1,35 );
+    grid.add(new Label("Llamada Saliente SIM1/ SIM 2 ( Altavoz/ Normal) ( Opcional)"),0 ,36 );
+    grid.add(cb[36], 1,36 );
+    grid.add(new Label("Llamada Entrante SIM1/ SIM 2 ( Altavoz/ Normal) ( Opcional)"),0 ,37 );
+    grid.add(cb[37],1 ,37 );
+    grid.add(new Label("Configuración Red Móvil ( APN / Operador de Red en  modo manual / automático)"), 0,38 );
+    grid.add(cb[38], 1, 38);
+    grid.add(new Label("Operaciones Contacto Teléfono ( Agregar/Modificar/ Borrar)"), 0,39 );
+    grid.add(cb[39], 1,39 );
+    grid.add(new Label("Verificar Descarga de Aplicaciones  desde el Escritorio/equipo (googleplay)"), 0,40 );
+    grid.add(cb[40],1 ,40 );
+
+//    grid.add(new Label("descripción:"), 0, 1);
+//    grid.add(descriptionfail, 1, 1);
+//    grid.add(lblimgfail, 1, 2);
+
+    
+      
+    aButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+//             functiondevice.clear();
+//             functiondevice.add(String.valueOf(cb1.isSelected()));
+//             for(String v:functiondevice){
+//             System.out.println(v);
+//             }
+                dlg.hide();
+            }
+        });
+    actionfunc=new AbstractAction("Aceptar") {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                  functiondevice.clear();
+             
+             for(int i=0;i<cb.length;i++){
+             functiondevice.add(String.valueOf(cb[i].isSelected()));
+             }
+             dlg.hide();
+            }
+        };
+   //ButtonBar.setType(aButton, ButtonType.OK_DONE);
+//    
+//    actionFail.disabledProperty().set(true);
+   // bcapfails.setOnAction(actioncapinmg);
+//    // Do some validation (using the Java 8 lambda syntax).
+//    namefail.textProperty().addListener((observable, oldValue, newValue) -> {
+//        actionFail.disabledProperty().set(newValue.trim().isEmpty());
+//        actioncapinmg.disabledProperty().set(newValue.trim().isEmpty());
+//    });
+//    actioncapinmg.disabledProperty().addListener((observable, oldValue, newValue) -> {
+//        lblimgfail.setText(imgc);
+//    });
+//
+//    dlg.setMasthead("ingrese información referente a falla");
+    dlg.setContent(scrollPane);
+   dlg.getActions().addAll(actionfunc,Dialog.Actions.CANCEL);
+
+    // Request focus on the username field by default.
+    
+    dlg.show();
+    }
+    }
+    
     
 
 

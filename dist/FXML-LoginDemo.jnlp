@@ -11,33 +11,33 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FXML-LoginDemo.jar" size="1344547" download="eager" />
-    <jar href="lib/Enzo-0.1.jar" size="1733402" download="eager" />
-    <jar href="lib/commons-beanutils-1.9.0.jar" size="246711" download="eager" />
-    <jar href="lib/commons-codec-1.5.jar" size="79317" download="eager" />
-    <jar href="lib/commons-collections-3.2.1.jar" size="624548" download="eager" />
-    <jar href="lib/commons-digester-2.1.jar" size="215226" download="eager" />
+    <jar href="FXML-LoginDemo.jar" size="1418035" download="eager" />
+    <jar href="lib/Enzo-0.1.jar" size="1733401" download="eager" />
+    <jar href="lib/commons-beanutils-1.9.0.jar" size="246709" download="eager" />
+    <jar href="lib/commons-codec-1.5.jar" size="79318" download="eager" />
+    <jar href="lib/commons-collections-3.2.1.jar" size="624547" download="eager" />
+    <jar href="lib/commons-digester-2.1.jar" size="215224" download="eager" />
     <jar href="lib/commons-io-2.4.jar" size="198396" download="eager" />
-    <jar href="lib/commons-javaflow-20060411.jar" size="102248" download="eager" />
-    <jar href="lib/commons-logging-1.1.1.jar" size="65454" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="924945" download="eager" />
-    <jar href="lib/groovy-all-2.0.1.jar" size="6622961" download="eager" />
-    <jar href="lib/gson-2.2.4.jar" size="207147" download="eager" />
-    <jar href="lib/itext-pdfa-5.5.0.jar" size="58075" download="eager" />
+    <jar href="lib/commons-javaflow-20060411.jar" size="102245" download="eager" />
+    <jar href="lib/commons-logging-1.1.1.jar" size="65452" download="eager" />
+    <jar href="lib/controlsfx-8.0.6_20.jar" size="924943" download="eager" />
+    <jar href="lib/groovy-all-2.0.1.jar" size="6622959" download="eager" />
+    <jar href="lib/gson-2.2.4.jar" size="207144" download="eager" />
+    <jar href="lib/itext-pdfa-5.5.0.jar" size="58073" download="eager" />
     <jar href="lib/itextpdf-5.5.0.jar" size="2207316" download="eager" />
-    <jar href="lib/jasperreports-6.0.0.jar" size="5518986" download="eager" />
-    <jar href="lib/jasperreports-fonts-6.0.0.jar" size="2480985" download="eager" />
-    <jar href="lib/jasperreports-javaflow-6.0.0.jar" size="5563478" download="eager" />
+    <jar href="lib/jasperreports-6.0.0.jar" size="5518983" download="eager" />
+    <jar href="lib/jasperreports-fonts-6.0.0.jar" size="2480982" download="eager" />
+    <jar href="lib/jasperreports-javaflow-6.0.0.jar" size="5563475" download="eager" />
     <jar href="lib/jcommon-1.0.15.jar" size="333298" download="eager" />
-    <jar href="lib/jfreechart-1.0.12.jar" size="1434002" download="eager" />
-    <jar href="lib/jnotify-0.94.jar" size="43086" download="eager" />
+    <jar href="lib/jfreechart-1.0.12.jar" size="1434001" download="eager" />
+    <jar href="lib/jnotify-0.94.jar" size="43084" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860442" download="eager" />
-    <jar href="lib/png-encoder-1.5.jar" size="11990" download="eager" />
-    <jar href="lib/poi-3.10.1.jar" size="2091262" download="eager" />
-    <jar href="lib/poi-ooxml-3.10.1.jar" size="1089548" download="eager" />
-    <jar href="lib/poi-ooxml-schemas-3.10.1.jar" size="5470511" download="eager" />
-    <jar href="lib/xmlParserAPIs-2.6.2.jar" size="144408" download="eager" />
-    <jar href="lib/zip4j_1.3.2.jar" size="137568" download="eager" />
+    <jar href="lib/png-encoder-1.5.jar" size="11987" download="eager" />
+    <jar href="lib/poi-3.10.1.jar" size="2091264" download="eager" />
+    <jar href="lib/poi-ooxml-3.10.1.jar" size="1089547" download="eager" />
+    <jar href="lib/poi-ooxml-schemas-3.10.1.jar" size="5470509" download="eager" />
+    <jar href="lib/xmlParserAPIs-2.6.2.jar" size="144405" download="eager" />
+    <jar href="lib/zip4j_1.3.2.jar" size="137566" download="eager" />
   </resources>
 <security>
   <all-permissions/>

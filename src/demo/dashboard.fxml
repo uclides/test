@@ -21,18 +21,30 @@
          <children>
             <Pane prefHeight="54.0" prefWidth="1250.0" style="-fx-background-color: white;">
                <children>
-                  <Label fx:id="permission" layoutX="1052.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="-" textAlignment="RIGHT" />
-                  <Label fx:id="user" layoutX="957.0" layoutY="35.0" prefHeight="17.0" prefWidth="41.0" text="usuario" />
-                  <ImageView fx:id="avatar" fitHeight="25.0" fitWidth="27.0" layoutX="927.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="permission" layoutX="1036.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="-" textAlignment="RIGHT" />
+                  <Label fx:id="user" layoutX="919.0" layoutY="35.0" prefHeight="20.0" prefWidth="55.0" text="usuario">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <ImageView fx:id="avatar" fitHeight="25.0" fitWidth="27.0" layoutX="885.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
                   <Label layoutY="6.0" />
                   <ProgressBar id="bardashboard" fx:id="bardashboard" layoutX="-2.0" layoutY="48.0" prefHeight="18.0" prefWidth="1256.0" progress="0.0" />
-                  <Label layoutX="1008.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="|" />
+                  <Label layoutX="984.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="|" />
                   <Button id="exit" fx:id="exit" layoutX="1225.0" layoutY="-1.0" mnemonicParsing="false" onAction="#exit" prefHeight="7.0" prefWidth="26.0" styleClass="exit-button" text="x" />
                   <Button layoutX="1204.0" layoutY="-1.0" mnemonicParsing="false" styleClass="exit-button" text="_" />
-                  <Label layoutX="1024.0" layoutY="35.0" text="nivel:" />
-                  <Label layoutX="1068.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="|" />
-                  <Label layoutX="1090.0" layoutY="35.0" text="ultima conexión:" />
-                  <Label fx:id="dateuser" layoutX="1183.0" layoutY="35.0" text="0000-00-00" />
+                  <Label layoutX="1000.0" layoutY="35.0" text="nivel:">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label layoutX="1055.0" layoutY="35.0" prefHeight="17.0" prefWidth="16.0" text="|" />
+                  <Label layoutX="1072.0" layoutY="35.0" text="ultima conexión:">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="dateuser" layoutX="1178.0" layoutY="35.0" text="0000-00-00">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                   <Label fx:id="activedevice" layoutX="506.0" layoutY="34.0" prefHeight="21.0" prefWidth="239.0" text="aun no se ha conectado dispositivo">
                      <font>
                         <Font name="Síragon Regular" size="16.0" />
@@ -80,11 +92,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                   </TitledPane>
-                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" style="-fx-background-color: white;" text="Imagenes">
+                                  <TitledPane fx:id="accorImagenes" blendMode="DARKEN" disable="true" style="-fx-background-color: white;" text="Imagenes">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bimgdevice" fx:id="bimgdevice" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bimgdevice" fx:id="bimgdevice" disable="true" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -140,11 +152,11 @@
                                           <Font name="Síragon Regular" size="18.0" />
                                        </font>
                                     </TitledPane>
-                                    <TitledPane fx:id="accorMantenimiento" blendMode="DARKEN" disable="true" layoutX="10.0" layoutY="175.0" style="-fx-background-color: white;" text="Mantenimiento">
+                                    <TitledPane fx:id="accorMantenimiento" blendMode="DARKEN" layoutX="10.0" layoutY="175.0" style="-fx-background-color: white;" text="Mantenimiento">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                              <children>
-                                                <Button id="bmantouser" mnemonicParsing="false" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
+                                                <Button id="bmant" fx:id="bmant" mnemonicParsing="false" onAction="#buttonLoadTab" prefHeight="29.0" prefWidth="201.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="General" />
                                              </children>
                                              <cursor>
                                                 <Cursor fx:constant="DEFAULT" />
@@ -193,9 +205,9 @@
                                                 </Label>
                                                 <CheckBox fx:id="chkpref" layoutX="14.0" layoutY="442.0" mnemonicParsing="false" text="No mostrar más este mensaje">
                                                    <font>
-                                                      <Font name="System Bold" size="12.0" />
+                                                      <Font name="System Bold" size="14.0" />
                                                    </font></CheckBox>
-                                                <Button fx:id="binduction" layoutX="466.0" layoutY="434.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="108.0" styleClass="standar-button" text="Cerrar" />
+                                                <Button fx:id="binduction" layoutX="466.0" layoutY="434.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" styleClass="standar-button" text="Cerrar" />
                                                 <Label layoutX="14.0" layoutY="118.0" prefHeight="20.0" prefWidth="665.0" text="Para un correcto uso de la aplicación, es necesario habilitar los siguientes parametros en el dispositivo:" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
@@ -212,11 +224,11 @@
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
-                                                <Label layoutX="117.0" layoutY="275.0" prefHeight="17.0" prefWidth="276.0" text="• conectarse a red Wi-Fi" wrapText="true">
+                                                <Label layoutX="117.0" layoutY="275.0" prefHeight="17.0" prefWidth="276.0" text="• Conectarse a red Wi-Fi" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
-                                                <Label layoutX="117.0" layoutY="306.0" prefHeight="17.0" prefWidth="276.0" text="• encender Bluetooth" wrapText="true">
+                                                <Label layoutX="117.0" layoutY="306.0" prefHeight="17.0" prefWidth="276.0" text="• Encender Bluetooth" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
@@ -224,15 +236,15 @@
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
-                                                <Label layoutX="562.0" layoutY="211.0" prefHeight="17.0" prefWidth="362.0" text="• agregar tarjeta MicroSD (si posee)" wrapText="true">
+                                                <Label layoutX="562.0" layoutY="211.0" prefHeight="17.0" prefWidth="362.0" text="• Agregar tarjeta MicroSD (si posee)" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
-                                                <Label layoutX="562.0" layoutY="275.0" prefHeight="17.0" prefWidth="362.0" text="• agregar Tarjeta SIM" wrapText="true">
+                                                <Label layoutX="562.0" layoutY="275.0" prefHeight="17.0" prefWidth="362.0" text="• Agregar Tarjeta SIM" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
-                                                <Label layoutX="562.0" layoutY="306.0" prefHeight="17.0" prefWidth="362.0" text="• habilitar datos moviles" wrapText="true">
+                                                <Label layoutX="562.0" layoutY="306.0" prefHeight="17.0" prefWidth="362.0" text="• Habilitar datos moviles" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font></Label>
@@ -254,7 +266,7 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <Button id="detectdevice" fx:id="detectdevice" layoutX="913.0" layoutY="36.0" mnemonicParsing="false" onAction="#LoadInfoInitialPhone" prefHeight="33.0" prefWidth="112.0" styleClass="standar-button" text="iniciar inspección">
+                                                <Button id="detectdevice" fx:id="detectdevice" layoutX="884.0" layoutY="36.0" mnemonicParsing="false" onAction="#LoadInfoInitialPhone" prefHeight="33.0" prefWidth="141.0" styleClass="standar-button" text="iniciar inspección">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
@@ -265,9 +277,9 @@
                                                       <TableColumn id="columndescription" fx:id="columndescription" maxWidth="673.0" minWidth="597.0" prefWidth="673.0" text="Descripción" />
                                                    </columns>
                                                 </TableView>
-                                                <Label layoutX="15.0" layoutY="111.0" text="Información recopilada del equipo conectado ">
+                                                <Label layoutX="14.0" layoutY="102.0" text="Información recopilada del equipo conectado ">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="14.0" />
+                                                      <Font size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <Label fx:id="lblinfod" alignment="CENTER" layoutX="14.0" layoutY="69.0" prefHeight="20.0" prefWidth="882.0" wrapText="true">
@@ -284,19 +296,14 @@
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#LoadInfoInitialPhone" prefHeight="501.0" prefWidth="1039.0">
                                              <children>
-                                                <Button id="detectdevice" layoutX="913.0" layoutY="36.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="112.0" styleClass="standar-button" text="iniciar inspección">
-                                                   <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
-                                                   </font>
-                                                </Button>
                                                 <TextField fx:id="txthdev" layoutX="102.0" layoutY="184.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <TextField fx:id="txtwdev" layoutX="102.0" layoutY="215.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <TextField fx:id="txtcapbat" layoutX="659.0" layoutY="213.0" prefHeight="25.0" prefWidth="100.0" />
+                                                <TextField fx:id="txtcapbat" layoutX="671.0" layoutY="211.0" prefHeight="25.0" prefWidth="100.0" />
                                                 <TextField fx:id="txtbulkdev" layoutX="102.0" layoutY="247.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <TextField fx:id="txtcolordis" layoutX="485.0" layoutY="214.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <Label layoutX="56.0" layoutY="220.0" text="Ancho:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <Label layoutX="14.0" text="Componentes y Proveedor">
@@ -306,83 +313,143 @@
                                                 </Label>
                                                 <Label layoutX="56.0" layoutY="252.0" text="Grosor:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <Label layoutX="56.0" layoutY="189.0" text="Alto:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <Label layoutX="56.0" layoutY="318.0" text="Material:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <Label layoutX="56.0" layoutY="351.0" text="Color:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <ColorPicker fx:id="cpdev" layoutX="102.0" layoutY="346.0" prefHeight="25.0" prefWidth="97.0" />
-                                                <Label layoutX="72.0" layoutY="155.0" text="Aspectos Visuales:" />
-                                                <Label layoutX="437.0" layoutY="156.0" text="Pantalla:" />
-                                                <Label layoutX="422.0" layoutY="186.0" text="tipo:" />
-                                                <Label layoutX="423.0" layoutY="219.0" text="Contraste:">
+                                                <Label layoutX="72.0" layoutY="155.0" text="Aspectos Visuales:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="437.0" layoutY="156.0" text="Pantalla:">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="431.0" layoutY="185.0" text="tipo:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="428.0" layoutY="220.0" text="Contraste:">
+                                                   <font>
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="265.0" layoutY="155.0" text="Conectividad:" />
-                                                <Label layoutX="249.0" layoutY="187.0" text="Bandas:" />
-                                                <MenuButton fx:id="choiceband" layoutX="308.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
-                                                <MenuButton fx:id="choicewifi" layoutX="308.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
-                                                <Label layoutX="249.0" layoutY="218.0" text="Wifi:" />
-                                                <Label layoutX="249.0" layoutY="250.0" text="Bluetooth" />
+                                                <Label layoutX="265.0" layoutY="155.0" text="Conectividad:">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="249.0" layoutY="187.0" text="Bandas:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <MenuButton fx:id="choiceband" layoutX="313.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
+                                                <MenuButton fx:id="choicewifi" layoutX="313.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
+                                                <Label layoutX="249.0" layoutY="218.0" text="Wifi:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="249.0" layoutY="250.0" text="Bluetooth:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <Label fx:id="lblcompinfo" alignment="CENTER" layoutX="229.0" layoutY="105.0" prefHeight="17.0" prefWidth="513.0" textAlignment="CENTER" wrapText="true">
                                                    <font>
                                                       <Font size="16.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="601.0" layoutY="185.0" text="tipo:" />
-                                                <Label layoutX="613.0" layoutY="155.0" text="Bateria:" />
-                                                <Label layoutX="613.0" layoutY="254.0" text="Sensores" />
+                                                <Label layoutX="601.0" layoutY="185.0" text="tipo:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="613.0" layoutY="155.0" text="Bateria:">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="613.0" layoutY="254.0" text="Sensores">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
                                                 <Label layoutX="603.0" layoutY="218.0" text="Capacidad:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Separator layoutX="412.0" layoutY="149.0" orientation="VERTICAL" prefHeight="210.0" prefWidth="6.0" />
-                                                <Separator layoutX="789.0" layoutY="148.0" orientation="VERTICAL" prefHeight="212.0" prefWidth="4.0" />
+                                                <Separator layoutX="416.0" layoutY="149.0" orientation="VERTICAL" prefHeight="210.0" prefWidth="6.0" />
+                                                <Separator layoutX="804.0" layoutY="148.0" orientation="VERTICAL" prefHeight="212.0" prefWidth="4.0" />
                                                 <Separator layoutX="240.0" layoutY="149.0" orientation="VERTICAL" prefHeight="231.0" prefWidth="6.0" />
                                                 <Separator layoutX="584.0" layoutY="150.0" orientation="VERTICAL" prefHeight="210.0" prefWidth="9.0" />
-                                                <Label layoutX="601.0" layoutY="283.0" text="tipo:" />
-                                                <Label layoutX="422.0" layoutY="250.0" text="tactil:" />
+                                                <Label layoutX="601.0" layoutY="283.0" text="tipo:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="428.0" layoutY="250.0" text="tactil:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <Separator layoutX="-1.0" layoutY="380.0" prefHeight="3.0" prefWidth="1027.0" />
                                                 <Separator layoutY="148.0" prefHeight="3.0" prefWidth="1025.0" />
-                                                <Label layoutX="795.0" layoutY="185.0" text="nombre:" />
-                                                <Label layoutX="806.0" layoutY="156.0" text="Proveedor del equipo" />
-                                                <ComboBox fx:id="cbbluetooth" layoutX="308.0" layoutY="246.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
-                                                <ComboBox fx:id="cbprov" layoutX="846.0" layoutY="181.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
+                                                <Label layoutX="810.0" layoutY="185.0" text="nombre:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="821.0" layoutY="156.0" text="Proveedor del equipo">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <ComboBox fx:id="cbbluetooth" layoutX="313.0" layoutY="246.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
+                                                <ComboBox fx:id="cbprov" layoutX="861.0" layoutY="181.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <ComboBox fx:id="cbtactildis" layoutX="485.0" layoutY="246.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
                                                 <ComboBox fx:id="cbtypedis" layoutX="485.0" layoutY="182.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
-                                                <ComboBox fx:id="cbtypebat" layoutX="659.0" layoutY="181.0" prefHeight="25.0" prefWidth="100.0" promptText="seleccione" />
-                                                <ComboBox fx:id="cbcertgoogle" layoutX="846.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
-                                                <MenuButton fx:id="choicesensor" layoutX="660.0" layoutY="279.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
+                                                <ComboBox fx:id="cbtypebat" layoutX="671.0" layoutY="179.0" prefHeight="25.0" prefWidth="100.0" promptText="seleccione" />
+                                                <ComboBox fx:id="cbcertgoogle" layoutX="861.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" promptText="seleccione" />
+                                                <MenuButton fx:id="choicesensor" layoutX="672.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="seleccione" />
                                                 <MenuButton fx:id="choicematerialdev" layoutX="102.0" layoutY="313.0" mnemonicParsing="false" prefWidth="97.0" text="seleccione" AnchorPane.leftAnchor="102.0" />
-                                                <Label layoutX="806.0" layoutY="254.0" text="Certificación Google" />
-                                                <Label layoutX="795.0" layoutY="283.0" text="posee:" />
+                                                <Label layoutX="821.0" layoutY="254.0" text="Certificación Google">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="810.0" layoutY="283.0" text="posee:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <TextField fx:id="txtweight" layoutX="102.0" layoutY="279.0" prefHeight="25.0" prefWidth="97.0" />
                                                 <Label layoutX="56.0" layoutY="284.0" text="Peso:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="12.0" />
+                                                      <Font name="Síragon Regular" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="200.0" layoutY="188.0" text="mm" />
-                                                <Label layoutX="200.0" layoutY="219.0" text="mm" />
-                                                <Label layoutX="200.0" layoutY="250.0" text="mm" />
-                                                <Label layoutX="200.0" layoutY="283.0" text="gr" />
-                                                <Label layoutX="761.0" layoutY="217.0" text="MAh" />
+                                                <Label layoutX="200.0" layoutY="188.0" text="mm">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="200.0" layoutY="219.0" text="mm">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="200.0" layoutY="250.0" text="mm">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="200.0" layoutY="283.0" text="gr">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="773.0" layoutY="215.0" text="MAh" />
                                              </children>
                                           </AnchorPane>
                                        </content>
@@ -396,7 +463,7 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <Button id="bprocapp" fx:id="bprocapp" layoutX="888.0" layoutY="48.0" mnemonicParsing="false" onAction="#initProcApp" prefHeight="21.0" prefWidth="137.0" styleClass="standar-button" text="preparar aplicaciones">
+                                                <Button id="bprocapp" fx:id="bprocapp" layoutX="854.0" layoutY="41.0" mnemonicParsing="false" onAction="#initProcApp" prefHeight="33.0" prefWidth="171.0" styleClass="standar-button" text="preparar aplicaciones">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
@@ -436,24 +503,42 @@
                                                 </Label>
                                                 <AnchorPane prefHeight="43.0" prefWidth="121.0" />
                                                 <ComboBox fx:id="cbbench" layoutX="599.0" layoutY="134.0" prefHeight="25.0" prefWidth="227.0" />
-                                                <Button fx:id="binitbech" layoutX="915.0" layoutY="132.0" mnemonicParsing="false" onAction="#startBench" prefHeight="17.0" prefWidth="110.0" styleClass="standar-button" text="iniciar prueba" visible="false" />
+                                                <Button fx:id="binitbech" layoutX="889.0" layoutY="133.0" mnemonicParsing="false" onAction="#startBench" prefHeight="25.0" prefWidth="136.0" styleClass="standar-button" text="iniciar prueba" visible="false" />
                                                 <TextField fx:id="result1" disable="true" layoutX="675.0" layoutY="229.0" />
                                                 <TextField fx:id="result2" disable="true" layoutX="675.0" layoutY="259.0" />
                                                 <TextField fx:id="result3" disable="true" layoutX="675.0" layoutY="291.0" />
                                                 <TextField fx:id="result4" disable="true" layoutX="675.0" layoutY="323.0" />
                                                 <TextField fx:id="result5" disable="true" layoutX="675.0" layoutY="354.0" />
-                                                <Button fx:id="bsavebech" layoutX="915.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="25.0" prefWidth="110.0" styleClass="standar-button" text="guardar" />
-                                                <Label fx:id="lblr1" disable="true" layoutX="601.0" layoutY="233.0" text="Resultado 1:" />
-                                                <Label fx:id="lblr2" disable="true" layoutX="601.0" layoutY="263.0" text="Resultado 2:" />
-                                                <Label fx:id="lblr3" disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:" />
-                                                <Label fx:id="lblr4" disable="true" layoutX="601.0" layoutY="327.0" text="Resultado 4:" />
-                                                <Label fx:id="lblr5" disable="true" layoutX="601.0" layoutY="358.0" text="Resultado 5:" />
+                                                <Button fx:id="bsavebech" layoutX="915.0" layoutY="347.0" mnemonicParsing="false" onAction="#saveRBench" prefHeight="33.0" prefWidth="110.0" styleClass="standar-button" text="guardar" />
+                                                <Label fx:id="lblr1" disable="true" layoutX="601.0" layoutY="233.0" text="Resultado 1:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label fx:id="lblr2" disable="true" layoutX="601.0" layoutY="263.0" text="Resultado 2:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label fx:id="lblr3" disable="true" layoutX="601.0" layoutY="295.0" text="Resultado 3:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label fx:id="lblr4" disable="true" layoutX="601.0" layoutY="327.0" text="Resultado 4:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label fx:id="lblr5" disable="true" layoutX="601.0" layoutY="358.0" text="Resultado 5:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <Label fx:id="estatusbench" alignment="CENTER" contentDisplay="CENTER" layoutX="222.0" layoutY="94.0" prefHeight="17.0" prefWidth="596.0">
                                                    <font>
                                                       <Font size="16.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="lblcapt" disable="true" layoutX="601.0" layoutY="392.0" text="Capturas:" />
+                                                <Label fx:id="lblcapt" disable="true" layoutX="601.0" layoutY="392.0" text="Capturas:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <Label fx:id="lblimg" disable="true" layoutX="675.0" layoutY="392.0" />
                                                 <ImageView fx:id="photo" fitHeight="87.0" fitWidth="79.0" layoutX="970.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                                    <image>
@@ -479,7 +564,10 @@
                                                       <TableColumn fx:id="columnaitest4" prefWidth="60.0" text="resultado" />
                                                   </columns>
                                                 </TableView>
-                                                <Label fx:id="lblr0" disable="true" layoutX="602.0" layoutY="202.0" text="compatible:" />
+                                                <Label fx:id="lblr0" disable="true" layoutX="602.0" layoutY="202.0" text="compatible:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <ComboBox fx:id="cbcompatible" disable="true" layoutX="675.0" layoutY="198.0" prefWidth="150.0" promptText="seleccione" />
                                              </children>
                                           </AnchorPane>
@@ -494,7 +582,7 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
-                                                <Button fx:id="bloadimg" layoutX="221.0" layoutY="163.0" mnemonicParsing="false" onAction="#Loadimg" styleClass="standar-button" text="mostrar">
+                                                <Button fx:id="bloadimg" layoutX="191.0" layoutY="164.0" mnemonicParsing="false" onAction="#Loadimg" prefHeight="25.0" prefWidth="90.0" styleClass="standar-button" text="mostrar">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
@@ -507,13 +595,16 @@
                                                          </padding></TilePane>
                                                    </content>
                                                 </ScrollPane>
-                                                <ComboBox fx:id="cbfilterimg" layoutX="74.0" layoutY="132.0" prefHeight="25.0" prefWidth="207.0" />
-                                                <Label fx:id="lblfilter" layoutX="14.0" layoutY="136.0" text="filtrar por:" />
+                                                <ComboBox fx:id="cbfilterimg" layoutX="80.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
+                                                <Label fx:id="lblfilter" layoutX="14.0" layoutY="136.0" text="filtrar por:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <Label fx:id="lblmsjimg" alignment="CENTER" contentDisplay="CENTER" layoutX="389.0" layoutY="99.0" prefHeight="17.0" prefWidth="540.0" textAlignment="CENTER">
                                                    <font>
                                                       <Font size="16.0" />
                                                    </font></Label>
-                                                <Button fx:id="banyimg" disable="true" layoutX="135.0" layoutY="416.0" mnemonicParsing="false" onAction="#addImage" prefHeight="25.0" prefWidth="146.0" styleClass="standar-button" text="agregar imagen" visible="false" />
+                                                <Button fx:id="banyimg" disable="true" layoutX="108.0" layoutY="413.0" mnemonicParsing="false" onAction="#addImage" prefHeight="30.0" prefWidth="173.0" styleClass="standar-button" text="agregar imagen" visible="false" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -535,11 +626,23 @@
                                                       <TableColumn fx:id="columnafdate" prefWidth="97.0" text="fecha" />
                                                   </columns>
                                                 </TableView>
-                                                <Label layoutX="14.0" layoutY="98.0" text="historial" />
-                                                <Label layoutX="582.0" layoutY="115.0" text="detalles historial de fallas" />
-                                                <Label layoutX="585.0" layoutY="211.0" text="descripción:" />
+                                                <Label layoutX="14.0" layoutY="98.0" text="historial">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="582.0" layoutY="115.0" text="detalles historial de fallas">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font></Label>
+                                                <Label layoutX="585.0" layoutY="211.0" text="descripción:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <TextArea fx:id="txtdf" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" layoutX="582.0" layoutY="228.0" prefHeight="75.0" prefWidth="447.0" scaleShape="false" />
-                                                <Label layoutX="585.0" layoutY="151.0" text="Nombre:" />
+                                                <Label layoutX="585.0" layoutY="151.0" text="Nombre:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Label>
                                                 <TextField fx:id="txtnf" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" layoutX="582.0" layoutY="168.0" prefHeight="25.0" prefWidth="448.0" scaleShape="false" />
                                                 <Label fx:id="lblinfofail" alignment="CENTER" layoutX="179.0" layoutY="65.0" prefHeight="17.0" prefWidth="755.0" textAlignment="CENTER">
                                                    <font>
@@ -561,13 +664,13 @@
                                                 </Label>
                                                 <Label layoutX="8.0" layoutY="93.0" text="tipo de comparativa:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="14.0" />
+                                                      <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="cbtypecomp" layoutX="114.0" layoutY="89.0" prefHeight="25.0" prefWidth="146.0" />
+                                                <ComboBox fx:id="cbtypecomp" layoutX="139.0" layoutY="89.0" prefHeight="25.0" prefWidth="134.0" />
                                                 <Label layoutX="9.0" layoutY="167.0" text="equipos disponibles:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="14.0" />
+                                                      <Font name="System Bold" size="14.0" />
                                                    </font>
                                                 </Label>
                                                 <TableView fx:id="tablechart" layoutX="9.0" layoutY="190.0" prefHeight="237.0" prefWidth="252.0">
@@ -728,11 +831,11 @@
                                                 <Button fx:id="bprev" layoutX="984.0" layoutY="74.0" mnemonicParsing="false" onAction="#prevChart" styleClass="standar-button" text="&lt;" />
                                                 <Label layoutX="8.0" layoutY="124.0" text="especifique:">
                                                    <font>
-                                                      <Font name="Síragon Regular" size="14.0" />
+                                                      <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="cbspecomp" layoutX="114.0" layoutY="120.0" prefHeight="25.0" prefWidth="146.0" />
-                                                <Button fx:id="bcreatec" layoutX="164.0" layoutY="430.0" mnemonicParsing="false" onAction="#getCherDeviceTrue" prefHeight="25.0" prefWidth="96.0" styleClass="standar-button" text="comparar">
+                                                <ComboBox fx:id="cbspecomp" layoutX="138.0" layoutY="120.0" prefHeight="25.0" prefWidth="135.0" />
+                                                <Button fx:id="bcreatec" layoutX="131.0" layoutY="431.0" mnemonicParsing="false" onAction="#getCherDeviceTrue" prefHeight="25.0" prefWidth="129.0" styleClass="standar-button" text="comparar">
                                                    <font>
                                                       <Font name="Síragon Regular" size="12.0" />
                                                    </font>
@@ -750,17 +853,42 @@
                                       <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <Button fx:id="generatereport" layoutX="876.0" layoutY="412.0" mnemonicParsing="false" onAction="#viewReport" prefHeight="33.0" prefWidth="149.0" styleClass="standar-button" text="Generar Reporte" />
+                                                <Button fx:id="generatereport" layoutX="447.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewReport" prefHeight="43.0" prefWidth="164.0" styleClass="standar-button" text="Generar Reporte">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></Button>
                                                 <Label text="Reporte">
                                                    <font>
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
+                                                <Label layoutX="163.0" layoutY="154.0" text="Aspectos Positivos:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea fx:id="positive" layoutX="163.0" layoutY="171.0" prefHeight="67.0" prefWidth="715.0" />
+                                                <TextArea fx:id="negative" layoutX="164.0" layoutY="266.0" prefHeight="72.0" prefWidth="714.0" />
+                                                <Label layoutX="164.0" layoutY="249.0" text="Aspectos Negativos:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblreport" layoutX="131.0" layoutY="75.0" prefHeight="54.0" prefWidth="795.0" text="Usted posee los datos necesarios para generar un reporte del dispositivo. Puede adicionar información relacionada a los aspectos positivos y negativos del equipo" textAlignment="CENTER" wrapText="true">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="visualize" layoutX="446.0" layoutY="412.0" mnemonicParsing="false" onAction="#openReport" prefHeight="44.0" prefWidth="166.0" styleClass="standar-button" text="Visualizar" visible="false">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Button>
                                              </children>
                                           </AnchorPane>
                                       </content>
                                     </Tab>
-                                    <Tab text="Untitled Tab">
+                                    <Tab fx:id="tabmant" text="Untitled Tab">
                                       <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
@@ -769,19 +897,58 @@
                                                       <Font name="Síragon Regular" size="36.0" />
                                                    </font>
                                                 </Label>
+                                                <Label layoutX="14.0" layoutY="110.0" text="Seleccione categoria:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox fx:id="cbmante" layoutX="155.0" layoutY="108.0" prefHeight="25.0" prefWidth="173.0" />
+                                                <TableView fx:id="tablemant" layoutX="338.0" layoutY="108.0" prefHeight="143.0" prefWidth="690.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="columnamant1" prefWidth="156.0" />
+                                                    <TableColumn fx:id="columnamant2" prefWidth="139.0" />
+                                                      <TableColumn fx:id="columnamant3" prefWidth="127.0" />
+                                                      <TableColumn fx:id="columnamant4" prefWidth="129.0" />
+                                                      <TableColumn fx:id="columnamant5" prefWidth="138.0" />
+                                                  </columns>
+                                                </TableView>
+                                                <Label fx:id="lbldesmant" disable="true" layoutX="14.0" layoutY="277.0" text="Descripción:">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="addmant" layoutX="217.0" layoutY="139.0" mnemonicParsing="false" onAction="#getElementsMant" prefHeight="30.0" prefWidth="112.0" styleClass="standar-button" text="nuevo" />
+                                                <TextField fx:id="txtmant1" layoutX="155.0" layoutY="326.0" visible="false" />
+                                                <TextField fx:id="txtmant2" layoutX="155.0" layoutY="368.0" visible="false" />
+                                                <TextField fx:id="txtmant3" layoutX="455.0" layoutY="326.0" visible="false" />
+                                                <TextField fx:id="txtmant4" layoutX="455.0" layoutY="368.0" visible="false" />
+                                                <TextField fx:id="txtmant5" layoutX="760.0" layoutY="326.0" visible="false" />
+                                                <TextField fx:id="txtmant6" layoutX="760.0" layoutY="368.0" visible="false" />
+                                                <Button fx:id="addnewmant" layoutX="903.0" layoutY="400.0" mnemonicParsing="false" onAction="#SaveElementMant" prefHeight="33.0" prefWidth="125.0" styleClass="standar-button" text="guardar" visible="false" />
+                                                <Label fx:id="lblmant1" layoutX="57.0" layoutY="330.0" prefHeight="17.0" prefWidth="87.0" text="Label" visible="false" />
+                                                <Label fx:id="lblmant2" layoutX="57.0" layoutY="372.0" prefHeight="17.0" prefWidth="87.0" text="Label" visible="false" />
+                                                <Label fx:id="lblmant3" layoutX="360.0" layoutY="330.0" prefHeight="17.0" prefWidth="87.0" text="Label" visible="false" />
+                                                <Label fx:id="lblmant4" layoutX="360.0" layoutY="372.0" prefHeight="17.0" prefWidth="87.0" text="Label" visible="false" />
+                                                <Label fx:id="lblmant5" layoutX="683.0" layoutY="330.0" prefHeight="17.0" prefWidth="72.0" text="Label" visible="false" />
+                                                <Label fx:id="lblmant6" layoutX="683.0" layoutY="372.0" prefHeight="17.0" prefWidth="72.0" text="Label" visible="false" />
+                                                <Label fx:id="lblinfomant" alignment="CENTER" layoutX="223.0" layoutY="53.0" prefHeight="17.0" prefWidth="760.0" wrapText="true">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </AnchorPane>
                                       </content>
                                     </Tab>
                                 </tabs>
                               </TabPane>
-                              <Button fx:id="bcontinue" disable="true" layoutX="938.0" layoutY="463.0" mnemonicParsing="false" onAction="#NextStep" prefHeight="30.0" prefWidth="87.0" styleClass="standar-button" text="continuar" visible="false">
+                              <Button fx:id="bcontinue" layoutX="924.0" layoutY="463.0" mnemonicParsing="false" onAction="#NextStep" prefHeight="30.0" prefWidth="101.0" styleClass="standar-button" text="continuar" visible="false">
                                  <font>
                                     <Font name="Síragon Regular" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="baddfails" layoutX="868.0" layoutY="463.0" mnemonicParsing="false" onAction="#addfails" prefHeight="30.0" prefWidth="55.0" styleClass="standar-button" text="falla" visible="false" />
-                              <Button fx:id="badvantage" layoutX="798.0" layoutY="463.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" styleClass="standar-button" text="ventaja" visible="false" />
+                              <Button fx:id="baddfails" layoutX="823.0" layoutY="463.0" mnemonicParsing="false" onAction="#addfails" prefHeight="30.0" prefWidth="90.0" styleClass="standar-button" text="falla" visible="false" />
+                              <Button fx:id="badvantage" layoutX="711.0" layoutY="463.0" mnemonicParsing="false" onAction="#checkFuncDevice" prefHeight="30.0" prefWidth="101.0" styleClass="standar-button" text="funciones" visible="false" />
                            </children>
                         </AnchorPane>
                     </items>
